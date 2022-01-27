@@ -4,8 +4,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.testingdashboard.TestingDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
@@ -50,8 +52,13 @@ public class Drive extends SubsystemBase {
     m_frontLeft.restoreFactoryDefaults();
     m_frontRight.restoreFactoryDefaults();
 
+    m_backLeft.follow(m_frontLeft);
+    m_backRight.follow(m_frontRight);
+
     setIdleMode(IdleMode.kBrake);
     setEncoderConversionFactor(CONVERSION_FACTOR);
+
+    BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
 
   }
 
@@ -95,8 +102,26 @@ public class Drive extends SubsystemBase {
     } 
   }
 
+  public static Drive getInstance() {
+    if (m_drive == null) {
+      m_drive = new Drive();
+      TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorDistance", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorDistance", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorDistance", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontRightMotorDistance", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontRightMotorSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Robot", "BatteryVoltage", 0);
+    }
+    return m_drive;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
   }
 }
