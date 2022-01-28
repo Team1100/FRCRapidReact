@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -24,6 +25,10 @@ public class Drive extends SubsystemBase {
   private RelativeEncoder m_backRightEncoder;
   private RelativeEncoder m_frontLeftEncoder;
   private RelativeEncoder m_frontRightEncoder;
+  private DifferentialDrive drivetrain;
+
+  double m_rightSpeed;
+  double m_leftSpeed;
 
   public static final double WHEEL_DIAMETER_IN_INCHES = 4; 
   public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER_IN_INCHES * Math.PI;
@@ -55,10 +60,12 @@ public class Drive extends SubsystemBase {
     m_backLeft.follow(m_frontLeft);
     m_backRight.follow(m_frontRight);
 
+    drivetrain = new DifferentialDrive(m_frontLeft, m_frontRight);
+
     setIdleMode(IdleMode.kBrake);
     setEncoderConversionFactor(CONVERSION_FACTOR);
 
-    BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
+    BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer(); // unit: g
 
   }
 
@@ -117,6 +124,17 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Robot", "BatteryVoltage", 0);
     }
     return m_drive;
+  }
+
+  public void arcadeDrive(double fwd, double rot) {
+    drivetrain.arcadeDrive(fwd, rot);
+  }
+
+  public void tankDrive(double leftSpeed, double rightSpeed) {
+    m_rightSpeed = rightSpeed;
+    m_leftSpeed = leftSpeed;
+    drivetrain.tankDrive(leftSpeed, rightSpeed);
+    TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
   @Override

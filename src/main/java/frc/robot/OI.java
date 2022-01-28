@@ -7,9 +7,12 @@
 
 package frc.robot;
 
+import frc.robot.commands.Drive.ArcadeDrive;
+import frc.robot.commands.Drive.TankDrive;
 import frc.robot.input.AttackThree;
 import frc.robot.input.ButtonBox;
 import frc.robot.input.XboxController;
+import frc.robot.subsystems.Drive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,12 +47,12 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-
+    xbox.getButtonBack().toggleWhenPressed(new ArcadeDrive());
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to AttackThree controllers
     ////////////////////////////////////////////////////
-
+    leftStick.getButton(2).toggleWhenPressed(new TankDrive());
    
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Button Box
