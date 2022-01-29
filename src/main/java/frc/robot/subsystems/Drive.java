@@ -126,6 +126,8 @@ public class Drive extends SubsystemBase {
     return m_drive;
   }
 
+  //Drive Methods:
+
   public void arcadeDrive(double fwd, double rot) {
     drivetrain.arcadeDrive(fwd, rot);
   }
@@ -135,6 +137,10 @@ public class Drive extends SubsystemBase {
     m_leftSpeed = leftSpeed;
     drivetrain.tankDrive(leftSpeed, rightSpeed);
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
+  }
+
+  public void keyboardDrive(double fwd, double rot) {
+    drivetrain.arcadeDrive(fwd, rot);
   }
 
   @Override
