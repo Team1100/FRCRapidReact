@@ -128,8 +128,8 @@ public class Drive extends SubsystemBase {
 
   //Drive Methods:
 
-  public void arcadeDrive(double fwd, double rot) {
-    drivetrain.arcadeDrive(fwd, rot);
+  public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
+    drivetrain.arcadeDrive(fwd, rot, sqInputs);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
