@@ -123,6 +123,10 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontRightMotorSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "BackLeftMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "BackRightMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontLeftMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontRightMotorCurrent", 0); // in Amps
       TestingDashboard.getInstance().registerNumber(m_drive, "Robot", "BatteryVoltage", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedToTravel", INITIAL_SPEED);
@@ -153,6 +157,11 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+
+    // Publish motor current values
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorCurrent", m_backLeft.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", m_backRight.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", m_frontLeft.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", m_frontRight.getOutputCurrent());
   }
 }
