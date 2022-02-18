@@ -189,10 +189,8 @@ public class RobotMap {
 	private static final int PDP_16 = 16;
 
 	//[D]rive
-	public static final int D_FRONT_LEFT = CAN_26;
-	public static final int D_FRONT_RIGHT = CAN_25;
-	public static final int D_BACK_LEFT = CAN_24;
-	public static final int D_BACK_RIGHT = CAN_23;
+	public static final int D_FRONT_LEFT = CAN_3;
+	public static final int D_FRONT_RIGHT = CAN_4;
 	public static final Port D_NAVX = SPI.Port.kMXP;
 	public static final int D_LEFT_ENCODER_A = DIO_MXP_0;
 	public static final int D_LEFT_ENCODER_B = DIO_MXP_1;

@@ -22,12 +22,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 public class Drive extends SubsystemBase {
-  private CANSparkMax m_backLeft;
-  private CANSparkMax m_backRight;
   private CANSparkMax m_frontLeft;
   private CANSparkMax m_frontRight;
-  private RelativeEncoder m_backLeftEncoder;
-  private RelativeEncoder m_backRightEncoder;
   private RelativeEncoder m_frontLeftEncoder;
   private RelativeEncoder m_frontRightEncoder;
   private DifferentialDrive drivetrain;
@@ -49,10 +45,12 @@ public class Drive extends SubsystemBase {
 
   public static final double WHEEL_DIAMETER_IN_INCHES = 4; 
   public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER_IN_INCHES * Math.PI;
-  public static final double GEAR_RATIO = 6.85; //number of times the motor rotates to rotate wheel once
+  public static final double GEAR_RATIO = 8.68; //number of times the motor rotates to rotate wheel once
   public static final double CONVERSION_FACTOR = WHEEL_CIRCUMFERENCE / GEAR_RATIO; //conversion factor * circumference = distance
   public final static double DISTANCE = CONVERSION_FACTOR * WHEEL_CIRCUMFERENCE;
   public final static double INITIAL_SPEED = 0.3;
+  public final static double INITIAL_DISTANCE = 12;
+  public final static double INITIAL_DEGREES = 90;
   
 
   private static Drive m_drive;
@@ -60,32 +58,21 @@ public class Drive extends SubsystemBase {
 
   /** Creates a new Drive. */
   private Drive() { 
-    m_backLeft = new CANSparkMax(RobotMap.D_BACK_LEFT, MotorType.kBrushless);
-    m_backRight = new CANSparkMax(RobotMap.D_BACK_RIGHT, MotorType.kBrushless);
     m_frontLeft = new CANSparkMax(RobotMap.D_FRONT_LEFT, MotorType.kBrushless);
     m_frontRight = new CANSparkMax(RobotMap.D_FRONT_RIGHT, MotorType.kBrushless);
 
-    m_backLeftEncoder = m_backLeft.getEncoder();
-    m_backRightEncoder = m_backRight.getEncoder();
     m_frontLeftEncoder = m_frontLeft.getEncoder();
     m_frontRightEncoder = m_frontRight.getEncoder();
 
-    m_backLeft.restoreFactoryDefaults();
-    m_backRight.restoreFactoryDefaults();
     m_frontLeft.restoreFactoryDefaults();
     m_frontRight.restoreFactoryDefaults(); 
 
-    m_backLeft.setInverted(false);
-    m_frontLeft.setInverted(false);
-    m_backRight.setInverted(true);
-    m_frontRight.setInverted(true);
-
-    m_backLeft.follow(m_frontLeft);
-    m_backRight.follow(m_frontRight);
-
     drivetrain = new DifferentialDrive(m_frontLeft, m_frontRight);
 
-    setIdleMode(IdleMode.kCoast);
+    m_frontLeft.setInverted(true);
+    m_frontRight.setInverted(false);
+
+    setIdleMode(IdleMode.kBrake);
     setEncoderConversionFactor(CONVERSION_FACTOR);
 
     m_accelerometer = new BuiltInAccelerometer(); // unit: g
@@ -108,15 +95,6 @@ public class Drive extends SubsystemBase {
   }
 
   public void setIdleMode(IdleMode mode) {
-    if(m_backLeft.setIdleMode(mode) != REVLibError.kOk){
-      System.out.println("Could not set idle mode on back left motor");
-      System.exit(1);
-    }
-  
-    if(m_backRight.setIdleMode(mode) != REVLibError.kOk){
-      System.out.println("Could not set idle mode on back right motor");
-      System.exit(1);
-    }
     
     if(m_frontLeft.setIdleMode(mode) != REVLibError.kOk){
       System.out.println("Could not set idle mode on front left motor");
@@ -130,13 +108,6 @@ public class Drive extends SubsystemBase {
   }
 
   public void setEncoderConversionFactor(double conversionFactor) {
-    if(m_backLeftEncoder.setPositionConversionFactor(conversionFactor) != REVLibError.kOk){ 
-      System.out.println("Could not set position conversion factor on back left encoder");
-    }
-  
-    if(m_backRightEncoder.setPositionConversionFactor(conversionFactor) != REVLibError.kOk){
-      System.out.println("Could not set position conversion factor on back right encoder");
-    } 
 
     if(m_frontLeftEncoder.setPositionConversionFactor(conversionFactor) != REVLibError.kOk){ 
       System.out.println("Could not set position conversion factor on front left encoder");
@@ -151,12 +122,8 @@ public class Drive extends SubsystemBase {
     if (m_drive == null) {
       m_drive = new Drive();
       TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
-      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorDistance", 0);
-      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontRightMotorDistance", 0);
-      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorSpeed", 0);
-      TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontRightMotorSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Accelerometer", "xInstantAccel", 0);
@@ -249,14 +216,10 @@ public class Drive extends SubsystemBase {
 
   void updateMotorCurrentAverages() {
     m_max_num_current_values = (int)TestingDashboard.getInstance().getNumber(m_drive, "MaxNumCurrentValues");
-    double backLeftMotorCurrent = m_backLeft.getOutputCurrent();
-    double backRightMotorCurrent = m_backRight.getOutputCurrent();
     double frontLeftMotorCurrent = m_frontLeft.getOutputCurrent();
     double frontRightMotorCurrent = m_frontRight.getOutputCurrent();
-    m_left_motor_current_values.add(backLeftMotorCurrent + frontLeftMotorCurrent);
-    m_right_motor_current_values.add(backRightMotorCurrent + frontRightMotorCurrent);
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorCurrent", backLeftMotorCurrent);
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", backRightMotorCurrent);
+    m_left_motor_current_values.add(frontLeftMotorCurrent);
+    m_right_motor_current_values.add(frontRightMotorCurrent);
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", frontLeftMotorCurrent);
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", frontRightMotorCurrent);
 
