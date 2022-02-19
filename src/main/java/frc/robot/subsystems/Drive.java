@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RoboRioAccelerometerHelper;
@@ -43,6 +44,7 @@ public class Drive extends SubsystemBase {
   public static final double GEAR_RATIO = 6.85; //number of times the motor rotates to rotate wheel once
   public static final double CONVERSION_FACTOR = WHEEL_CIRCUMFERENCE / GEAR_RATIO; //conversion factor * circumference = distance
   public final static double DISTANCE = CONVERSION_FACTOR * WHEEL_CIRCUMFERENCE;
+  public final static double INITIAL_SPEED = 0.3;
   
 
   private static Drive m_drive;
@@ -142,7 +144,13 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Accelerometer", "xInstantDist", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Accelerometer", "yInstantDist", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Accelerometer", "currentTime", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "BackLeftMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "BackRightMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontLeftMotorCurrent", 0); // in Amps
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontRightMotorCurrent", 0); // in Amps
       TestingDashboard.getInstance().registerNumber(m_drive, "Robot", "BatteryVoltage", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "DistanceToTravelInInches", 12);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedToTravel", INITIAL_SPEED);
     }
     return m_drive;
   }
@@ -191,6 +199,15 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
+    //Encoder Methods
+    public RelativeEncoder getLeftEncoder() {
+      return m_frontLeftEncoder;
+    }
+  
+    public RelativeEncoder getRightEncoder() {
+      return m_frontRightEncoder;
+    }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -225,6 +242,10 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "currentTime", m_accelHelper.getCurrentTime());
     TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
    
-
+    // Publish motor current values
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorCurrent", m_backLeft.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", m_backRight.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", m_frontLeft.getOutputCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", m_frontRight.getOutputCurrent());
   }
 }
