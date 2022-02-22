@@ -31,7 +31,7 @@ public class TankDrive extends CommandBase {
    */
   public TankDrive() {
     m_drive = Drive.getInstance();
-    oi = OI.getInstance();
+    
     counter = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
@@ -46,6 +46,7 @@ public class TankDrive extends CommandBase {
   // Called when the command is initially scheduled. (Unused)
   @Override
   public void initialize() {
+    oi = OI.getInstance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
