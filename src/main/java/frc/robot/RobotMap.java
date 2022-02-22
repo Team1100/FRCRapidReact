@@ -166,7 +166,8 @@ public class RobotMap {
 
 	//[I]ntake
 
-	public static final int I_INTAKE_ROLLER = CAN_4;
+	public static final int I_INTAKE_ROLLER1 = CAN_4;
+	public static final int I_INTAKE_ROLLER2 = CAN_5;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
