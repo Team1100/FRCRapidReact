@@ -9,6 +9,7 @@ import frc.robot.testingdashboard.TestingDashboard;
 
 public class Climber extends SubsystemBase {
   private static Climber m_climber;
+  //TalonSRX srx = {0};
   
   /** Creates a new Climber. */
   public Climber() {}
@@ -16,7 +17,7 @@ public class Climber extends SubsystemBase {
   public static Climber getInstance() {
     if (m_climber == null) {
       m_climber = new Climber();
-      TestingDashboard.getInstance().registerSubsystem(m_climber, "Vision");
+      TestingDashboard.getInstance().registerSubsystem(m_climber, "Climber");
     }
     return m_climber;
   }
