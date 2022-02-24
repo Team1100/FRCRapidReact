@@ -5,14 +5,20 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Climber extends SubsystemBase {
   private static Climber m_climber;
-  //TalonSRX srx = {0};
+  VictorSPX m_leftMotor;
+  VictorSPX m_rightMotor;
   
   /** Creates a new Climber. */
-  public Climber() {}
+  public Climber() {
+    m_leftMotor = new VictorSPX(RobotMap.C_LEFT_ENCODER);
+    m_rightMotor = new VictorSPX(RobotMap.C_RIGHT_ENCODER);
+  }
 
   public static Climber getInstance() {
     if (m_climber == null) {

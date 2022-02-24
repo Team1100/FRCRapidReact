@@ -163,6 +163,10 @@ public class RobotMap {
 	public static final int D_LEFT_ENCODER_B = DIO_MXP_1;
 	public static final int D_RIGHT_ENCODER_A = DIO_MXP_2;
 	public static final int D_RIGHT_ENCODER_B = DIO_MXP_3;
+
+	//[C]limber
+	public static final int C_LEFT_ENCODER = CAN_10;
+	public static final int C_RIGHT_ENCODER = CAN_12;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
