@@ -164,9 +164,13 @@ public class RobotMap {
 	public static final int D_RIGHT_ENCODER_A = DIO_MXP_2;
 	public static final int D_RIGHT_ENCODER_B = DIO_MXP_3;
 
-	//[C]limber
-	public static final int C_LEFT_ENCODER = CAN_10;
-	public static final int C_RIGHT_ENCODER = CAN_12;
+	//[CL]imber
+	public static final int CL_LEFT_ENCODER = CAN_10;
+	public static final int CL_RIGHT_ENCODER = CAN_12;
+	public static final I2C.Port CL_LEFT_COLOR_SENSOR = I2C.Port.kOnboard;
+	public static final I2C.Port CL_RIGHT_COLOR_SENSOR = I2C.Port.kOnboard;
+	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
+	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
