@@ -7,17 +7,20 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Climber extends SubsystemBase {
   private static Climber m_climber;
-  VictorSPX m_leftMotor;
-  VictorSPX m_rightMotor;
+  VictorSPX m_leftCaneMotor;
+  VictorSPX m_rightCaneMotor;
   
   /** Creates a new Climber. */
   public Climber() {
-    m_leftMotor = new VictorSPX(RobotMap.C_LEFT_ENCODER);
-    m_rightMotor = new VictorSPX(RobotMap.C_RIGHT_ENCODER);
+    m_leftCaneMotor = new VictorSPX(RobotMap.C_LEFT_ENCODER);
+    m_rightCaneMotor = new VictorSPX(RobotMap.C_RIGHT_ENCODER);
+    m_rightCaneMotor.setInverted(true);
   }
 
   public static Climber getInstance() {
@@ -31,5 +34,10 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void tankCane(double leftSpeed, double rightSpeed) {
+    m_leftCaneMotor.set(ControlMode.PercentOutput, leftSpeed);
+    m_rightCaneMotor.set(ControlMode.PercentOutput, rightSpeed);
   }
 }

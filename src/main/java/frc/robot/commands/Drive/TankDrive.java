@@ -66,8 +66,7 @@ public class TankDrive extends CommandBase {
     if (counter % 2 == 1) {
       leftJoystickSpeed = rightJoystick.getAxis(yAxis);
       rightJoystickSpeed = leftJoystick.getAxis(yAxis);
-    }
-    else {
+    } else {
       leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
       rightJoystickSpeed = -rightJoystick.getAxis(yAxis);
     }
