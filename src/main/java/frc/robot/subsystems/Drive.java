@@ -155,6 +155,8 @@ public class Drive extends SubsystemBase {
     return m_drive;
   }
 
+  //Drive Methods:
+
   public static double integrate(double tInitial, double tFinal, double vInitial, double vFinal) { // v for value
     double tInterval = tFinal - tInitial;
     double area = (tInterval * (vInitial + vFinal)) / 2;
@@ -188,8 +190,8 @@ public class Drive extends SubsystemBase {
     m_accelHelper.initializeDistance(distance);
   }
 
-  public void arcadeDrive(double fwd, double rot) {
-    drivetrain.arcadeDrive(fwd, rot);
+  public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
+    drivetrain.arcadeDrive(fwd, rot, sqInputs);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -199,14 +201,14 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
-    //Encoder Methods
-    public RelativeEncoder getLeftEncoder() {
-      return m_frontLeftEncoder;
-    }
-  
-    public RelativeEncoder getRightEncoder() {
-      return m_frontRightEncoder;
-    }
+  //Encoder Methods
+  public RelativeEncoder getLeftEncoder() {
+	  return m_frontLeftEncoder;
+  }
+
+  public RelativeEncoder getRightEncoder() {
+	  return m_frontRightEncoder;
+  }
 
   @Override
   public void periodic() {
