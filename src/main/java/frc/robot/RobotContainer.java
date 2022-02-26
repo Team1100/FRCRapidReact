@@ -11,6 +11,7 @@ import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
+import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -44,6 +45,7 @@ public class RobotContainer {
     DriveToBar.registerWithTestingDashboard();
     TankCane.registerWithTestingDashboard();
     DriveDistance.registerWithTestingDashboard();
+    KeyboardDrive.registerWithTestingDashboard();
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();

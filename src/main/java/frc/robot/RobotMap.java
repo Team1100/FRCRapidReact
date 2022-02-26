@@ -167,16 +167,18 @@ public class RobotMap {
 	//[CL]imber
 	public static final int CL_LEFT_ENCODER = CAN_10;
 	public static final int CL_RIGHT_ENCODER = CAN_12;
-	public static final I2C.Port CL_LEFT_COLOR_SENSOR = I2C.Port.kOnboard;
-	public static final I2C.Port CL_RIGHT_COLOR_SENSOR = I2C.Port.kOnboard;
 	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
 	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
+
+	//[I]ntake
+	public static final int I_LEFT_ROLLER = CAN_4;
+	public static final int I_RIGHT_ROLLER = CAN_5;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
 	public static final int U_JOYSTICK_RIGHT = 1;
 	public static final int U_XBOX_CONTROLLER = 2;
 	public static final int U_BUTTON_BOX = 3;
-
+	public static final int U_KEYBOARD_BOX = 4;
 
 }
