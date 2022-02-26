@@ -17,7 +17,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Climber extends SubsystemBase {
   private static Climber m_climber;
-  public final static double INITIAL_SPEED = 0.3;
+  public final static double INITIAL_TRAVEL_SPEED = 0.3;
+  public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
   VictorSPX m_leftCaneMotor;
   VictorSPX m_rightCaneMotor;
   private DigitalInput leftSwitch, rightSwitch;
@@ -38,8 +39,9 @@ public class Climber extends SubsystemBase {
 
 
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "DistanceToTravelInInches", 12);
-      TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_TRAVEL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
+      TestingDashboard.getInstance().registerNumber(m_climber, "Extend/Retract", "Extend/Retract Speed", INITIAL_CANE_EXTENTION_SPEED);
 
     }
     return m_climber;

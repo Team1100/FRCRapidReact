@@ -44,7 +44,7 @@ public class DriveToBar extends CommandBase {
 
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    DriveToBar cmd = new DriveToBar(12.0, Climber.INITIAL_SPEED, Constants.NO_SENSOR, false);
+    DriveToBar cmd = new DriveToBar(12.0, Climber.INITIAL_TRAVEL_SPEED, Constants.NO_SENSOR, false);
     TestingDashboard.getInstance().registerCommand(climber, "Basic", cmd);
   }
 
