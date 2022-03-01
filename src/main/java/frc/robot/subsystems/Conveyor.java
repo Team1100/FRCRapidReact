@@ -16,7 +16,7 @@ public class Conveyor extends SubsystemBase {
   public static Conveyor getInstance() {
     if (m_conveyor == null) {
       m_conveyor = new Conveyor();
-      TestingDashboard.getInstance().registerSubsystem(m_conveyor, "Vision");
+      TestingDashboard.getInstance().registerSubsystem(m_conveyor, "Conveyor");
     }
     return m_conveyor;
   }

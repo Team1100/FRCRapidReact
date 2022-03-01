@@ -31,7 +31,7 @@ public class TankDrive extends CommandBase {
    */
   public TankDrive() {
     m_drive = Drive.getInstance();
-    oi = OI.getInstance();
+    
     counter = 0;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drive);
@@ -46,6 +46,7 @@ public class TankDrive extends CommandBase {
   // Called when the command is initially scheduled. (Unused)
   @Override
   public void initialize() {
+    oi = OI.getInstance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -56,7 +57,7 @@ public class TankDrive extends CommandBase {
     AttackThree leftJoystick = oi.getLeftStick();
     AttackThree rightJoystick = oi.getRightStick();
     double leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
-    double rightJoystickSpeed = -rightJoystick.getAxis(yAxis);
+    double rightJoystickSpeed = rightJoystick.getAxis(yAxis);
     
     // Reverses the direction of the drive train upon pressing 2 on the right joystick
     if (rightJoystick.getRawButtonPressed(2)) {
@@ -65,10 +66,9 @@ public class TankDrive extends CommandBase {
     if (counter % 2 == 1) {
       leftJoystickSpeed = rightJoystick.getAxis(yAxis);
       rightJoystickSpeed = leftJoystick.getAxis(yAxis);
-    }
-    else {
+    } else {
       leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
-      rightJoystickSpeed = -rightJoystick.getAxis(yAxis);
+      rightJoystickSpeed = rightJoystick.getAxis(yAxis);
     }
     m_drive.tankDrive(leftJoystickSpeed, rightJoystickSpeed);
   }

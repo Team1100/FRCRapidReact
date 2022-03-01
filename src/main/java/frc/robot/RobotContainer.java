@@ -7,7 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Drive.ArcadeDrive;
+import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.subsystems.Drive;
@@ -39,6 +42,9 @@ public class RobotContainer {
     // Register commands with TestingDashboard commands
     TankDrive.registerWithTestingDashboard();
     ArcadeDrive.registerWithTestingDashboard();
+    DriveToBar.registerWithTestingDashboard();
+    TankCane.registerWithTestingDashboard();
+    DriveDistance.registerWithTestingDashboard();
     KeyboardDrive.registerWithTestingDashboard();
     
     // Create Testing Dashboard

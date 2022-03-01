@@ -10,12 +10,10 @@ package frc.robot;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
-import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 import frc.robot.input.AttackThree;
 import frc.robot.input.ButtonBox;
-import frc.robot.input.KeyboardBox;
-import frc.robot.input.KeyboardBox;
 import frc.robot.input.XboxController;
+import frc.robot.input.KeyboardBox;
 import frc.robot.subsystems.Drive;
 
 /**
@@ -107,7 +105,6 @@ public class OI {
    */
   public KeyboardBox getKeyboardBox() {
     return keyboardBox;
-}
-
+  }
   
 }
