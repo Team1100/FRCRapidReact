@@ -5,23 +5,41 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
 
-public class Intake extends SubsystemBase {
-  private static Intake m_intake;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+public class Intake extends SubsystemBase {
+
+  private static Intake m_intake;
+  private CANSparkMax m_leftIntakeRollerMotor;
+  private CANSparkMax m_rightIntakeRollerMotor;
+  public static final double DEFAULT_ROLLER_SPEED = 0.5;
+  
   /** Creates a new Intake. */
-  public Intake() {}
+  private Intake() {
+    m_leftIntakeRollerMotor = new CANSparkMax(RobotMap.I_LEFT_ROLLER, MotorType.kBrushless);
+    m_rightIntakeRollerMotor = new CANSparkMax(RobotMap.I_RIGHT_ROLLER, MotorType.kBrushless);
+  }
 
   public static Intake getInstance() {
     if (m_intake == null) {
       m_intake = new Intake();
-      TestingDashboard.getInstance().registerSubsystem(m_intake, "Vision");
+      TestingDashboard.getInstance().registerSubsystem(m_intake, "Intake");
     }
     return m_intake;
   }
 
-
+  public void spinIntakeRoller(double speed) {
+    m_leftIntakeRollerMotor.set(speed);
+    m_rightIntakeRollerMotor.set(speed);
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

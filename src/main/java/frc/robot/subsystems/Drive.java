@@ -151,9 +151,12 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Robot", "BatteryVoltage", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedToTravel", INITIAL_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedOfTravel", 0);
     }
     return m_drive;
   }
+
+  //Drive Methods:
 
   public static double integrate(double tInitial, double tFinal, double vInitial, double vFinal) { // v for value
     double tInterval = tFinal - tInitial;
@@ -188,8 +191,8 @@ public class Drive extends SubsystemBase {
     m_accelHelper.initializeDistance(distance);
   }
 
-  public void arcadeDrive(double fwd, double rot) {
-    drivetrain.arcadeDrive(fwd, rot);
+  public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
+    drivetrain.arcadeDrive(fwd, rot, sqInputs);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -199,14 +202,14 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
-    //Encoder Methods
-    public RelativeEncoder getLeftEncoder() {
-      return m_frontLeftEncoder;
-    }
-  
-    public RelativeEncoder getRightEncoder() {
-      return m_frontRightEncoder;
-    }
+  //Encoder Methods
+  public RelativeEncoder getLeftEncoder() {
+	  return m_frontLeftEncoder;
+  }
+
+  public RelativeEncoder getRightEncoder() {
+	  return m_frontRightEncoder;
+  }
 
   @Override
   public void periodic() {
