@@ -67,12 +67,17 @@ public class Drive extends SubsystemBase {
     m_frontLeft.restoreFactoryDefaults();
     m_frontRight.restoreFactoryDefaults(); 
 
+    m_backLeft.setInverted(false);
+    m_frontLeft.setInverted(false);
+    m_backRight.setInverted(true);
+    m_frontRight.setInverted(true);
+
     m_backLeft.follow(m_frontLeft);
     m_backRight.follow(m_frontRight);
 
     drivetrain = new DifferentialDrive(m_frontLeft, m_frontRight);
 
-    setIdleMode(IdleMode.kBrake);
+    setIdleMode(IdleMode.kCoast);
     setEncoderConversionFactor(CONVERSION_FACTOR);
 
     m_accelerometer = new BuiltInAccelerometer(); // unit: g
