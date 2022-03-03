@@ -170,5 +170,9 @@ public class RobotMap {
 	public static final int U_XBOX_CONTROLLER = 2;
 	public static final int U_BUTTON_BOX = 3;
 
-
+	//[S]hooter
+	public static final int SH_TOP = CAN_13;
+	public static final int SH_TOP_ENCODER_A = DIO_2;
+	public static final int SH_TOP_ENCODER_B = DIO_3;
+	
 }
