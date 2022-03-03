@@ -76,6 +76,18 @@ public class RobotMap {
 	private final static int CAN_13 = 13; 
 	private final static int CAN_14 = 14; 
     private final static int CAN_15 = 15; 
+	private final static int CAN_16 = 16;
+	private final static int CAN_17 = 17;
+	private final static int CAN_18 = 18; 
+	private final static int CAN_19 = 19; 
+	private final static int CAN_20 = 20; 
+    private final static int CAN_21 = 21;
+	private final static int CAN_22 = 22;
+	private final static int CAN_23 = 23;
+	private final static int CAN_24 = 24; 
+	private final static int CAN_25 = 25; 
+	private final static int CAN_26 = 26; 
+    private final static int CAN_27 = 27; 
     
 	//List of all analog ports
 	private final static int ANALOG_0 = 0;
@@ -154,21 +166,31 @@ public class RobotMap {
 	private static final int PDP_16 = 16;
 
 	//[D]rive
-	public static final int D_FRONT_LEFT = CAN_0;
-	public static final int D_FRONT_RIGHT = CAN_1;
-	public static final int D_BACK_LEFT = CAN_2;
-	public static final int D_BACK_RIGHT = CAN_3;
+	public static final int D_FRONT_LEFT = CAN_26;
+	public static final int D_FRONT_RIGHT = CAN_25;
+	public static final int D_BACK_LEFT = CAN_24;
+	public static final int D_BACK_RIGHT = CAN_23;
 	public static final Port D_NAVX = SPI.Port.kMXP;
 	public static final int D_LEFT_ENCODER_A = DIO_MXP_0;
 	public static final int D_LEFT_ENCODER_B = DIO_MXP_1;
 	public static final int D_RIGHT_ENCODER_A = DIO_MXP_2;
 	public static final int D_RIGHT_ENCODER_B = DIO_MXP_3;
+
+	//[CL]imber
+	public static final int CL_LEFT_ENCODER = CAN_10;
+	public static final int CL_RIGHT_ENCODER = CAN_12;
+	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
+	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
+
+	//[I]ntake
+	public static final int I_LEFT_ROLLER = CAN_4;
+	public static final int I_RIGHT_ROLLER = CAN_5;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
 	public static final int U_JOYSTICK_RIGHT = 1;
 	public static final int U_XBOX_CONTROLLER = 2;
 	public static final int U_BUTTON_BOX = 3;
-
+	public static final int U_KEYBOARD_BOX = 4;
 
 }
