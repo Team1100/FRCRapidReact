@@ -21,6 +21,8 @@ public class Climber extends SubsystemBase {
   public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
   VictorSPX m_leftCaneMotor;
   VictorSPX m_rightCaneMotor;
+  // limit switches on the top of the cane (one per cane) for detecting
+  // contact with a bar
   private DigitalInput leftSwitch, rightSwitch;
   
   /** Creates a new Climber. */
@@ -47,34 +49,12 @@ public class Climber extends SubsystemBase {
     return m_climber;
   }
 
-  public boolean leftSensorActivated(int sensor) {
-    switch (sensor) {
-      case Constants.NO_SENSOR: 
-        break;
-      case Constants.MOTOR_CURRENT:
-        break;
-      case Constants.LIMIT_SWITCH:
-        if (leftSwitch.get())
-          return true;
-        else 
-          return false;
-    }
-    return false;
+  public DigitalInput getLeftSwitch() {
+    return leftSwitch;
   }
 
-  public boolean rightSensorActivated(int sensor) {
-    switch (sensor) {
-      case Constants.NO_SENSOR: 
-        break;
-      case Constants.MOTOR_CURRENT:
-        break;
-      case Constants.LIMIT_SWITCH:
-        if (rightSwitch.get())
-          return true;
-        else 
-          return false;
-    }
-    return false;
+  public DigitalInput getRightSwitch() {
+    return rightSwitch;
   }
 
   @Override

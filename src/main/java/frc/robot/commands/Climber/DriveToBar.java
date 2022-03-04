@@ -9,6 +9,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.Constants;
+import frc.robot.sensors.BarDetectionSensorHelper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 
@@ -22,6 +23,7 @@ public class DriveToBar extends CommandBase {
   private int m_direction;
   private boolean m_leftSensorHasActivated;
   private boolean m_rightSensorHasActivated;
+  private BarDetectionSensorHelper m_barSensor;
 
   private final static double ENCODER_INITIAL_POSITION = 0;
   
@@ -33,6 +35,7 @@ public class DriveToBar extends CommandBase {
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
+    m_barSensor = new BarDetectionSensorHelper();
     m_parameterized = parameterized;
     m_distance = distance;
     m_speed = speed;

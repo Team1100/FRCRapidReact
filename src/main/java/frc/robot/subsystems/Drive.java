@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -35,6 +37,11 @@ public class Drive extends SubsystemBase {
   private boolean m_measureVelocity;
   private boolean m_measureDistance;
   private double accelIntCount = 0;
+
+  // Motor current variables
+  ArrayList<Double> m_left_motor_current_values;
+  ArrayList<Double> m_right_motor_current_values;
+  public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 50; // This is 1000 miliseconds divided in 20 millisecond chunks
 
   double m_rightSpeed;
   double m_leftSpeed;
@@ -85,6 +92,10 @@ public class Drive extends SubsystemBase {
 
     m_measureVelocity = false;
     m_measureDistance = false;
+
+    // initialize motor current variables
+    m_left_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
+    m_right_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
   }
 
   public void setIdleMode(IdleMode mode) {
@@ -216,6 +227,35 @@ public class Drive extends SubsystemBase {
 	  return m_frontRightEncoder;
   }
 
+  double getTotalAverageLeftMotorCurrent() {
+    return 0;
+  }
+
+  double getTotalAverageRightMotorCurrent() {
+    return 0;
+  }
+
+  void updateMotorCurrentAverages() {
+    double backLeftMotorCurrent = m_backLeft.getOutputCurrent();
+    double backRightMotorCurrent = m_backRight.getOutputCurrent();
+    double frontLeftMotorCurrent = m_frontLeft.getOutputCurrent();
+    double frontRightMotorCurrent = m_frontRight.getOutputCurrent();
+    m_left_motor_current_values.add(backLeftMotorCurrent + frontLeftMotorCurrent);
+    m_right_motor_current_values.add(backRightMotorCurrent + frontRightMotorCurrent);
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorCurrent", backLeftMotorCurrent);
+    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", backRightMotorCurrent);
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", frontLeftMotorCurrent);
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", frontRightMotorCurrent);
+  }
+
+  public static double arrayListAverage(ArrayList<Double> arrayList) {
+    double sum = 0;
+    for (int i = 0; i < arrayList.size(); i++) {
+      sum += arrayList.get(i);
+    }
+    return sum / arrayList.size();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -251,9 +291,6 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
    
     // Publish motor current values
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorCurrent", m_backLeft.getOutputCurrent());
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", m_backRight.getOutputCurrent());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", m_frontLeft.getOutputCurrent());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", m_frontRight.getOutputCurrent());
+    updateMotorCurrentAverages();
   }
 }
