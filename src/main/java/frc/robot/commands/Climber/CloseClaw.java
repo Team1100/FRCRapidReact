@@ -15,12 +15,14 @@ public class CloseClaw extends CommandBase {
   private Climber m_climber;
   private boolean m_parameterized;
   private OI m_oi;
+  private boolean m_finished;
 
   /** Creates a new OpenClaw. */
   public CloseClaw() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
+    m_finished = false;
   }
 
   //Register with TestingDashboard
@@ -39,18 +41,19 @@ public class CloseClaw extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Empty currently
+    m_climber.closeClaw();
+    m_finished = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Not sure if needed:  m_climber.openClaw();
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_finished;
   }
 }

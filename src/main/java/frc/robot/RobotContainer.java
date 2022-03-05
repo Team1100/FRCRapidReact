@@ -13,6 +13,9 @@ import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
+import frc.robot.commands.Intake.LowerIntake;
+import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -42,10 +45,13 @@ public class RobotContainer {
     // Register commands with TestingDashboard commands
     TankDrive.registerWithTestingDashboard();
     ArcadeDrive.registerWithTestingDashboard();
-    DriveToBar.registerWithTestingDashboard();
-    TankCane.registerWithTestingDashboard();
+    //DriveToBar.registerWithTestingDashboard();
+    //TankCane.registerWithTestingDashboard();
     DriveDistance.registerWithTestingDashboard();
     KeyboardDrive.registerWithTestingDashboard();
+    SpinIntake.registerWithTestingDashboard();
+    RaiseIntake.registerWithTestingDashboard();
+    LowerIntake.registerWithTestingDashboard();
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();

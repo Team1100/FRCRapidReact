@@ -23,7 +23,7 @@ public class Climber extends SubsystemBase {
   VictorSPX m_leftCaneMotor;
   VictorSPX m_rightCaneMotor;
   private DoubleSolenoid m_clawpiston1;
-  private static DoubleSolenoid m_clawpiston2;
+  private DoubleSolenoid m_clawpiston2;
   private DigitalInput leftSwitch, rightSwitch;
   
   /** Creates a new Climber. */
