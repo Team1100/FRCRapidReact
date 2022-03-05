@@ -96,7 +96,14 @@ public class Drive extends SubsystemBase {
 
     // initialize motor current variables
     m_left_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
+    for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
+      m_left_motor_current_values.add(0.0);
+    }
     m_right_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
+    for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
+      m_right_motor_current_values.add(0.0);
+    }
+
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
   }
 

@@ -17,7 +17,6 @@ public class BarDetectionSensorHelper {
         m_drive = Drive.getInstance();
         m_climber = Climber.getInstance();
     }
-
     public boolean leftSensorActivated(int sensor) {
       boolean ret = false;
         switch (sensor) {
@@ -26,6 +25,7 @@ public class BarDetectionSensorHelper {
           case Constants.MOTOR_CURRENT:
             if (m_drive.getTotalAverageLeftMotorCurrent() > Constants.MOTOR_CURRENT_THRESHOLD) {
                 ret = true;
+
             } else {
                 ret = false;
             }
@@ -64,4 +64,5 @@ public class BarDetectionSensorHelper {
         }
         return ret;
       }
+
 }

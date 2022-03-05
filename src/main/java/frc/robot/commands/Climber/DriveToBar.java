@@ -58,6 +58,8 @@ public class DriveToBar extends CommandBase {
     RelativeEncoder rightEncoder = m_drive.getRightEncoder();
     leftEncoder.setPosition(ENCODER_INITIAL_POSITION);
     rightEncoder.setPosition(ENCODER_INITIAL_POSITION);
+    m_leftSensorHasActivated = false;
+    m_rightSensorHasActivated = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -93,7 +95,8 @@ public class DriveToBar extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
