@@ -31,7 +31,9 @@ public class BarDetectionSensorHelper {
             }
             break;
           case Constants.LIMIT_SWITCH:
-            if (m_climber.getLeftSwitch().get()) {
+          // Note that "true" indicates no contact, false indicates contact for the
+          // limit switch
+            if (!m_climber.getLeftSwitch().get()) {
               ret = true;
             } else {
               ret = false;
@@ -56,7 +58,9 @@ public class BarDetectionSensorHelper {
             }
             break;
           case Constants.LIMIT_SWITCH:
-            if (m_climber.getRightSwitch().get()) {
+            // Note that "true" indicates no contact, false indicates contact for the
+            // limit switch
+            if (!m_climber.getRightSwitch().get()) {
               ret = true;
             } else {
               ret = false;

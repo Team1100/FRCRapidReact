@@ -84,11 +84,11 @@ public class DriveToBar extends CommandBase {
      **/ 
     m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction);
     if (m_barSensor.leftSensorActivated(m_sensor)) {
-      m_drive.tankDrive(0, (m_speed/2) * m_direction);
+      m_drive.tankDrive(0, (m_speed) * m_direction);
       m_leftSensorHasActivated = true;
     }
     if (m_barSensor.rightSensorActivated(m_sensor)) {
-      m_drive.tankDrive((m_speed/2) * m_direction, 0);
+      m_drive.tankDrive((m_speed) * m_direction, 0);
       m_rightSensorHasActivated = true;
     }
   }
