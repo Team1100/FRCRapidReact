@@ -19,42 +19,49 @@ public class BarDetectionSensorHelper {
     }
 
     public boolean leftSensorActivated(int sensor) {
+      boolean ret = false;
         switch (sensor) {
-          case Constants.NO_SENSOR: 
+          case Constants.NO_SENSOR:
             break;
           case Constants.MOTOR_CURRENT:
             if (m_drive.getTotalAverageLeftMotorCurrent() > Constants.MOTOR_CURRENT_THRESHOLD) {
-                return true;
+                ret = true;
             } else {
-                return false;
+                ret = false;
             }
             break;
           case Constants.LIMIT_SWITCH:
-            if (m_climber.getLeftSwitch().get())
-              return true;
-            else 
-              return false;
+            if (m_climber.getLeftSwitch().get()) {
+              ret = true;
+            } else {
+              ret = false;
+            }
+            break;
+          default:
+            ret = false;
         }
-        return false;
+        return ret;
       }
     
       public boolean rightSensorActivated(int sensor) {
+        boolean ret = false;
         switch (sensor) {
-          case Constants.NO_SENSOR: 
+          case Constants.NO_SENSOR:
             break;
           case Constants.MOTOR_CURRENT:
             if (m_drive.getTotalAverageRightMotorCurrent() > Constants.MOTOR_CURRENT_THRESHOLD) {
-                return true;
+                ret = true;
             } else {
-                return false;
+                ret = false;
             }
             break;
           case Constants.LIMIT_SWITCH:
-            if (m_climber.getRightSwitch().get())
-              return true;
-            else 
-              return false;
+            if (m_climber.getRightSwitch().get()) {
+              ret = true;
+            } else {
+              ret = false;
+            }
         }
-        return false;
+        return ret;
       }
 }

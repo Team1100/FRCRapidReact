@@ -81,11 +81,11 @@ public class DriveToBar extends CommandBase {
      * If the right sensor is activated, the right motor is stopped and the left motor continues at half it's speed.
      **/ 
     m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction);
-    if (m_climber.leftSensorActivated(m_sensor)) {
+    if (m_barSensor.leftSensorActivated(m_sensor)) {
       m_drive.tankDrive(0, (m_speed/2) * m_direction);
       m_leftSensorHasActivated = true;
     }
-    if (m_climber.rightSensorActivated(m_sensor)) {
+    if (m_barSensor.rightSensorActivated(m_sensor)) {
       m_drive.tankDrive((m_speed/2) * m_direction, 0);
       m_rightSensorHasActivated = true;
     }

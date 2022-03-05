@@ -42,6 +42,7 @@ public class Drive extends SubsystemBase {
   ArrayList<Double> m_left_motor_current_values;
   ArrayList<Double> m_right_motor_current_values;
   public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 50; // This is 1000 miliseconds divided in 20 millisecond chunks
+  private int m_max_num_current_values;
 
   double m_rightSpeed;
   double m_leftSpeed;
@@ -96,6 +97,7 @@ public class Drive extends SubsystemBase {
     // initialize motor current variables
     m_left_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
     m_right_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
+    m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
   }
 
   public void setIdleMode(IdleMode mode) {
@@ -168,6 +170,7 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedToTravel", INITIAL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedOfTravel", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "MotorCurrent", "MaxNumCurrentValues", MOTOR_CURRENT_INITIAL_CAPACITY);
     }
     return m_drive;
   }
@@ -227,15 +230,16 @@ public class Drive extends SubsystemBase {
 	  return m_frontRightEncoder;
   }
 
-  double getTotalAverageLeftMotorCurrent() {
-    return 0;
+  public double getTotalAverageLeftMotorCurrent() {
+    return arrayListAverage(m_left_motor_current_values);
   }
 
-  double getTotalAverageRightMotorCurrent() {
-    return 0;
+  public double getTotalAverageRightMotorCurrent() {
+    return arrayListAverage(m_right_motor_current_values);
   }
 
   void updateMotorCurrentAverages() {
+    m_max_num_current_values = (int)TestingDashboard.getInstance().getNumber(m_drive, "MaxNumCurrentValues");
     double backLeftMotorCurrent = m_backLeft.getOutputCurrent();
     double backRightMotorCurrent = m_backRight.getOutputCurrent();
     double frontLeftMotorCurrent = m_frontLeft.getOutputCurrent();
@@ -246,6 +250,15 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorCurrent", backRightMotorCurrent);
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrent", frontLeftMotorCurrent);
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrent", frontRightMotorCurrent);
+
+    // Trim current buffers until they contain the correct number of entries.
+    // Old entries are removed first.
+    while (m_left_motor_current_values.size() > m_max_num_current_values) {
+      m_left_motor_current_values.remove(0);
+    }
+    while (m_right_motor_current_values.size() > m_max_num_current_values) {
+      m_right_motor_current_values.remove(0);
+    }
   }
 
   public static double arrayListAverage(ArrayList<Double> arrayList) {
