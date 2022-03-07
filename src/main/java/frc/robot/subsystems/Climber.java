@@ -5,7 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -21,6 +22,8 @@ public class Climber extends SubsystemBase {
   public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
   VictorSPX m_leftCaneMotor;
   VictorSPX m_rightCaneMotor;
+  private DoubleSolenoid m_clawpiston1;
+  private DoubleSolenoid m_clawpiston2;
   // limit switches on the top of the cane (one per cane) for detecting
   // contact with a bar
   private DigitalInput leftSwitch, rightSwitch;
@@ -32,6 +35,8 @@ public class Climber extends SubsystemBase {
     m_rightCaneMotor.setInverted(true);
     leftSwitch = new DigitalInput(RobotMap.CL_LEFT_LIMIT_SWITCH);
     rightSwitch = new DigitalInput(RobotMap.CL_RIGHT_LIMIT_SWITCH);
+    m_clawpiston1 = new DoubleSolenoid(RobotMap.B_PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_PISTON_PORT2, RobotMap.CL_PISTON_PORT1);
+    m_clawpiston2 = new DoubleSolenoid(RobotMap.B_PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_PISTON_PORT2, RobotMap.CL_PISTON_PORT1);
   }
 
   public static Climber getInstance() {
@@ -66,4 +71,14 @@ public class Climber extends SubsystemBase {
     m_leftCaneMotor.set(ControlMode.PercentOutput, leftSpeed);
     m_rightCaneMotor.set(ControlMode.PercentOutput, rightSpeed);
   }
+
+  public void openClaw() {
+    m_clawpiston1.set(DoubleSolenoid.Value.kReverse);
+    m_clawpiston2.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void closeClaw() {
+      m_clawpiston1.set(DoubleSolenoid.Value.kForward);
+      m_clawpiston2.set(DoubleSolenoid.Value.kForward);
+      }
 }

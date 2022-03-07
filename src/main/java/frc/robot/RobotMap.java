@@ -181,10 +181,14 @@ public class RobotMap {
 	public static final int CL_RIGHT_ENCODER = CAN_12;
 	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
 	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
+	public static final int CL_PISTON_PORT1 = PCM_2;
+	public static final int CL_PISTON_PORT2 = PCM_3;
 
 	//[I]ntake
-	public static final int I_LEFT_ROLLER = CAN_4;
-	public static final int I_RIGHT_ROLLER = CAN_5;
+	public static final int I_LEFT_ROLLER = CAN_27;
+	public static final int B_PCM_CAN = PCM_CAN;
+	public static final int I_PISTON_PORT1 = PCM_0;
+	public static final int I_PISTON_PORT2 = PCM_1;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
