@@ -11,25 +11,22 @@ import frc.robot.OI;
 import frc.robot.subsystems.Intake;
 import frc.robot.testingdashboard.TestingDashboard;
 
-public class SpinIntake extends CommandBase {
+public class UserSpinIntake extends CommandBase {
 
   private Intake m_intake;
   private OI m_oi;
-  private double m_speed;
-  private boolean m_parameterized;
 
-  /** Creates a new SpinIntakeForward. */
-  public SpinIntake(double speed, boolean forward) {
+  /** Creates a new UserSpinIntakeForward. */
+  public UserSpinIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = Intake.getInstance();
     addRequirements(m_intake);
-    m_speed = speed;
   }
 
     //Register with TestingDashboard
     public static void registerWithTestingDashboard() {
       Intake intake = Intake.getInstance();
-      SpinIntake cmd = new SpinIntake(Intake.DEFAULT_ROLLER_SPEED, true);
+      UserSpinIntake cmd = new UserSpinIntake();
       TestingDashboard.getInstance().registerCommand(intake, "Basic", cmd);
     }
 
@@ -43,11 +40,7 @@ public class SpinIntake extends CommandBase {
   @Override
   public void execute() {
 
-    if (!m_parameterized) {
-      m_speed = TestingDashboard.getInstance().getNumber(m_intake, "RollerSpeed");
-    }
-
-    //Drives the ball intake with the right trigger.
+    //Drives the ball intake with the left and right triggers.
     double speedRight = m_oi.getXbox().getAxis(XboxAxis.kRightTrigger);
     double speedLeft = m_oi.getXbox().getAxis(XboxAxis.kLeftTrigger);
     double speed = 0;

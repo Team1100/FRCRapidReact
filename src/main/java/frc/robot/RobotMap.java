@@ -50,8 +50,8 @@ public class RobotMap {
 	private final static int PWM_MXP_9 = 19;
 
 	// List of PCM CAN IDs
-	private final static int PCM_CAN = 16;
-	private final static int PCM_CAN_2 = 18;
+	public final static int PCM_CAN = 16;
+	public final static int PCM_CAN_2 = 18;
 
 	// List of Talon SRX CAN IDs
 	private final static int SRX_CAN_0 = 0;
@@ -181,14 +181,17 @@ public class RobotMap {
 	public static final int CL_RIGHT_ENCODER = CAN_12;
 	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
 	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
-	public static final int CL_PISTON_PORT1 = PCM_2;
-	public static final int CL_PISTON_PORT2 = PCM_3;
+	public static final int CL_LEFT_CLAW_PISTON_PORT1 = PCM_0;
+	public static final int CL_LEFT_CLAW_PISTON_PORT2 = PCM_1;
+	public static final int CL_RIGHT_CLAW_PISTON_PORT1 = PCM_2;
+	public static final int CL_RIGHT_CLAW_PISTON_PORT2 = PCM_3;
 
 	//[I]ntake
 	public static final int I_LEFT_ROLLER = CAN_27;
-	public static final int B_PCM_CAN = PCM_CAN;
-	public static final int I_PISTON_PORT1 = PCM_0;
-	public static final int I_PISTON_PORT2 = PCM_1;
+	public static final int I_LEFT_PISTON_PORT1 = PCM_4;
+	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
+	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
+	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;

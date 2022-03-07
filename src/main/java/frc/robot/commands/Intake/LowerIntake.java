@@ -17,7 +17,7 @@ public class LowerIntake extends CommandBase {
   private OI m_oi;
   private boolean m_finished;
 
-  /** Creates a new RaiseIntake. */
+  /** Creates a new LowerIntake. */
   public LowerIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = Intake.getInstance();
@@ -36,6 +36,7 @@ public class LowerIntake extends CommandBase {
   @Override
   public void initialize() {
     m_oi = OI.getInstance();
+    m_finished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,6 +49,7 @@ public class LowerIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_finished = false;
   }
 
   // Returns true when the command should end.
