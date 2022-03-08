@@ -14,7 +14,7 @@ package frc.robot;
  */
 public final class Constants {
     // Controls which software should run based on hardware availability
-    public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = false;
+    public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
 
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;

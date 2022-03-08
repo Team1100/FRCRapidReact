@@ -49,10 +49,6 @@ public class RobotMap {
 	private final static int PWM_MXP_8 = 18;
 	private final static int PWM_MXP_9 = 19;
 
-	// List of PCM CAN IDs
-	public final static int PCM_CAN = 16;
-	public final static int PCM_CAN_2 = 18;
-
 	// List of Talon SRX CAN IDs
 	private final static int SRX_CAN_0 = 0;
 	private final static int SRX_CAN_1 = 1;
@@ -89,6 +85,10 @@ public class RobotMap {
 	private final static int CAN_26 = 26; 
     private final static int CAN_27 = 27; 
     
+	// List of PCM CAN IDs
+	public final static int PCM_CAN = CAN_2;
+	public final static int PCM_CAN_2 = CAN_18;
+
 	//List of all analog ports
 	private final static int ANALOG_0 = 0;
 	private final static int ANALOG_1 = 1;
