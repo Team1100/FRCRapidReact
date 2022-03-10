@@ -41,10 +41,10 @@ public class Climber extends SubsystemBase {
   
   /** Creates a new Climber. */
   public Climber() {
-    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_LEFT_CANE_TURN_ENCODER);
-    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_ENCODER);
-    m_leftCaneMotor = new CANSparkMax(RobotMap.CL_LEFT_ENCODER, MotorType.kBrushless);
-    m_rightCaneMotor = new CANSparkMax(RobotMap.CL_RIGHT_ENCODER, MotorType.kBrushless);
+    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_LEFT_CANE_TURN_MOTOR);
+    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
+    m_leftCaneMotor = new CANSparkMax(RobotMap.CL_LEFT_MOTOR, MotorType.kBrushless);
+    m_rightCaneMotor = new CANSparkMax(RobotMap.CL_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor.setInverted(true);
     leftSwitch = new DigitalInput(RobotMap.CL_LEFT_LIMIT_SWITCH);
     rightSwitch = new DigitalInput(RobotMap.CL_RIGHT_LIMIT_SWITCH);
