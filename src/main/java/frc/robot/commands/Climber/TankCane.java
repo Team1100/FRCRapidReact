@@ -44,7 +44,7 @@ public class TankCane extends CommandBase {
   @Override
   public void execute() {
     if (!m_parameterized) {
-      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "Extend/Retract Speed");
+      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
     }
     
     XboxController xbox = m_oi.getXbox();
@@ -60,7 +60,6 @@ public class TankCane extends CommandBase {
     } else if (xbox.getButtonRightBumper().get()) {
       rightSpeed = -m_caneSpeed;
     }
-    
 
     m_climber.tankCane(leftSpeed, rightSpeed);
   }

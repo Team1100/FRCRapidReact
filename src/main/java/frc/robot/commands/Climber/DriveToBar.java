@@ -9,6 +9,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.Constants;
+import frc.robot.sensors.BarDetectionSensorHelper;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 
@@ -22,6 +23,7 @@ public class DriveToBar extends CommandBase {
   private int m_direction;
   private boolean m_leftSensorHasActivated;
   private boolean m_rightSensorHasActivated;
+  private BarDetectionSensorHelper m_barSensor;
 
   private final static double ENCODER_INITIAL_POSITION = 0;
   
@@ -33,6 +35,7 @@ public class DriveToBar extends CommandBase {
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
+    m_barSensor = new BarDetectionSensorHelper();
     m_parameterized = parameterized;
     m_distance = distance;
     m_speed = speed;
@@ -55,6 +58,8 @@ public class DriveToBar extends CommandBase {
     RelativeEncoder rightEncoder = m_drive.getRightEncoder();
     leftEncoder.setPosition(ENCODER_INITIAL_POSITION);
     rightEncoder.setPosition(ENCODER_INITIAL_POSITION);
+    m_leftSensorHasActivated = false;
+    m_rightSensorHasActivated = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -78,19 +83,20 @@ public class DriveToBar extends CommandBase {
      * If the right sensor is activated, the right motor is stopped and the left motor continues at half it's speed.
      **/ 
     m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction);
-    if (m_climber.leftSensorActivated(m_sensor)) {
-      m_drive.tankDrive(0, (m_speed/2) * m_direction);
+    if (m_barSensor.leftSensorActivated(m_sensor)) {
+      m_drive.tankDrive(0, (m_speed) * m_direction);
       m_leftSensorHasActivated = true;
     }
-    if (m_climber.rightSensorActivated(m_sensor)) {
-      m_drive.tankDrive((m_speed/2) * m_direction, 0);
+    if (m_barSensor.rightSensorActivated(m_sensor)) {
+      m_drive.tankDrive((m_speed) * m_direction, 0);
       m_rightSensorHasActivated = true;
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

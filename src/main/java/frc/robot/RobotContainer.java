@@ -7,12 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.Climber.CloseLeftClaw;
+import frc.robot.commands.Climber.CloseRightClaw;
 import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.OpenLeftClaw;
+import frc.robot.commands.Climber.OpenRightClaw;
 import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
+import frc.robot.commands.Intake.LowerIntake;
+import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.commands.Intake.UserSpinIntake;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -40,12 +47,19 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Register commands with TestingDashboard commands
-    TankDrive.registerWithTestingDashboard();
-    ArcadeDrive.registerWithTestingDashboard();
     DriveToBar.registerWithTestingDashboard();
     TankCane.registerWithTestingDashboard();
+    OpenLeftClaw.registerWithTestingDashboard();
+    OpenRightClaw.registerWithTestingDashboard();
+    CloseLeftClaw.registerWithTestingDashboard();
+    CloseRightClaw.registerWithTestingDashboard();
+    TankDrive.registerWithTestingDashboard();
+    ArcadeDrive.registerWithTestingDashboard();
     DriveDistance.registerWithTestingDashboard();
     KeyboardDrive.registerWithTestingDashboard();
+    UserSpinIntake.registerWithTestingDashboard();
+    RaiseIntake.registerWithTestingDashboard();
+    LowerIntake.registerWithTestingDashboard();
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();

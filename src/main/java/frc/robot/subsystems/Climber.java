@@ -5,12 +5,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.Constants;
-import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -21,6 +21,10 @@ public class Climber extends SubsystemBase {
   public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
   VictorSPX m_leftCaneMotor;
   VictorSPX m_rightCaneMotor;
+  private DoubleSolenoid m_leftClawPiston;
+  private DoubleSolenoid m_rightClawPiston;
+  // limit switches on the top of the cane (one per cane) for detecting
+  // contact with a bar
   private DigitalInput leftSwitch, rightSwitch;
   
   /** Creates a new Climber. */
@@ -30,6 +34,10 @@ public class Climber extends SubsystemBase {
     m_rightCaneMotor.setInverted(true);
     leftSwitch = new DigitalInput(RobotMap.CL_LEFT_LIMIT_SWITCH);
     rightSwitch = new DigitalInput(RobotMap.CL_RIGHT_LIMIT_SWITCH);
+    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
+      m_leftClawPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_LEFT_CLAW_PISTON_PORT1, RobotMap.CL_LEFT_CLAW_PISTON_PORT2);
+      m_rightClawPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_RIGHT_CLAW_PISTON_PORT1, RobotMap.CL_RIGHT_CLAW_PISTON_PORT2);
+    }
   }
 
   public static Climber getInstance() {
@@ -41,40 +49,17 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_TRAVEL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
-      TestingDashboard.getInstance().registerNumber(m_climber, "Extend/Retract", "Extend/Retract Speed", INITIAL_CANE_EXTENTION_SPEED);
-
+      TestingDashboard.getInstance().registerNumber(m_climber, "Extension", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
     }
     return m_climber;
   }
 
-  public boolean leftSensorActivated(int sensor) {
-    switch (sensor) {
-      case Constants.NO_SENSOR: 
-        break;
-      case Constants.MOTOR_CURRENT:
-        break;
-      case Constants.LIMIT_SWITCH:
-        if (leftSwitch.get())
-          return true;
-        else 
-          return false;
-    }
-    return false;
+  public DigitalInput getLeftSwitch() {
+    return leftSwitch;
   }
 
-  public boolean rightSensorActivated(int sensor) {
-    switch (sensor) {
-      case Constants.NO_SENSOR: 
-        break;
-      case Constants.MOTOR_CURRENT:
-        break;
-      case Constants.LIMIT_SWITCH:
-        if (rightSwitch.get())
-          return true;
-        else 
-          return false;
-    }
-    return false;
+  public DigitalInput getRightSwitch() {
+    return rightSwitch;
   }
 
   @Override
@@ -85,5 +70,39 @@ public class Climber extends SubsystemBase {
   public void tankCane(double leftSpeed, double rightSpeed) {
     m_leftCaneMotor.set(ControlMode.PercentOutput, leftSpeed);
     m_rightCaneMotor.set(ControlMode.PercentOutput, rightSpeed);
+  }
+
+  public void openLeftClaw() {
+    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
+      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+
+  public void openRightClaw() {
+    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
+      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+
+  public void openClaws() {
+    openLeftClaw();
+    openRightClaw();
+  }
+
+  public void closeLeftClaw() {
+    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
+      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
+    }
+  }
+
+  public void closeRightClaw() {
+    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
+      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
+    }
+  }
+
+  public void closeClaws() {
+    closeLeftClaw();
+    closeRightClaw();
   }
 }
