@@ -109,7 +109,7 @@ public class RobotMap {
 	private final static int CAN_50 = 50; 
     
 	// List of PCM CAN IDs
-	public final static int PCM_CAN = CAN_2;
+	public final static int PCM_CAN = CAN_16;
 	public final static int PCM_CAN_2 = CAN_18;
 
 	//List of all analog ports
@@ -211,7 +211,7 @@ public class RobotMap {
 	public static final int CL_POTENTIOMETER = ANALOG_0;
 
 	//[I]ntake
-	public static final int I_LEFT_ROLLER = CAN_27;
+	public static final int I_LEFT_ROLLER = CAN_4;
 	public static final int I_LEFT_PISTON_PORT1 = PCM_4;
 	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
 	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
