@@ -13,8 +13,19 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // Controls which software should run based on hardware availability
+    public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
+
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;
     public static final int MOTOR_CURRENT = 1;
     public static final int LIMIT_SWITCH = 2;
+
+    // Defines constants associated with sensors
+    // 15 Amps for 1 second at a speed of 0.3 indicates that contact with
+    // a bar has been detected
+    public static final double MOTOR_CURRENT_THRESHOLD = 15; // Amps
+    public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
+    public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
+    public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
 }
