@@ -25,7 +25,9 @@ public class Intake extends SubsystemBase {
   
   /** Creates a new Intake. */
   private Intake() {
-    m_intakeRollerMotor = new CANSparkMax(RobotMap.I_LEFT_ROLLER, MotorType.kBrushless);
+    if (Constants.HW_AVAILABLE_INTAKE) {
+      m_intakeRollerMotor = new CANSparkMax(RobotMap.I_LEFT_ROLLER, MotorType.kBrushless);
+    }
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
       m_leftPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.I_LEFT_PISTON_PORT1, RobotMap.I_LEFT_PISTON_PORT2);
       m_rightPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.I_RIGHT_PISTON_PORT1, RobotMap.I_RIGHT_PISTON_PORT2);
@@ -42,7 +44,9 @@ public class Intake extends SubsystemBase {
   }
 
   public void spinIntakeRoller(double speed) {
-    m_intakeRollerMotor.set(speed);
+    if (Constants.HW_AVAILABLE_INTAKE) {
+      m_intakeRollerMotor.set(speed);
+    }
   }
   
   @Override

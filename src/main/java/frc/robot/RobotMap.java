@@ -211,7 +211,7 @@ public class RobotMap {
 	public static final int CL_POTENTIOMETER = ANALOG_0;
 
 	//[I]ntake
-	public static final int I_LEFT_ROLLER = CAN_4;
+	public static final int I_LEFT_ROLLER = CAN_30;
 	public static final int I_LEFT_PISTON_PORT1 = PCM_4;
 	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
 	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
