@@ -13,6 +13,7 @@ import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -22,6 +23,7 @@ public class Climber extends SubsystemBase {
   private static Climber m_climber;
   public final static double INITIAL_TRAVEL_SPEED = 0.3;
   public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
+  public final static double INITIAL_CANE_ROTATION_SPEED = 0.2;
   private DoubleSolenoid m_leftClawPiston;
   private DoubleSolenoid m_rightClawPiston;
   public static final double GEAR_DIAMETER_IN_INCHES = 4;
@@ -34,6 +36,7 @@ public class Climber extends SubsystemBase {
   private double m_currentRightCaneHeight;
   private VictorSPX m_leftCaneTurnMotor;
   private VictorSPX m_rightCaneTurnMotor;
+  
 
   // limit switches on the top of the cane (one per cane) for detecting
   // contact with a bar
@@ -111,6 +114,20 @@ public class Climber extends SubsystemBase {
   public RelativeEncoder getRightCaneEncoder() {
 	  return m_rightCaneEncoder;
   }
+
+  public void rotateLeftCane(double speed) {
+    m_leftCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, speed);
+  }
+
+  public void rotateRightCane(double speed) {
+    m_rightCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, speed);
+  }
+
+  public void rotateBothCanes(double speed) {
+    rotateLeftCane(speed);
+    rotateRightCane(speed);
+  }
+
 
   public double getCurrentLeftCaneHeight() {
     return m_leftCaneEncoder.getPosition() * GEAR_CIRCUMFERENCE_IN_INCHES;

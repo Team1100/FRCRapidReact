@@ -26,11 +26,25 @@ public class ElevatorCane extends CommandBase {
     private double m_currentDistance;
     private double m_currentCaneHeight;
     private double m_direction; // 1 indicates extension of the cane
-    private boolean m_side; // 1 indicates right
+    private double  m_side; // true indicates right
     private CANSparkMax m_caneMotor;
     private RelativeEncoder m_caneEncoder;
 
-    public ElevatorCane(boolean side, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
+    public enum CanesToExtend {
+      CANE_LEFT(0),
+     
+      CANE_RIGHT(1),
+
+      CANE_BOTH(2);
+    
+      public final int key;
+
+		  private CanesToExtend(int key) {
+			  this.key = key;
+		  }
+    }
+
+    public ElevatorCane(CanesToExtend cane, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
         m_climber = Climber.getInstance();
         addRequirements(m_climber);
@@ -38,23 +52,22 @@ public class ElevatorCane extends CommandBase {
         m_caneHeightToTravel = caneHeightToTravel;
         m_parameterized = parameterized;
         m_direction = 1;
-        m_side = side;
-        if (side == true) {
-          m_caneMotor = m_climber.getRightCaneMotor();
-          m_caneEncoder = m_climber.getRightCaneEncoder();
-        }
-        else {
+        if (cane == CanesToExtend.CANE_LEFT) {
           m_caneMotor = m_climber.getLeftCaneMotor();
           m_caneEncoder = m_climber.getLeftCaneEncoder();
+        }
+        else if (cane == CanesToExtend.CANE_RIGHT) {
+          m_caneMotor = m_climber.getRightCaneMotor();
+          m_caneEncoder = m_climber.getRightCaneEncoder();
         }
       }
 
     public static void registerWithTestingDashboard() {
         Climber climber = Climber.getInstance();
-        ElevatorCane cmdRight = new ElevatorCane(true, 0, 0, false);
-        ElevatorCane cmdLeft = new ElevatorCane(true, 0, 0, false);
-        TestingDashboard.getInstance().registerCommand(climber, "Basic", cmdRight);
-        TestingDashboard.getInstance().registerCommand(climber, "Basic", cmdLeft);
+        ElevatorCane cmdRight = new ElevatorCane(CanesToExtend.CANE_RIGHT, 0, 0, false);
+        ElevatorCane cmdLeft = new ElevatorCane(CanesToExtend.CANE_LEFT, 0, 0, false);
+        TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionRight", cmdRight);
+        TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionLeft", cmdLeft);
         TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CaneHeightToTravel", 0);
         TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentLeftCaneHeight", 0);
         TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentRightCaneHeight", 0);
