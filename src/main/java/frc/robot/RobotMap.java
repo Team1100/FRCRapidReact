@@ -84,6 +84,9 @@ public class RobotMap {
 	private final static int CAN_25 = 25; 
 	private final static int CAN_26 = 26; 
     private final static int CAN_27 = 27; 
+
+	private final static int CAN_30 = 30;
+	private final static int CAN_31 = 31;
     
 	// List of PCM CAN IDs
 	public final static int PCM_CAN = CAN_2;
@@ -194,6 +197,10 @@ public class RobotMap {
 	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
 	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
 	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
+
+	//[C]onveyor
+	public static final int C_LEFT_MOTOR = CAN_30;
+	public static final int C_RIGHT_MOTOR = CAN_31;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
