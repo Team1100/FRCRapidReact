@@ -16,6 +16,9 @@ public final class Constants {
     // Controls which software should run based on hardware availability
     public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
 
+    // Defines Auto command constants
+    public static final int DEFAULT_AUTO_WAIT_TIME = 3;
+
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;
     public static final int MOTOR_CURRENT = 1;
