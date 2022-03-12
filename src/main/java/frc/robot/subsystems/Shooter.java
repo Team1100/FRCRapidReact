@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Copytop (c) 2019 FIRST. All tops Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -8,24 +8,20 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
 
 public class Shooter extends SubsystemBase {
+  
   private static Shooter m_shooter;
   private CANSparkMax m_topShooter;
-  private Encoder m_topEncoder;
-  private final double PPD = 2048;
-  private DoubleSolenoid m_piston;
+  private CANSparkMax m_bottomShooter;
+  private RelativeEncoder m_topEncoder;
+  private RelativeEncoder m_bottomEncoder;
   private double kP, kI, kD;
 
   /**
@@ -33,12 +29,11 @@ public class Shooter extends SubsystemBase {
    */
   private Shooter() {
     
-    m_topShooter = new CANSparkMax(RobotMap.SH_TOP, MotorType.kBrushless);
-    m_topEncoder = new Encoder(RobotMap.SH_TOP_ENCODER_A, RobotMap.SH_TOP_ENCODER_B);
-    
+    m_topShooter = new CANSparkMax(RobotMap.S_TOP_MOTOR, MotorType.kBrushless);
+    m_bottomShooter = new CANSparkMax(RobotMap.S_BOT_MOTOR, MotorType.kBrushless);
+    m_topEncoder = m_topShooter.getEncoder();
+    m_bottomEncoder = m_bottomShooter.getEncoder();
 
-    m_topEncoder.setDistancePerPulse(1/PPD);
-    m_topEncoder.setReverseDirection(true);
 
     kP = 0.00125;
     kI = 0.00045;
@@ -50,33 +45,45 @@ public class Shooter extends SubsystemBase {
       m_shooter = new Shooter();
       TestingDashboard.getInstance().registerSubsystem(m_shooter, "Shooter");
       //Controlling shooter speeds
-      TestingDashboard.getInstance().registerNumber(m_shooter, "TopShooter", "TopShooterInputSpeed", 0.2);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "TopShooter", "Top Setpoint", 2000);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "TopShooter", "TopShooterDist", 0);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "TopShooter", "TopShooterOutputSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterInputSpeed", 0.2);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topSetpoint", 2000);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterDist", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterOutputSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterInputSpeed", 0.2);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomSetpoint", 2000);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterDist", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterOutputSpeed", 0);
     }
     return m_shooter;
   }
 
 
   public void setTop(double speed) {
-    m_topShooter.set(-speed);
+    m_topShooter.set(speed);
+  }
+
+  public void setBottom(double speed) {
+    m_bottomShooter.set(speed);
   }
 
   public void setTopVoltage(double voltage) {
-    m_topShooter.setVoltage(-voltage);
+    m_topShooter.setVoltage(voltage);
   }
 
-  public Encoder getTopEncoder() {
+  public void setBottomVoltage(double voltage) {
+    m_bottomShooter.setVoltage(voltage);
+  }
+
+  public RelativeEncoder getTopEncoder() {
     return m_topEncoder;
   }
 
-  public double getRPM(Encoder encoder) {
-    return encoder.getRate() * 60;
+  public RelativeEncoder getBottomEncoder() {
+    return m_bottomEncoder;
   }
 
-  public DoubleSolenoid getPiston() {
-    return m_piston;
+  public double getRPM(RelativeEncoder encoder) {
+    return encoder.getVelocity();
   }
 
   public double getkP() {
@@ -106,7 +113,9 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    TestingDashboard.getInstance().updateNumber(this, "TopShooterDist", m_topEncoder.getDistance());
-    TestingDashboard.getInstance().updateNumber(this, "TopShooterOutputSpeed", getRPM(m_topEncoder));
+    TestingDashboard.getInstance().updateNumber(this, "topShooterDist", m_topEncoder.getPosition());
+    TestingDashboard.getInstance().updateNumber(this, "topShooterOutputSpeed", getRPM(m_topEncoder));
+    TestingDashboard.getInstance().updateNumber(this, "bottomShooterDist", m_bottomEncoder.getPosition());
+    TestingDashboard.getInstance().updateNumber(this, "bottomShooterOutputSpeed", getRPM(m_bottomEncoder));
   }
 }

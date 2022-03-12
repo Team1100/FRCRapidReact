@@ -84,6 +84,8 @@ public class RobotMap {
 	private final static int CAN_25 = 25; 
 	private final static int CAN_26 = 26; 
     private final static int CAN_27 = 27; 
+	private final static int CAN_28 = 28; 
+	private final static int CAN_29 = 29; 
     
 	// List of PCM CAN IDs
 	public final static int PCM_CAN = CAN_2;
@@ -200,15 +202,12 @@ public class RobotMap {
 	public static final int U_JOYSTICK_RIGHT = 1;
 	public static final int U_XBOX_CONTROLLER = 2;
 	public static final int U_BUTTON_BOX = 3;
-<<<<<<< HEAD
+
 
 	//[S]hooter
-	public static final int SH_TOP = CAN_13;
-	public static final int SH_TOP_ENCODER_A = DIO_2;
-	public static final int SH_TOP_ENCODER_B = DIO_3;
+	public static final int S_TOP_MOTOR = CAN_28;
+	public static final int S_BOT_MOTOR = CAN_29;
 	
-=======
+	
 	public static final int U_KEYBOARD_BOX = 4;
-
->>>>>>> cd5054dc69f38c4545232b06ca3d2aee28674265
 }
