@@ -177,8 +177,10 @@ public class RobotMap {
 	public static final int D_RIGHT_ENCODER_B = DIO_MXP_3;
 
 	//[CL]imber
-	public static final int CL_LEFT_ENCODER = CAN_10;
-	public static final int CL_RIGHT_ENCODER = CAN_12;
+	public static final int CL_LEFT_MOTOR = CAN_22;
+	public static final int CL_RIGHT_MOTOR = CAN_21;
+	public static final int CL_LEFT_CANE_TURN_MOTOR = CAN_12;
+	public static final int CL_RIGHT_CANE_TURN_MOTOR = CAN_10;
 	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
 	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
 	public static final int CL_LEFT_CLAW_PISTON_PORT1 = PCM_0;
