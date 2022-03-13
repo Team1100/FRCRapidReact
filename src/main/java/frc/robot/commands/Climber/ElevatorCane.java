@@ -78,7 +78,13 @@ public class ElevatorCane extends CommandBase {
 
     @Override
     public void initialize() {
-      m_caneEncoder.setPosition(ENCODER_INITIAL_POSITION);
+      if (m_sideToExtend == CanesToExtend.CANE_BOTH) {
+        m_climber.getLeftCaneEncoder().setPosition(0);
+        m_climber.getRightCaneEncoder().setPosition(0);
+      }
+      else {
+        m_caneEncoder.setPosition(ENCODER_INITIAL_POSITION);
+      }
       if (!m_parameterized) {
         m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
         m_caneHeightToTravel = TestingDashboard.getInstance().getNumber(m_climber, "CaneHeightToTravel");

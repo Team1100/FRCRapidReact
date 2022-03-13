@@ -14,6 +14,7 @@ import frc.robot.commands.Climber.ElevatorCane;
 import frc.robot.commands.Climber.OpenLeftClaw;
 import frc.robot.commands.Climber.OpenRightClaw;
 import frc.robot.commands.Climber.TankCane;
+import frc.robot.commands.Climber.TestStateMachineSequence;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -21,6 +22,7 @@ import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
 import frc.robot.commands.Intake.UserSpinIntake;
+import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -40,6 +42,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Initialize subsystems
+    Auto.getInstance();
     drive = Drive.getInstance();
 
     drive.setDefaultCommand(new ArcadeDrive());
@@ -54,6 +57,7 @@ public class RobotContainer {
     OpenRightClaw.registerWithTestingDashboard();
     CloseLeftClaw.registerWithTestingDashboard();
     CloseRightClaw.registerWithTestingDashboard();
+    TestStateMachineSequence.registerWithTestingDashboard();
     TankDrive.registerWithTestingDashboard();
     ArcadeDrive.registerWithTestingDashboard();
     ElevatorCane.registerWithTestingDashboard();
