@@ -139,13 +139,13 @@ public class Climber extends SubsystemBase {
 
   public void openLeftClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
+      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
     }
   }
 
   public void openRightClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
+      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
     }
   }
 
@@ -156,13 +156,13 @@ public class Climber extends SubsystemBase {
 
   public void closeLeftClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
+      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
   public void closeRightClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
+      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
