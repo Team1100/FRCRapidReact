@@ -14,13 +14,10 @@ public class ClimbingSequence extends SequentialCommandGroup {
         final double DRIVE_DISTANCE = 60;
         final double CANE_HEIGHT = 24;
 
-        Climber m_climber;
-        Drive m_drive;
-
         addCommands(
             new ElevatorCane(CanesToExtend.CANE_BOTH, CANE_HEIGHT, CANE_SPEED, true),
-            new DriveToBar(DRIVE_DISTANCE, DRIVE_SPEED, Constants.NO_SENSOR, true),
-            new ElevatorCane(CanesToExtend.CANE_BOTH, CANE_HEIGHT/2, -CANE_SPEED, true)
+            new DriveToBar(DRIVE_DISTANCE, DRIVE_SPEED, Constants.MOTOR_CURRENT, true),
+            new ElevatorCane(CanesToExtend.CANE_BOTH, -CANE_HEIGHT, CANE_SPEED, true)
         );
     }
 
