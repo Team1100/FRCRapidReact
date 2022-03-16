@@ -15,6 +15,10 @@ package frc.robot;
 public final class Constants {
     // Controls which software should run based on hardware availability
     public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
+    public static final boolean HW_ENABLE_SHOOTER = false;
+
+    // Defines Auto command constants
+    public static final int DEFAULT_AUTO_WAIT_TIME = 3;
 
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;

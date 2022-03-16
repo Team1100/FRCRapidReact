@@ -71,19 +71,42 @@ public class RobotMap {
 	private final static int CAN_12 = 12; 
 	private final static int CAN_13 = 13; 
 	private final static int CAN_14 = 14; 
-    private final static int CAN_15 = 15; 
+	private final static int CAN_15 = 15; 
 	private final static int CAN_16 = 16;
 	private final static int CAN_17 = 17;
 	private final static int CAN_18 = 18; 
 	private final static int CAN_19 = 19; 
 	private final static int CAN_20 = 20; 
-    private final static int CAN_21 = 21;
+	private final static int CAN_21 = 21;
 	private final static int CAN_22 = 22;
 	private final static int CAN_23 = 23;
 	private final static int CAN_24 = 24; 
 	private final static int CAN_25 = 25; 
 	private final static int CAN_26 = 26; 
-    private final static int CAN_27 = 27; 
+	private final static int CAN_27 = 27; 
+	private final static int CAN_28 = 28; 
+	private final static int CAN_29 = 29; 
+	private final static int CAN_30 = 30; 
+	private final static int CAN_31 = 31; 
+	private final static int CAN_32 = 32; 
+	private final static int CAN_33 = 33; 
+	private final static int CAN_34 = 34; 
+	private final static int CAN_35 = 35; 
+	private final static int CAN_36 = 36; 
+	private final static int CAN_37 = 37; 
+	private final static int CAN_38 = 38; 
+	private final static int CAN_39 = 39; 
+	private final static int CAN_40 = 40; 
+	private final static int CAN_41 = 41; 
+	private final static int CAN_42 = 42; 
+	private final static int CAN_43 = 43; 
+	private final static int CAN_44 = 44; 
+	private final static int CAN_45 = 45; 
+	private final static int CAN_46 = 46; 
+	private final static int CAN_47 = 47; 
+	private final static int CAN_48 = 48; 
+	private final static int CAN_49 = 49; 
+	private final static int CAN_50 = 50; 
     
 	// List of PCM CAN IDs
 	public final static int PCM_CAN = CAN_2;
@@ -194,6 +217,10 @@ public class RobotMap {
 	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
 	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
 	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
+	
+	//[S]hooter
+	public static final int S_TOP_MOTOR = CAN_28;
+	public static final int S_BOT_MOTOR = CAN_29;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;

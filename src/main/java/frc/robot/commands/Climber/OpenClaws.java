@@ -5,61 +5,52 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
+
 import frc.robot.subsystems.Climber;
 import frc.robot.testingdashboard.TestingDashboard;
-import frc.robot.input.XboxController;
 
-public class TankRotateCane extends CommandBase {
-  /** Creates a new TankRotateCane. */
-  Climber m_climber;
-  OI m_oi;
-  private double m_caneSpeed;
+public class OpenClaws extends CommandBase {
+  
+  private Climber m_climber;
+  private boolean m_finished;
 
-  public TankRotateCane() {
+  /** Creates a new OpenClaws. */
+  public OpenClaws() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
-    m_caneSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
+    m_finished = false;
   }
 
+  //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    TankRotateCane cmd = new TankRotateCane();
-    TestingDashboard.getInstance().registerCommand(climber, "CaneRotation", cmd);
+    OpenClaws cmd = new OpenClaws();
+    TestingDashboard.getInstance().registerCommand(climber, "Claws", cmd);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_oi = OI.getInstance();
-
+    m_finished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
-    double rotationSpeed = 0;
-    XboxController xbox = m_oi.getXbox();
-    if (xbox.getDPad().getRight().get()) {
-      rotationSpeed = m_caneSpeed;
-    }
-    else if (xbox.getDPad().getLeft().get()) {
-      rotationSpeed = -m_caneSpeed;
-    }
-    m_climber.rotateBothCanes(rotationSpeed);
+    m_climber.openClaws();
+    m_finished = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_climber.rotateBothCanes(0);
+    m_finished = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_finished;
   }
 }

@@ -45,7 +45,7 @@ public class Climber extends SubsystemBase {
   /** Creates a new Climber. */
   public Climber() {
     m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_LEFT_CANE_TURN_MOTOR);
-    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
+    m_rightCaneTurnMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
     m_leftCaneMotor = new CANSparkMax(RobotMap.CL_LEFT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor = new CANSparkMax(RobotMap.CL_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor.setInverted(true);
@@ -66,7 +66,8 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_TRAVEL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
-      TestingDashboard.getInstance().registerNumber(m_climber, "Extension", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "RotationSpeed", INITIAL_CANE_ROTATION_SPEED);
     }
     return m_climber;
   }
@@ -107,6 +108,11 @@ public class Climber extends SubsystemBase {
     m_rightCaneMotor.set(rightSpeed);
   }
 
+  public void extendCane(double speed) {
+    m_leftCaneMotor.set(speed);
+    m_rightCaneMotor.set(speed);
+  }
+
   public CANSparkMax getLeftCaneMotor() {
     return m_leftCaneMotor;
   }
@@ -128,7 +134,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void rotateRightCane(double speed) {
-    m_rightCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, speed);
+    m_rightCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, -speed);
   }
 
   public void rotateBothCanes(double speed) {
@@ -152,13 +158,13 @@ public class Climber extends SubsystemBase {
 
   public void openLeftClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
+      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
     }
   }
 
   public void openRightClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
+      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
     }
   }
 
@@ -169,13 +175,13 @@ public class Climber extends SubsystemBase {
 
   public void closeLeftClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
+      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
   public void closeRightClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
+      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
