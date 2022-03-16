@@ -18,6 +18,7 @@ import frc.robot.commands.Climber.OpenRightClaw;
 import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Climber.TankRotateCane;
 import frc.robot.commands.Climber.TestStateMachineSequence;
+import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -62,6 +63,7 @@ public class RobotContainer {
     OpenClaws.registerWithTestingDashboard();
     CloseClaws.registerWithTestingDashboard();
     TankRotateCane.registerWithTestingDashboard();
+    UserOperateCane.registerWithTestingDashboard();
     TestStateMachineSequence.registerWithTestingDashboard();
     TankDrive.registerWithTestingDashboard();
     ArcadeDrive.registerWithTestingDashboard();

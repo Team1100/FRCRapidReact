@@ -66,8 +66,8 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "DistanceToTravelInInches", 12);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_TRAVEL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
-      TestingDashboard.getInstance().registerNumber(m_climber, "Extension", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
-      TestingDashboard.getInstance().registerNumber(m_climber, "Extension", "RotationSpeed", INITIAL_CANE_ROTATION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "RotationSpeed", INITIAL_CANE_ROTATION_SPEED);
     }
     return m_climber;
   }
@@ -98,6 +98,11 @@ public class Climber extends SubsystemBase {
   public void tankCane(double leftSpeed, double rightSpeed) {
     m_leftCaneMotor.set(leftSpeed);
     m_rightCaneMotor.set(rightSpeed);
+  }
+
+  public void extendCane(double speed) {
+    m_leftCaneMotor.set(speed);
+    m_rightCaneMotor.set(speed);
   }
 
   public CANSparkMax getLeftCaneMotor() {
