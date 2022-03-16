@@ -14,7 +14,7 @@ public class CloseClaws extends CommandBase {
   private Climber m_climber;
   private boolean m_finished;
 
-  /** Creates a new OpenClaws. */
+  /** Creates a new CloseClaws. */
   
   public CloseClaws() {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,7 @@ public class CloseClaws extends CommandBase {
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
     CloseClaws cmd = new CloseClaws();
-    TestingDashboard.getInstance().registerCommand(climber, "Basic", cmd);
+    TestingDashboard.getInstance().registerCommand(climber, "Claws", cmd);
   }
 
   // Called when the command is initially scheduled.

@@ -5,7 +5,6 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.subsystems.Shooter;
@@ -15,9 +14,9 @@ public class PIDBottomShooter extends PIDCommand {
   public PIDBottomShooter(double setPoint) {
     super(
         // The controller that the command will use
-        new PIDController(Shooter.getInstance().getkP(), Shooter.getInstance().getkI(), Shooter.getInstance().getkD()),
+        new PIDController(Shooter.getInstance().getP(), Shooter.getInstance().getI(), Shooter.getInstance().getD()),
         // This should return the measurement
-        () -> Shooter.getInstance().getRPM(Shooter.getInstance().getBottomEncoder()),
+        () -> Shooter.getInstance().getBottomRpm(),
         // This should return the setpoint (can also be a constant)
         () -> setPoint,
         // This uses the output

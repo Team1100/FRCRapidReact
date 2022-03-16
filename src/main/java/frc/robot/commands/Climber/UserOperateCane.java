@@ -11,31 +11,32 @@ import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.subsystems.Climber;
 import frc.robot.testingdashboard.TestingDashboard;
 
-
-public class TankCane extends CommandBase {
+public class UserOperateCane extends CommandBase {
   private Climber m_climber;
   private OI m_oi;
-  private double m_caneSpeed;
-  private boolean m_parameterized;
+  private double m_caneExtensionSpeed;
+  private double m_caneRotationSpeed;
 
-  /** Creates a new tankCane. **/
-  public TankCane(double caneSpeed, boolean parameterized) {
+  /** Creates a new UserOperateCane. */
+  public UserOperateCane() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
-    m_caneSpeed = caneSpeed;
-    m_parameterized = parameterized;
+    m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
+    m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
   }
 
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    TankCane cmd = new TankCane(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
-    TestingDashboard.getInstance().registerCommand(climber, "CaneExtension", cmd);
+    UserOperateCane cmd = new UserOperateCane();
+    TestingDashboard.getInstance().registerCommand(climber, "Basic", cmd);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
+    m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
     m_climber.tankCane(0, 0);
     m_oi = OI.getInstance();
   }
@@ -43,32 +44,39 @@ public class TankCane extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!m_parameterized) {
-      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
-    }
-    
+    m_caneExtensionSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
+    m_caneRotationSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
+
+    extendCane();
+    rotateCane();
+  }
+
+  private void extendCane() {
     XboxController xbox = m_oi.getXbox();
-    double leftSpeed = 0;
-    double rightSpeed = 0;
+    double extensionSpeed = 0;
     if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) {
-      leftSpeed = m_caneSpeed;
+      extensionSpeed = m_caneExtensionSpeed;
     } else if (xbox.getButtonLeftBumper().get()) {
-      leftSpeed = -m_caneSpeed;
-    }
-    if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) {
-      rightSpeed = m_caneSpeed;
-    } else if (xbox.getButtonRightBumper().get()) {
-      rightSpeed = -m_caneSpeed;
+      extensionSpeed = -m_caneExtensionSpeed;
     }
 
-    m_climber.tankCane(leftSpeed, rightSpeed);
+    m_climber.extendCane(extensionSpeed);
+  }
+
+  private void rotateCane() {
+    double rotationSpeed = 0;
+    XboxController xbox = m_oi.getXbox();
+    if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) {
+      rotationSpeed = m_caneRotationSpeed;
+    } else if (xbox.getButtonRightBumper().get()) {
+      rotationSpeed = -m_caneRotationSpeed;
+    }
+    m_climber.rotateBothCanes(rotationSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_climber.tankCane(0, 0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

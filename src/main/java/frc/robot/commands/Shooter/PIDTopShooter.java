@@ -14,9 +14,9 @@ public class PIDTopShooter extends PIDCommand {
   public PIDTopShooter(double setPoint) {
     super(
         // The controller that the command will use
-        new PIDController(Shooter.getInstance().getkP(), Shooter.getInstance().getkI(), Shooter.getInstance().getkD()),
+        new PIDController(Shooter.getInstance().getP(), Shooter.getInstance().getI(), Shooter.getInstance().getD()),
         // This should return the measurement
-        () -> Shooter.getInstance().getRPM(Shooter.getInstance().getTopEncoder()),
+        () -> Shooter.getInstance().getTopRpm(),
         // This should return the setpoint (can also be a constant)
         () -> setPoint,
         // This uses the output

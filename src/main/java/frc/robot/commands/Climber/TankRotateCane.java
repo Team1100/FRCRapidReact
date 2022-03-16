@@ -39,6 +39,7 @@ public class TankRotateCane extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
     double rotationSpeed = 0;
     XboxController xbox = m_oi.getXbox();
     if (xbox.getDPad().getRight().get()) {

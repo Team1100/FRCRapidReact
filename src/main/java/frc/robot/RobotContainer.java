@@ -8,14 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Climber.CloseClaws;
-import frc.robot.commands.Climber.CloseLeftClaw;
-import frc.robot.commands.Climber.CloseRightClaw;
-import frc.robot.commands.Climber.DriveToBar;
-import frc.robot.commands.Climber.OpenLeftClaw;
-import frc.robot.commands.Climber.OpenRightClaw;
-import frc.robot.commands.Climber.ElevatorCane;
 import frc.robot.commands.Climber.OpenClaws;
+import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.ElevatorCane;
 import frc.robot.commands.Climber.TankCane;
+import frc.robot.commands.Climber.TankRotateCane;
+import frc.robot.commands.Climber.TestStateMachineSequence;
+import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -26,6 +25,8 @@ import frc.robot.commands.Intake.UserSpinIntake;
 import frc.robot.commands.Shooter.PIDBottomShooter;
 import frc.robot.commands.Shooter.PIDTopShooter;
 import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.subsystems.Auto;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -38,16 +39,20 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class RobotContainer {
   // The robot's subsystems are defined here...
   
-  private final Drive drive;
+  private final Drive m_drive;
+  private final Climber m_climber;
 
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Initialize subsystems
-    drive = Drive.getInstance();
+    Auto.getInstance();
+    m_drive = Drive.getInstance();
+    m_climber = Climber.getInstance();
 
-    drive.setDefaultCommand(new ArcadeDrive());
+    m_drive.setDefaultCommand(new ArcadeDrive());
+    m_climber.setDefaultCommand(new UserOperateCane());
 
     // Configure the button bindings
     configureButtonBindings();
@@ -57,6 +62,9 @@ public class RobotContainer {
     TankCane.registerWithTestingDashboard();
     OpenClaws.registerWithTestingDashboard();
     CloseClaws.registerWithTestingDashboard();
+    TankRotateCane.registerWithTestingDashboard();
+    UserOperateCane.registerWithTestingDashboard();
+    TestStateMachineSequence.registerWithTestingDashboard();
     TankDrive.registerWithTestingDashboard();
     ArcadeDrive.registerWithTestingDashboard();
     ElevatorCane.registerWithTestingDashboard();
@@ -67,7 +75,7 @@ public class RobotContainer {
     LowerIntake.registerWithTestingDashboard();
     PIDTopShooter.registerWithTestingDashboard();
     PIDBottomShooter.registerWithTestingDashboard();
-    
+    ShootBall.registerWithTestingDashboard();
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();
