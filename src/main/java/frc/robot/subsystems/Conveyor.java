@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANPIDController.AccelStrategy;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -18,7 +20,7 @@ public class Conveyor extends SubsystemBase {
   boolean conveyor = false;
 
   /** Creates a new Conveyor. */
-  public Conveyor() {
+  private Conveyor() {
     if(conveyor == true){
     m_conveyorLeft = new CANSparkMax(RobotMap.C_LEFT_MOTOR,MotorType.kBrushless);
     m_conveyorRight = new CANSparkMax(RobotMap.C_RIGHT_MOTOR,MotorType.kBrushless);
@@ -40,8 +42,8 @@ public class Conveyor extends SubsystemBase {
 
   public void spinConveyor(double speed) {
     if(conveyor == true){
-    m_conveyorLeft.set(speed);
-    m_conveyorRight.set(speed);
+      m_conveyorLeft.set(speed);
+      m_conveyorRight.set(speed);
     }
   }
 }
