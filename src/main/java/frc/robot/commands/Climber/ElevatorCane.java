@@ -8,6 +8,7 @@ import frc.robot.OI;
 import frc.robot.input.XboxController;
 import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.testingdashboard.TestingDashboard;
 
 
@@ -16,6 +17,7 @@ public class ElevatorCane extends CommandBase {
     public static final double GEAR_CIRCUMFERENCE_IN_INCHES = GEAR_DIAMETER_IN_INCHES * Math.PI;
     public static final double ENCODER_INITIAL_POSITION = 0;
 
+    private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
     private OI m_oi;
     private double m_caneSpeed;
@@ -46,8 +48,8 @@ public class ElevatorCane extends CommandBase {
 
     public ElevatorCane(CanesToExtend cane, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
-        m_climber = Climber.getInstance();
-        addRequirements(m_climber);
+        m_climberCaneExtension = ClimberCaneExtension.getInstance();
+        addRequirements(m_climberCaneExtension);
         m_caneSpeed = caneSpeed;
         m_caneHeightToTravel = caneHeightToTravel;
         m_parameterized = parameterized;

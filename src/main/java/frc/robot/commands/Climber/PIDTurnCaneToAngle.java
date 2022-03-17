@@ -8,12 +8,14 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NTSendable;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneRotation;
 import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PIDTurnCaneToAngle extends PIDCommand {
+  private ClimberCaneRotation m_climberCaneRotation;
   /** Creates a new PIDTurnCaneToAngle. */
   public PIDTurnCaneToAngle(double setpoint) {
     super(
@@ -30,7 +32,8 @@ public class PIDTurnCaneToAngle extends PIDCommand {
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
-    addRequirements(Climber.getInstance());
+    m_climberCaneRotation = ClimberCaneRotation.getInstance();
+    addRequirements(m_climberCaneRotation);
     getController().setTolerance(5);
     getController().disableContinuousInput();
   }
