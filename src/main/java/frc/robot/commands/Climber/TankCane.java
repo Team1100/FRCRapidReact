@@ -9,11 +9,13 @@ import frc.robot.OI;
 import frc.robot.input.XboxController;
 import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.testingdashboard.TestingDashboard;
 
 
 public class TankCane extends CommandBase {
   private Climber m_climber;
+  private ClimberCaneExtension m_climberCaneExtension;
   private OI m_oi;
   private double m_caneSpeed;
   private boolean m_parameterized;
@@ -21,8 +23,8 @@ public class TankCane extends CommandBase {
   /** Creates a new tankCane. **/
   public TankCane(double caneSpeed, boolean parameterized) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_climber = Climber.getInstance();
-    addRequirements(m_climber);
+    m_climberCaneExtension = ClimberCaneExtension.getInstance();
+    addRequirements(m_climberCaneExtension);
     m_caneSpeed = caneSpeed;
     m_parameterized = parameterized;
   }

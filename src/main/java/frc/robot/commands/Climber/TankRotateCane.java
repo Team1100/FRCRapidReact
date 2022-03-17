@@ -7,19 +7,21 @@ package frc.robot.commands.Climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneRotation;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.input.XboxController;
 
 public class TankRotateCane extends CommandBase {
   /** Creates a new TankRotateCane. */
   Climber m_climber;
+  ClimberCaneRotation m_climberCaneRotation;
   OI m_oi;
   private double m_caneSpeed;
 
   public TankRotateCane() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_climber = Climber.getInstance();
-    addRequirements(m_climber);
+    m_climberCaneRotation = ClimberCaneRotation.getInstance();
+    addRequirements(m_climberCaneRotation);
     m_caneSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
   }
 

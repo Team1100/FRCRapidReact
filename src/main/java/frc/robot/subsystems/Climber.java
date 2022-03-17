@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -37,6 +39,13 @@ public class Climber extends SubsystemBase {
   private double m_currentRightCaneHeight;
   private VictorSPX m_leftCaneTurnMotor;
   private VictorSPX m_rightCaneTurnMotor;
+  private AnalogInput m_potentiometer;
+  private double m_caneRotateSpeed;
+  public static final double POTENTIOMETER_MIN = 1.1; // voltage
+  public static final double POTENTIOMETER_MAX = 3.5; // voltage
+  public static final double MIN_ANGLE = 110.0;
+  public static final double MAX_ANGLE = 350.0;
+  public static final double DEGREES_PER_VOLT = 100;
 
   // limit switches on the top of the cane (one per cane) for detecting
   // contact with a bar
@@ -57,6 +66,8 @@ public class Climber extends SubsystemBase {
     }
     m_leftCaneEncoder = m_leftCaneMotor.getEncoder();
     m_rightCaneEncoder = m_rightCaneMotor.getEncoder();
+    m_caneRotateSpeed = 0;
+    m_potentiometer = new AnalogInput(RobotMap.CL_POTENTIOMETER);
   }
 
   public static Climber getInstance() {
@@ -68,6 +79,9 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "RotationSpeed", INITIAL_CANE_ROTATION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "Potentiometer", "CaneAngle", MIN_ANGLE);
+      TestingDashboard.getInstance().registerNumber(m_climber, "PIDRotation", "CaneSetpoint", 180); 
+      TestingDashboard.getInstance().registerNumber(m_climber, "PIDRotation", "CaneMotorSpeed", .3);
     }
     return m_climber;
   }
@@ -93,6 +107,9 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    TestingDashboard.getInstance().updateNumber(m_climber, "CaneAngle", getRotationAngle());
+    TestingDashboard.getInstance().updateNumber(m_climber, "CaneMotorSpeed", m_caneRotateSpeed);
+    
   }
 
   public double getRightCaneSpeed() {
@@ -138,8 +155,15 @@ public class Climber extends SubsystemBase {
   }
 
   public void rotateBothCanes(double speed) {
+    m_caneRotateSpeed = speed;
     rotateLeftCane(speed);
     rotateRightCane(speed);
+  }
+
+  public double getRotationAngle() {
+    double volt = m_potentiometer.getVoltage();
+    double angle = MIN_ANGLE + (volt - POTENTIOMETER_MIN) * DEGREES_PER_VOLT;
+    return angle;
   }
 
 
