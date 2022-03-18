@@ -14,6 +14,8 @@ import frc.robot.commands.Climber.ConstantSpeedRotateCane;
 import frc.robot.commands.Climber.OpenClaws;
 import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.PIDTurnCaneToAngle;
+import frc.robot.commands.Climber.RetractCaneToBar;
+import frc.robot.commands.Climber.ElevatorCane;
 import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Climber.TankRotateCane;
 import frc.robot.commands.Climber.TestStateMachineSequence;
@@ -82,6 +84,7 @@ public class RobotContainer {
     PIDBottomShooter.registerWithTestingDashboard();
     ShootBall.registerWithTestingDashboard();
     PIDTurnCaneToAngle.registerWithTestingDashboard();
+    RetractCaneToBar.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard
