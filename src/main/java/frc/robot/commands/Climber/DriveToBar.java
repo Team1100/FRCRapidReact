@@ -33,8 +33,7 @@ public class DriveToBar extends CommandBase {
   public DriveToBar(double distance, double speed, int sensor, boolean parameterized) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drive = Drive.getInstance();
-    m_climber = Climber.getInstance();
-    addRequirements(m_climber);
+    addRequirements(m_drive);
     m_barSensor = new BarDetectionSensorHelper();
     m_parameterized = parameterized;
     m_distance = distance;

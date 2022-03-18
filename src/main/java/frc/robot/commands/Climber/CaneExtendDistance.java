@@ -5,19 +5,18 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
-import frc.robot.input.XboxController;
-import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.testingdashboard.TestingDashboard;
 
 
-public class ElevatorCane extends CommandBase {
+public class CaneExtendDistance extends CommandBase {
     public static final double GEAR_DIAMETER_IN_INCHES = 4;
     public static final double GEAR_CIRCUMFERENCE_IN_INCHES = GEAR_DIAMETER_IN_INCHES * Math.PI;
     public static final double ENCODER_INITIAL_POSITION = 0;
 
+    private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
-    private OI m_oi;
     private double m_caneSpeed;
     private boolean m_parameterized;
     private double m_leftCaneCurrentHeight;
@@ -44,10 +43,10 @@ public class ElevatorCane extends CommandBase {
 		  }
     }
 
-    public ElevatorCane(CanesToExtend cane, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
+    public CaneExtendDistance(CanesToExtend cane, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
-        m_climber = Climber.getInstance();
-        addRequirements(m_climber);
+        m_climberCaneExtension = ClimberCaneExtension.getInstance();
+        addRequirements(m_climberCaneExtension);
         m_caneSpeed = caneSpeed;
         m_caneHeightToTravel = caneHeightToTravel;
         m_parameterized = parameterized;
@@ -65,9 +64,9 @@ public class ElevatorCane extends CommandBase {
 
     public static void registerWithTestingDashboard() {
         Climber climber = Climber.getInstance();
-        ElevatorCane cmdRight = new ElevatorCane(CanesToExtend.CANE_RIGHT, 0, 0, false);
-        ElevatorCane cmdLeft = new ElevatorCane(CanesToExtend.CANE_LEFT, 0, 0, false);
-        ElevatorCane cmdBoth = new ElevatorCane(CanesToExtend.CANE_BOTH, 0, 0, false);
+        CaneExtendDistance cmdRight = new CaneExtendDistance(CanesToExtend.CANE_RIGHT, 0, 0, false);
+        CaneExtendDistance cmdLeft = new CaneExtendDistance(CanesToExtend.CANE_LEFT, 0, 0, false);
+        CaneExtendDistance cmdBoth = new CaneExtendDistance(CanesToExtend.CANE_BOTH, 0, 0, false);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionRight", cmdRight);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionLeft", cmdLeft);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);

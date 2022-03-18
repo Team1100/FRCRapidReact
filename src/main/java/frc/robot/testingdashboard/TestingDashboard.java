@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.networktables.NTSendable;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -128,7 +129,7 @@ public class TestingDashboard {
     tab.dataTable.addDefaultStringValue(dataName, defaultValue);
   }
 
-  public void registerSendable(SubsystemBase subsystem, String dataGrpName, String dataName, NTSendable sendable) {
+  public void registerSendable(SubsystemBase subsystem, String dataGrpName, String dataName, Sendable sendable) {
     TestingDashboardTab tab = getSubsystemTab(subsystem);
     if (tab == null) {
       System.out.println("WARNING: Subsystem for data does not exist!");
@@ -222,7 +223,7 @@ public class TestingDashboard {
           String entryName = dataList.get(j);
           double defaultNumberValue = 0;
           String defaultStringValue = "";
-          NTSendable sendable;
+          Sendable sendable;
           NetworkTableEntry entry;
           int type = tdt.dataTable.getType(entryName);
           switch (type) {

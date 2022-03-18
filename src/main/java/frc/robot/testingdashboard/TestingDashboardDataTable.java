@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.networktables.NTSendable;
 
 /**
@@ -70,7 +71,7 @@ public class TestingDashboardDataTable {
     }
   }
 
-  public void addDefaultSendableValue(String name, NTSendable sendable) {
+  public void addDefaultSendableValue(String name, Sendable sendable) {
     if (names.contains(name)) {
         type.put(name,TYPE_SENDABLE);
         defaultSendable.put(name,(Object)sendable);
@@ -85,8 +86,8 @@ public class TestingDashboardDataTable {
     return defaultDouble.get(name).doubleValue();
   }
 
-  public NTSendable getDefaultSendableValue(String name) {
-    return (NTSendable)defaultSendable.get(name);
+  public Sendable getDefaultSendableValue(String name) {
+    return (Sendable) defaultSendable.get(name);
   }
 
   /*
