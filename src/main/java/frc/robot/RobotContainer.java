@@ -56,7 +56,6 @@ public class RobotContainer {
     m_climber = Climber.getInstance();
 
     m_drive.setDefaultCommand(new ArcadeDrive());
-    m_climber.setDefaultCommand(new UserOperateCane());
 
     // Configure the button bindings
     configureButtonBindings();

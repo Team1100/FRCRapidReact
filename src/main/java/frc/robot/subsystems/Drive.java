@@ -178,6 +178,8 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedToTravel", INITIAL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_drive, "Travel", "SpeedOfTravel", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "MotorCurrent", "MaxNumCurrentValues", MOTOR_CURRENT_INITIAL_CAPACITY);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontLeftMotorCurrentAverage", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontRightMotorCurrentAverage", 0);
     }
     return m_drive;
   }
@@ -266,6 +268,8 @@ public class Drive extends SubsystemBase {
     while (m_right_motor_current_values.size() > m_max_num_current_values) {
       m_right_motor_current_values.remove(0);
     }
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorCurrentAverage", getTotalAverageLeftMotorCurrent());
+    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorCurrentAverage", getTotalAverageRightMotorCurrent());
   }
 
   public static double arrayListAverage(ArrayList<Double> arrayList) {
