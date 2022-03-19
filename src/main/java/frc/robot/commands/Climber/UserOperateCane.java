@@ -23,11 +23,13 @@ public class UserOperateCane extends CommandBase {
 
   /** Creates a new UserOperateCane. */
   public UserOperateCane() {
+    m_climber = Climber.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     m_climberCaneExtension = ClimberCaneExtension.getInstance();
     addRequirements(m_climberCaneExtension);
     m_climberCaneRotation = ClimberCaneRotation.getInstance();
     addRequirements(m_climberCaneRotation);
+    addRequirements(m_climber);
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
   }

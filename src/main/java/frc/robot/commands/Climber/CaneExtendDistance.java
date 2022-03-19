@@ -46,6 +46,7 @@ public class CaneExtendDistance extends CommandBase {
     public CaneExtendDistance(CanesToExtend cane, double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
         m_climberCaneExtension = ClimberCaneExtension.getInstance();
+        m_climber = Climber.getInstance();
         addRequirements(m_climberCaneExtension);
         m_caneSpeed = caneSpeed;
         m_caneHeightToTravel = caneHeightToTravel;
