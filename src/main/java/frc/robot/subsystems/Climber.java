@@ -102,13 +102,13 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "PIDRotation", "CaneMotorSpeed", .3);
       TestingDashboard.getInstance().registerNumber(m_climber, "ExtensionMotorCurrents", "LeftCaneMotorCurrent", 0);
       TestingDashboard.getInstance().registerNumber(m_climber, "ExtensionMotorCurrents", "RightCaneMotorCurrent", 0);
+      TestingDashboard.getInstance().registerNumber(m_climber, "ExtensionMotorCurrents", "MaxNumCurrentValues", MOTOR_CURRENT_INITIAL_CAPACITY);
     }
     return m_climber;
   }
 
   void updateMotorCurrentAverages() {
-    Drive m_drive = new Drive();
-    m_max_num_current_values = (int)TestingDashboard.getInstance().getNumber(m_drive, "MaxNumCurrentValues");
+    m_max_num_current_values = (int)TestingDashboard.getInstance().getNumber(m_climber, "MaxNumCurrentValues");
     double leftCaneMotorCurrent = m_leftCaneMotor.getOutputCurrent();
     double rightCaneMotorCurrent = m_rightCaneMotor.getOutputCurrent();
     m_left_cane_motor_current_values.add(leftCaneMotorCurrent + leftCaneMotorCurrent);
