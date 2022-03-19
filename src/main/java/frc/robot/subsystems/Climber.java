@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -170,14 +169,6 @@ public class Climber extends SubsystemBase {
     updateMotorCurrentAverages();    
   }
 
-  public double getRightCaneSpeed() {
-    return m_rightCaneMotor.get();
-  }
-
-  public double getLeftCaneSpeed() {
-    return m_leftCaneMotor.get();
-  }
-
   public void tankCane(double leftSpeed, double rightSpeed) {
     m_leftCaneMotor.set(leftSpeed);
     m_rightCaneMotor.set(rightSpeed);
@@ -232,11 +223,6 @@ public class Climber extends SubsystemBase {
   public double getCurrentRightCaneHeight() {
     return m_rightCaneEncoder.getPosition() * GEAR_CIRCUMFERENCE_IN_INCHES;
   }
-
-  /*public void noFall() {
-    double rCaneHeight = getCurrentRightCaneHeight();
-    double lCaneHeight = getCurrentLeftCaneHeight();
-  }*/
 
   public void openLeftClaw() {
     if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
