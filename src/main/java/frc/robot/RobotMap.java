@@ -218,6 +218,10 @@ public class RobotMap {
 	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
 	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
 	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
+
+	//[C]onveyor
+	public static final int C_LEFT_MOTOR = CAN_30;
+	public static final int C_RIGHT_MOTOR = CAN_31;
 	
 	//[S]hooter
 	public static final int S_TOP_MOTOR = CAN_28;

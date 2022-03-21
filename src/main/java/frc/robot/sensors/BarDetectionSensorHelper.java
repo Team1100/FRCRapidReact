@@ -25,7 +25,6 @@ public class BarDetectionSensorHelper {
           case Constants.MOTOR_CURRENT:
             if (m_drive.getTotalAverageLeftMotorCurrent() > Constants.MOTOR_CURRENT_THRESHOLD) {
                 ret = true;
-
             } else {
                 ret = false;
             }

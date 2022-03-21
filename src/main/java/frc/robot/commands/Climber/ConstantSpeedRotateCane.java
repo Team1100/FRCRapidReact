@@ -5,52 +5,43 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneRotation;
 import frc.robot.testingdashboard.TestingDashboard;
-import frc.robot.input.XboxController;
 
-public class TankRotateCane extends CommandBase {
-  /** Creates a new TankRotateCane. */
-  Climber m_climber;
+public class ConstantSpeedRotateCane extends CommandBase {
   ClimberCaneRotation m_climberCaneRotation;
-  OI m_oi;
+  Climber m_climber;
+  private boolean m_parameterized;
   private double m_caneSpeed;
 
-  public TankRotateCane() {
+  /** Creates a new ConstantSpeedRotateCane. */
+  public ConstantSpeedRotateCane(double speed, boolean parameterized) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climberCaneRotation = ClimberCaneRotation.getInstance();
     addRequirements(m_climberCaneRotation);
-    m_caneSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
+    m_climber = Climber.getInstance();
+    m_caneSpeed = speed;
+    m_parameterized = parameterized;
   }
 
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    TankRotateCane cmd = new TankRotateCane();
+    ConstantSpeedRotateCane cmd = new ConstantSpeedRotateCane(Climber.INITIAL_CANE_ROTATION_SPEED, false);
     TestingDashboard.getInstance().registerCommand(climber, "CaneRotation", cmd);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_oi = OI.getInstance();
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
-    double rotationSpeed = 0;
-    XboxController xbox = m_oi.getXbox();
-    if (xbox.getDPad().getRight().get()) {
-      rotationSpeed = m_caneSpeed;
+    if (!m_parameterized) {
+      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
     }
-    else if (xbox.getDPad().getLeft().get()) {
-      rotationSpeed = -m_caneSpeed;
-    }
-    m_climber.rotateBothCanes(rotationSpeed);
+    m_climber.rotateBothCanes(m_caneSpeed);
   }
 
   // Called once the command ends or is interrupted.

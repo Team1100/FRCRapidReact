@@ -9,10 +9,14 @@ import frc.robot.OI;
 import frc.robot.input.XboxController;
 import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneExtension;
+import frc.robot.subsystems.ClimberCaneRotation;
 import frc.robot.testingdashboard.TestingDashboard;
 
 public class UserOperateCane extends CommandBase {
   private Climber m_climber;
+  private ClimberCaneExtension m_climberCaneExtension;
+  private ClimberCaneRotation m_climberCaneRotation;
   private OI m_oi;
   private double m_caneExtensionSpeed;
   private double m_caneRotationSpeed;
@@ -22,6 +26,10 @@ public class UserOperateCane extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climber = Climber.getInstance();
     addRequirements(m_climber);
+    m_climberCaneExtension = ClimberCaneExtension.getInstance();
+    addRequirements(m_climberCaneExtension);
+    m_climberCaneRotation = ClimberCaneRotation.getInstance();
+    addRequirements(m_climberCaneRotation);
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
   }

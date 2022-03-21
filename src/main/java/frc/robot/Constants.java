@@ -32,4 +32,6 @@ public final class Constants {
     public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
+
+    public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
 }

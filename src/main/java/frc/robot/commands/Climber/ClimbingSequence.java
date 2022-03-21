@@ -2,9 +2,7 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.Climber.ElevatorCane.CanesToExtend;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
 public class ClimbingSequence extends SequentialCommandGroup {
@@ -15,9 +13,9 @@ public class ClimbingSequence extends SequentialCommandGroup {
         final double CANE_HEIGHT = 24;
 
         addCommands(
-            new ElevatorCane(CanesToExtend.CANE_BOTH, CANE_HEIGHT, CANE_SPEED, true),
+            new CaneExtendDistance(CANE_HEIGHT, CANE_SPEED, true),
             new DriveToBar(DRIVE_DISTANCE, DRIVE_SPEED, Constants.MOTOR_CURRENT, true),
-            new ElevatorCane(CanesToExtend.CANE_BOTH, -CANE_HEIGHT, CANE_SPEED, true)
+            new CaneExtendDistance(-CANE_HEIGHT, CANE_SPEED, true)
         );
     }
 
