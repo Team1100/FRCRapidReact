@@ -32,9 +32,9 @@ public class Shooter extends SubsystemBase {
     
     if (Constants.HW_ENABLE_SHOOTER) {
       m_topShooter = new CANSparkMax(RobotMap.S_TOP_MOTOR, MotorType.kBrushless);
-      m_bottomShooter = new CANSparkMax(RobotMap.S_BOT_MOTOR, MotorType.kBrushless);
+      //m_bottomShooter = new CANSparkMax(RobotMap.S_BOT_MOTOR, MotorType.kBrushless);
       m_topEncoder = m_topShooter.getEncoder();
-      m_bottomEncoder = m_bottomShooter.getEncoder();
+      //m_bottomEncoder = m_bottomShooter.getEncoder();
     }
 
     m_P = 0.00125;
@@ -47,6 +47,7 @@ public class Shooter extends SubsystemBase {
       m_shooter = new Shooter();
       TestingDashboard.getInstance().registerSubsystem(m_shooter, "Shooter");
       //Controlling shooter speeds
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "shooterInputSpeed", 0.1);
       TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterInputSpeed", 0.2);
       TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topSetpoint", 2000);
       TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterDist", 0);
@@ -68,7 +69,7 @@ public class Shooter extends SubsystemBase {
 
   public void setBottom(double speed) {
     if (Constants.HW_ENABLE_SHOOTER) {
-      m_bottomShooter.set(speed);
+      //m_bottomShooter.set(speed);
     }
   }
 
@@ -80,7 +81,7 @@ public class Shooter extends SubsystemBase {
 
   public void setBottomVoltage(double voltage) {
     if (Constants.HW_ENABLE_SHOOTER) {
-      m_bottomShooter.setVoltage(voltage);
+      //m_bottomShooter.setVoltage(voltage);
     }
   }
 
@@ -95,7 +96,7 @@ public class Shooter extends SubsystemBase {
   public double getBottomRpm() {
     double velocity = 0;
     if (Constants.HW_ENABLE_SHOOTER) {
-      velocity = m_bottomEncoder.getVelocity();
+      //velocity = m_bottomEncoder.getVelocity();
     }
     return velocity;
   }
@@ -111,7 +112,7 @@ public class Shooter extends SubsystemBase {
   public double getBottomDistance() {
     double distance = 0;
     if (Constants.HW_ENABLE_SHOOTER) {
-      distance = m_bottomEncoder.getPosition();
+     // distance = m_bottomEncoder.getPosition();
     }
     return distance;
   }

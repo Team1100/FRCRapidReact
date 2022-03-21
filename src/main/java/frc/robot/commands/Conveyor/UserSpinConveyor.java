@@ -40,18 +40,14 @@ public class UserSpinConveyor extends CommandBase {
   @Override
   public void execute() {
 
-    //Drives the ball Conveyor with the left and right triggers.
-    double speedRight = m_oi.getXbox().getAxis(XboxAxis.kRightTrigger);
-    double speedLeft = m_oi.getXbox().getAxis(XboxAxis.kLeftTrigger);
+    //Drives the ball Conveyor with the left and right bumpers.
+
     double speed = 0;
-    if(speedRight > 0) {
-      speed = speedRight / 2;
+    if(m_oi.getXbox().getButtonRightBumper().get()) {
+      speed = 0.15;
     }
-    else if(speedLeft > 0) {
-      speed = -speedLeft / 2;
-    }
-    else {
-      speed = 0;
+    if(m_oi.getXbox().getButtonLeftBumper().get()) {
+      speed = -0.15;
     }
     m_conveyor.spinConveyor(speed);
   }

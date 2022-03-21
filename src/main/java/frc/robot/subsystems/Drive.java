@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RoboRioAccelerometerHelper;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -59,7 +60,8 @@ public class Drive extends SubsystemBase {
   
 
   /** Creates a new Drive. */
-  private Drive() { 
+  private Drive() {
+    if(Constants.DRIVE_PRESENT == true) {
     m_backLeft = new CANSparkMax(RobotMap.D_BACK_LEFT, MotorType.kBrushless);
     m_backRight = new CANSparkMax(RobotMap.D_BACK_RIGHT, MotorType.kBrushless);
     m_frontLeft = new CANSparkMax(RobotMap.D_FRONT_LEFT, MotorType.kBrushless);
@@ -105,6 +107,7 @@ public class Drive extends SubsystemBase {
     }
 
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
+    }
   }
 
   public void setIdleMode(IdleMode mode) {

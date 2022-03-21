@@ -15,7 +15,9 @@ package frc.robot;
 public final class Constants {
     // Controls which software should run based on hardware availability
     public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
-    public static final boolean HW_ENABLE_SHOOTER = false;
+    public static final boolean HW_ENABLE_SHOOTER = true;
+    public static final boolean CONVEYOR_PRESENT = true;
+    public static final boolean DRIVE_PRESENT = true;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
