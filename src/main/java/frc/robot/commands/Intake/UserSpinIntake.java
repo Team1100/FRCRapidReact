@@ -41,8 +41,8 @@ public class UserSpinIntake extends CommandBase {
   public void execute() {
 
     //Drives the ball intake with the left and right triggers.
-    double speedRight = m_oi.getXbox().getAxis(XboxAxis.kRightTrigger);
-    double speedLeft = m_oi.getXbox().getAxis(XboxAxis.kLeftTrigger);
+    double speedRight = m_oi.getOperatorXboxController().getAxis(XboxAxis.kRightTrigger);
+    double speedLeft = m_oi.getOperatorXboxController().getAxis(XboxAxis.kLeftTrigger);
     double speed = 0;
     if(speedRight > 0) {
       speed = speedRight / 2;

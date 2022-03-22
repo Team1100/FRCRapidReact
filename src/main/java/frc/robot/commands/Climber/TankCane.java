@@ -49,7 +49,7 @@ public class TankCane extends CommandBase {
       m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
     }
     
-    XboxController xbox = m_oi.getXbox();
+    XboxController xbox = m_oi.getDriverXboxController();
     double leftSpeed = 0;
     double rightSpeed = 0;
     if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) {

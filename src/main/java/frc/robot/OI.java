@@ -10,11 +10,16 @@ package frc.robot;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
+import frc.robot.commands.Intake.LowerIntake;
+import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.input.AttackThree;
 import frc.robot.input.ButtonBox;
 import frc.robot.input.XboxController;
 import frc.robot.input.KeyboardBox;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Shooter;
+import frc.robot.testingdashboard.TestingDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -25,7 +30,8 @@ public class OI {
 
   public static AttackThree leftStick;
   public static AttackThree rightStick;
-  private static XboxController xbox;
+  private static XboxController DriverXboxController;
+  private static XboxController OperatorXboxController;
   private static ButtonBox buttonBox;
   private static KeyboardBox keyboardBox;
 
@@ -46,14 +52,18 @@ public class OI {
     // TODO: Tune deadband
     leftStick = new AttackThree(RobotMap.U_JOYSTICK_LEFT, 0.01);
     rightStick = new AttackThree(RobotMap.U_JOYSTICK_RIGHT, 0.01);
-    xbox = new XboxController(RobotMap.U_XBOX_CONTROLLER, 0.3);
+    DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, 0.3);
+    OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, 0.3);
     buttonBox = new ButtonBox(RobotMap.U_BUTTON_BOX);
     keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    xbox.getButtonBack().toggleWhenPressed(new ArcadeDrive());
+    DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
+    OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
+    OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
+
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to AttackThree controllers
@@ -95,9 +105,13 @@ public class OI {
    * Returns the Xbox Controller
    * @return the Xbox Controller
    */
-  public XboxController getXbox() {
-      return xbox;
+  public XboxController getDriverXboxController() {
+      return DriverXboxController;
   }
+
+  public XboxController getOperatorXboxController() {
+    return OperatorXboxController;
+}
 
   /**
    * Returns the KeyboardBox
