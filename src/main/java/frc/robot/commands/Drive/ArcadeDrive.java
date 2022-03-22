@@ -5,6 +5,7 @@
 package frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.input.XboxController;
@@ -49,7 +50,7 @@ public class ArcadeDrive extends CommandBase {
     boolean squareInputs = true;
 
     if (rotation != 0) {
-      rotation = rotation - 0.1;
+      rotation = rotation - Constants.XBOX_DEADBAND_LIMIT;
     }
     
     m_drive.arcadeDrive(-speed, rotation, squareInputs);

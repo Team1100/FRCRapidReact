@@ -25,6 +25,9 @@ public final class Constants {
     public static final int MOTOR_CURRENT = 1;
     public static final int LIMIT_SWITCH = 2;
 
+    // Defines OI deadband constants
+    public static final double XBOX_DEADBAND_LIMIT = 0.1;
+
     // Defines constants associated with sensors
     // 15 Amps for 1 second at a speed of 0.3 indicates that contact with
     // a bar has been detected
@@ -32,9 +35,5 @@ public final class Constants {
     public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
-
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
-
-    // OI Constants
-    
 }

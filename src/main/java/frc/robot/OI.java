@@ -52,12 +52,8 @@ public class OI {
     // TODO: Tune deadband
     leftStick = new AttackThree(RobotMap.U_JOYSTICK_LEFT, 0.01);
     rightStick = new AttackThree(RobotMap.U_JOYSTICK_RIGHT, 0.01);
-<<<<<<< HEAD
-    xbox = new XboxController(RobotMap.U_XBOX_CONTROLLER, 0.1);
-=======
-    DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, 0.3);
-    OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, 0.3);
->>>>>>> f664e025ca28b860b7df991ea59faaff11527073
+    DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
+    OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
     buttonBox = new ButtonBox(RobotMap.U_BUTTON_BOX);
     keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
 
