@@ -22,15 +22,14 @@ public class ShootBall extends ParallelCommandGroup {
   public ShootBall(double[] doubleArray) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());super();
-    super(new PIDTopShooter(doubleArray[0]), 
-          new PIDBottomShooter(doubleArray[1]));
+    super(new PIDShooter(doubleArray[0])
+    );
   }
 
   public static void registerWithTestingDashboard() {
     Shooter shooter = Shooter.getInstance();
-    double top_setpoint = TestingDashboard.getInstance().getNumber(shooter, "topSetpoint");
-    double bot_setpoint = TestingDashboard.getInstance().getNumber(shooter, "bottomSetpoint");
-    double[] setpoints = {top_setpoint, bot_setpoint};
+    double top_setpoint = TestingDashboard.getInstance().getNumber(shooter, "Setpoint");
+    double[] setpoints = {top_setpoint};
     ShootBall cmd = new ShootBall(setpoints);
     TestingDashboard.getInstance().registerCommand(shooter, "Basic", cmd);
   }

@@ -220,8 +220,7 @@ public class RobotMap {
 	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
 	
 	//[S]hooter
-	public static final int S_TOP_MOTOR = CAN_28;
-	public static final int S_BOT_MOTOR = CAN_29;
+	public static final int S_MOTOR = CAN_28;
 	
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
