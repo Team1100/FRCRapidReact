@@ -22,7 +22,6 @@ import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Climber.TankRotateCane;
 import frc.robot.commands.Climber.TestStateMachineSequence;
 import frc.robot.commands.Climber.UserOperateCane;
-import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -33,6 +32,13 @@ import frc.robot.commands.Intake.UserSpinIntake;
 import frc.robot.commands.Shooter.PIDShooter;
 import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Shooter.SpinShooter;
+import frc.robot.commands.Conveyor.UserSpinConveyor;
+import frc.robot.commands.Conveyor.SpinConveyorBackwards;
+import frc.robot.commands.Conveyor.SpinConveyorForwards;
+import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
+import frc.robot.commands.Auto.DriveAndSpinIntake;
+import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneExtension;
@@ -98,11 +104,15 @@ public class RobotContainer {
 
     // Conveyor
     SpinConveyorForwards.registerWithTestingDashboard();
+    SpinConveyorBackwards.registerWithTestingDashboard();
+    UserSpinConveyor.registerWithTestingDashboard();
 
     // Intake
     UserSpinIntake.registerWithTestingDashboard();
     RaiseIntake.registerWithTestingDashboard();
     LowerIntake.registerWithTestingDashboard();
+    SpinIntake.registerWithTestingDashboard();
+    DriveAndSpinIntake.registerWithTestingDashboard();
 
     // Auto
     

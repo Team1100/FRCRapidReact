@@ -16,6 +16,11 @@ public final class Constants {
     // Controls which software should run based on hardware availability
     public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
     public static final boolean HW_ENABLE_SHOOTER = true;
+    public static final boolean HW_ENABLE_CONVEYOR = true;
+    public static final boolean HW_ENABLE_DRIVE = true;
+
+    // Defines Shooter command constants
+    public static final double DEFAULT_SHOOTER_SPEED = 0.35;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;

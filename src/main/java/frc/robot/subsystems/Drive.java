@@ -59,7 +59,7 @@ public class Drive extends SubsystemBase {
   
 
   /** Creates a new Drive. */
-  private Drive() { 
+  private Drive() {
     m_backLeft = new CANSparkMax(RobotMap.D_BACK_LEFT, MotorType.kBrushless);
     m_backRight = new CANSparkMax(RobotMap.D_BACK_RIGHT, MotorType.kBrushless);
     m_frontLeft = new CANSparkMax(RobotMap.D_FRONT_LEFT, MotorType.kBrushless);
