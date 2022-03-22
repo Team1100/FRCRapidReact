@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,7 +30,7 @@ public class Climber extends SubsystemBase {
   private static Climber m_climber;
   public final static double INITIAL_TRAVEL_SPEED = 0.3;
   public final static double INITIAL_CANE_EXTENTION_SPEED = 0.2;
-  public final static double INITIAL_CANE_ROTATION_SPEED = 0.4;
+  public final static double INITIAL_CANE_ROTATION_SPEED = 0.2;
 
   public static final double GEAR_DIAMETER_IN_INCHES = 4;
   public static final double GEAR_CIRCUMFERENCE_IN_INCHES = GEAR_DIAMETER_IN_INCHES * Math.PI;
@@ -42,22 +43,33 @@ public class Climber extends SubsystemBase {
   private DoubleSolenoid m_rightClawPiston;
   private CANSparkMax m_leftCaneMotor;
   private CANSparkMax m_rightCaneMotor;
+
   private RelativeEncoder m_leftCaneEncoder;
   private RelativeEncoder m_rightCaneEncoder;
+
+
   private double m_currentLeftCaneHeight;
   private double m_currentRightCaneHeight;
-  private VictorSPX m_leftCaneTurnMotor;
-  private VictorSPX m_rightCaneTurnMotor;
+  private VictorSPX m_leftCaneRotationMotor;
+  private VictorSPX m_rightCaneRotationMotor;
+  private Encoder m_caneRotationEncoder;
+  private static final double ROTATION_ECODER_PULSES_PER_REVOLUTION = 2048;
+  private static final double ROTATION_ENCODER_DEGREES_PER_PULSE = 360 / ROTATION_ECODER_PULSES_PER_REVOLUTION; // Degrees
+
   private AnalogInput m_potentiometer;
   private double m_caneRotateSpeed;
+  
+  // TODO: Adjust the Pot min/max voltage, min/max angle, and degrees per volt for current potentiometer
   public static final double POTENTIOMETER_MIN = 1.1; // voltage
   public static final double POTENTIOMETER_MAX = 3.5; // voltage
+  
   public static final double MIN_ANGLE = 110.0;
   public static final double MAX_ANGLE = 350.0;
   public static final double DEGREES_PER_VOLT = 100;
 
   ArrayList<Double> m_left_cane_motor_current_values;
   ArrayList<Double> m_right_cane_motor_current_values;
+
   public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 50; // This is 1000 miliseconds divided in 20 millisecond chunks
   private int m_max_num_current_values;
 
@@ -67,10 +79,11 @@ public class Climber extends SubsystemBase {
   
   /** Creates a new Climber. */
   public Climber() {
-    m_leftCaneTurnMotor = new VictorSPX(RobotMap.CL_LEFT_CANE_TURN_MOTOR);
-    m_rightCaneTurnMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
-    m_leftCaneTurnMotor.setNeutralMode(NeutralMode.Brake);
-    m_rightCaneTurnMotor.setNeutralMode(NeutralMode.Brake);
+    m_leftCaneRotationMotor = new VictorSPX(RobotMap.CL_LEFT_CANE_TURN_MOTOR);
+    m_rightCaneRotationMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
+    m_leftCaneRotationMotor.setNeutralMode(NeutralMode.Brake);
+    m_rightCaneRotationMotor.setNeutralMode(NeutralMode.Brake);
+    
     m_leftCaneMotor = new CANSparkMax(RobotMap.CL_LEFT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor = new CANSparkMax(RobotMap.CL_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor.setInverted(false);
@@ -83,9 +96,14 @@ public class Climber extends SubsystemBase {
     }
     m_leftCaneEncoder = m_leftCaneMotor.getEncoder();
     m_rightCaneEncoder = m_rightCaneMotor.getEncoder();
+
+    m_caneRotationEncoder = new Encoder(RobotMap.CL_CANE_TURN_ENCODER_A, RobotMap.CL_CANE_TURN_ENCODER_B);
+    m_caneRotationEncoder.setDistancePerPulse(ROTATION_ENCODER_DEGREES_PER_PULSE);
+
     m_caneRotateSpeed = 0;
     m_potentiometer = new AnalogInput(RobotMap.CL_POTENTIOMETER);
 
+    // Initializes the arraylist for the motors that extend the cane
     m_left_cane_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
       m_left_cane_motor_current_values.add(0.0);
@@ -94,6 +112,7 @@ public class Climber extends SubsystemBase {
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
       m_right_cane_motor_current_values.add(0.0);
     }
+
 
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
 
@@ -118,6 +137,7 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentRightEncoderPostition", 0);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentLeftEncoderVelocity", 0);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentRightEncoderVelocity", 0);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentRotationEncoderRate", 0);
       TestingDashboard.getInstance().registerNumber(m_climber, "Potentiometer", "CaneAngle", MIN_ANGLE);
       TestingDashboard.getInstance().registerNumber(m_climber, "PIDRotation", "CaneSetpoint", 180); 
       TestingDashboard.getInstance().registerNumber(m_climber, "PIDRotation", "CaneMotorSpeed", .3);
@@ -140,7 +160,9 @@ public class Climber extends SubsystemBase {
   }
 
   void updateMotorCurrentAverages() {
+
     m_max_num_current_values = (int)TestingDashboard.getInstance().getNumber(m_climber, "MaxNumCurrentValues");
+    // Extention motors
     double leftCaneMotorCurrent = m_leftCaneMotor.getOutputCurrent();
     double rightCaneMotorCurrent = m_rightCaneMotor.getOutputCurrent();
     m_left_cane_motor_current_values.add(leftCaneMotorCurrent + leftCaneMotorCurrent);
@@ -156,6 +178,7 @@ public class Climber extends SubsystemBase {
     while (m_right_cane_motor_current_values.size() > m_max_num_current_values) {
       m_right_cane_motor_current_values.remove(0);
     }
+    
   }
 
   public static double arrayListAverage(ArrayList<Double> arrayList) {
@@ -218,12 +241,16 @@ public class Climber extends SubsystemBase {
 	  return m_rightCaneEncoder;
   }
 
+  public Encoder getCaneRotationEncoder() {
+	  return m_caneRotationEncoder;
+  }
+
   public void rotateLeftCane(double speed) {
-    m_leftCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, speed);
+    m_leftCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
   public void rotateRightCane(double speed) {
-    m_rightCaneTurnMotor.set(VictorSPXControlMode.PercentOutput, -speed);
+    m_rightCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, -speed);
   }
 
   public void rotateBothCanes(double speed) {
@@ -288,12 +315,11 @@ public class Climber extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_climber, "CaneMotorSpeed", m_caneRotateSpeed);
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftExtensionSpeed", m_leftCaneMotor.get());
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightExtensionSpeed", m_rightCaneMotor.get());
-    //TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftRotationSpeed", m_leftCaneTurnMotor);
-    //TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightRotationSpeed", m_rightCaneTurnMotor);
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderPostition", m_leftCaneEncoder.getPosition());
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderPostition", m_rightCaneEncoder.getPosition());
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderVelocity", m_leftCaneEncoder.getVelocity());
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderVelocity", m_rightCaneEncoder.getVelocity());
+    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRotationEncoderRate", m_caneRotationEncoder.getRate());
 
     updateMotorCurrentAverages();    
   }

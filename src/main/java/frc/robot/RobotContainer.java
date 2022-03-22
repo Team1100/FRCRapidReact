@@ -14,14 +14,14 @@ import frc.robot.commands.Climber.ConstantSpeedRotateCane;
 import frc.robot.commands.Climber.OpenClaws;
 import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.PIDTurnCaneToAngle;
+import frc.robot.commands.Climber.ReachForNextBarSequence;
+import frc.robot.commands.Climber.ReachForNextBarStatefully;
 import frc.robot.commands.Climber.RetractCaneToBar;
+import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Climber.TankRotateCane;
 import frc.robot.commands.Climber.TestStateMachineSequence;
 import frc.robot.commands.Climber.UserOperateCane;
-import frc.robot.commands.Conveyor.SpinConveyorBackwards;
-import frc.robot.commands.Conveyor.SpinConveyorForwards;
-import frc.robot.commands.Conveyor.UserSpinConveyor;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -41,6 +41,7 @@ import frc.robot.commands.Auto.DriveAndSpinIntake;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -65,12 +66,27 @@ public class RobotContainer {
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
 
+
     m_drive.setDefaultCommand(new ArcadeDrive());
 
     // Configure the button bindings
     configureButtonBindings();
 
     // Register commands with TestingDashboard commands
+
+    // Drive
+    TankDrive.registerWithTestingDashboard();
+    ArcadeDrive.registerWithTestingDashboard();
+    DriveDistance.registerWithTestingDashboard();
+    KeyboardDrive.registerWithTestingDashboard();
+
+    // Shooter
+    PIDTopShooter.registerWithTestingDashboard();
+    PIDBottomShooter.registerWithTestingDashboard();
+    ShootBall.registerWithTestingDashboard();
+    RunShooter.registerWithTestingDashboard();
+
+    // Climber
     DriveToBar.registerWithTestingDashboard();
     TankCane.registerWithTestingDashboard();
     OpenClaws.registerWithTestingDashboard();
@@ -80,25 +96,27 @@ public class RobotContainer {
     ConstantSpeedRotateCane.registerWithTestingDashboard();
     ClimbStatefully.registerWithTestingDashboard();
     TestStateMachineSequence.registerWithTestingDashboard();
-    TankDrive.registerWithTestingDashboard();
-    ArcadeDrive.registerWithTestingDashboard();
     CaneExtendDistance.registerWithTestingDashboard();
-    DriveDistance.registerWithTestingDashboard();
-    KeyboardDrive.registerWithTestingDashboard();
+    PIDTurnCaneToAngle.registerWithTestingDashboard();
+    RetractCaneToBar.registerWithTestingDashboard();
+    ReachForNextBarSequence.registerWithTestingDashboard();
+    RotateCaneToBar.registerWithTestingDashboard();
+    ReachForNextBarStatefully.registerWithTestingDashboard();
+
+    // Conveyor
+    SpinConveyorForwards.registerWithTestingDashboard();
+    UserSpinConveyor.registerWithTestingDashboard();
+    SpinConveyorBackwards.registerWithTestingDashboard();
+
+    // Intake
     UserSpinIntake.registerWithTestingDashboard();
     RaiseIntake.registerWithTestingDashboard();
     LowerIntake.registerWithTestingDashboard();
     SpinIntake.registerWithTestingDashboard();
-    UserSpinConveyor.registerWithTestingDashboard();
-    SpinConveyorBackwards.registerWithTestingDashboard();
-    SpinConveyorForwards.registerWithTestingDashboard();
-    PIDTopShooter.registerWithTestingDashboard();
-    PIDBottomShooter.registerWithTestingDashboard();
-    ShootBall.registerWithTestingDashboard();
-    RunShooter.registerWithTestingDashboard();
-    PIDTurnCaneToAngle.registerWithTestingDashboard();
-    RetractCaneToBar.registerWithTestingDashboard();
     DriveAndSpinIntake.registerWithTestingDashboard();
+
+    // Auto
+    
     
     
     // Create Testing Dashboard
