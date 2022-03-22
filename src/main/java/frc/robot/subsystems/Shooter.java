@@ -19,10 +19,8 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class Shooter extends SubsystemBase {
   
   private static Shooter m_shooter;
-  private CANSparkMax m_topShooter;
-  private CANSparkMax m_bottomShooter;
-  private RelativeEncoder m_topEncoder;
-  private RelativeEncoder m_bottomEncoder;
+  private CANSparkMax m_shooterMotor;
+  private RelativeEncoder m_shooterEncoder;
   private double m_P, m_I, m_D;
 
   /**
@@ -31,10 +29,8 @@ public class Shooter extends SubsystemBase {
   private Shooter() {
     
     if (Constants.HW_ENABLE_SHOOTER) {
-      m_topShooter = new CANSparkMax(RobotMap.S_TOP_MOTOR, MotorType.kBrushless);
-      m_bottomShooter = new CANSparkMax(RobotMap.S_BOT_MOTOR, MotorType.kBrushless);
-      m_topEncoder = m_topShooter.getEncoder();
-      m_bottomEncoder = m_bottomShooter.getEncoder();
+      m_shooterMotor = new CANSparkMax(RobotMap.S_MOTOR, MotorType.kBrushless);
+      m_shooterEncoder = m_shooterMotor.getEncoder();
     }
 
     m_P = 0.00125;
@@ -47,71 +43,39 @@ public class Shooter extends SubsystemBase {
       m_shooter = new Shooter();
       TestingDashboard.getInstance().registerSubsystem(m_shooter, "Shooter");
       //Controlling shooter speeds
-      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterInputSpeed", 0.2);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topSetpoint", 2000);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterDist", 0);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "topShooter", "topShooterOutputSpeed", 0);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterInputSpeed", 0.2);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomSetpoint", 2000);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterDist", 0);
-      TestingDashboard.getInstance().registerNumber(m_shooter, "bottomShooter", "bottomShooterOutputSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterInputSpeed", 0.2);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "Setpoint", 2000);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterDist", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterOutputSpeed", 0);
     }
     return m_shooter;
   }
 
 
-  public void setTop(double speed) {
+  public void setMotor(double speed) {
     if (Constants.HW_ENABLE_SHOOTER) {
-      m_topShooter.set(speed);
+      m_shooterMotor.set(speed);
     }
   }
 
-  public void setBottom(double speed) {
+  public void setMotorVoltage(double voltage) {
     if (Constants.HW_ENABLE_SHOOTER) {
-      m_bottomShooter.set(speed);
+      m_shooterMotor.setVoltage(voltage);
     }
   }
 
-  public void setTopVoltage(double voltage) {
-    if (Constants.HW_ENABLE_SHOOTER) {
-      m_topShooter.setVoltage(voltage);
-    }
-  }
-
-  public void setBottomVoltage(double voltage) {
-    if (Constants.HW_ENABLE_SHOOTER) {
-      m_bottomShooter.setVoltage(voltage);
-    }
-  }
-
-  public double getTopRpm() {
+  public double getMotorRpm() {
     double velocity = 0;
     if (Constants.HW_ENABLE_SHOOTER) {
-      velocity = m_topEncoder.getVelocity();
+      velocity = m_shooterEncoder.getVelocity();
     }
     return velocity;
   }
 
-  public double getBottomRpm() {
-    double velocity = 0;
-    if (Constants.HW_ENABLE_SHOOTER) {
-      velocity = m_bottomEncoder.getVelocity();
-    }
-    return velocity;
-  }
-
-  public double getTopDistance() {
+  public double getMotorDistance() {
     double distance = 0;
     if (Constants.HW_ENABLE_SHOOTER) {
-      distance = m_topEncoder.getPosition();
-    }
-    return distance;
-  }
-
-  public double getBottomDistance() {
-    double distance = 0;
-    if (Constants.HW_ENABLE_SHOOTER) {
-      distance = m_bottomEncoder.getPosition();
+      distance = m_shooterEncoder.getPosition();
     }
     return distance;
   }
@@ -143,9 +107,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    TestingDashboard.getInstance().updateNumber(this, "topShooterDist", getTopDistance());
-    TestingDashboard.getInstance().updateNumber(this, "topShooterOutputSpeed", getTopRpm());
-    TestingDashboard.getInstance().updateNumber(this, "bottomShooterDist", getBottomDistance());
-    TestingDashboard.getInstance().updateNumber(this, "bottomShooterOutputSpeed", getBottomRpm());
+    TestingDashboard.getInstance().updateNumber(this, "ShooterDist", getMotorDistance());
+    TestingDashboard.getInstance().updateNumber(this, "ShooterOutputSpeed", getMotorRpm());
   }
 }

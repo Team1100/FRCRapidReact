@@ -30,9 +30,9 @@ import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
 import frc.robot.commands.Intake.UserSpinIntake;
-import frc.robot.commands.Shooter.PIDBottomShooter;
-import frc.robot.commands.Shooter.PIDTopShooter;
+import frc.robot.commands.Shooter.PIDShooter;
 import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneExtension;
@@ -75,9 +75,9 @@ public class RobotContainer {
     KeyboardDrive.registerWithTestingDashboard();
 
     // Shooter
-    PIDTopShooter.registerWithTestingDashboard();
-    PIDBottomShooter.registerWithTestingDashboard();
     ShootBall.registerWithTestingDashboard();
+    PIDShooter.registerWithTestingDashboard();
+    SpinShooter.registerWithTestingDashboard();
 
     // Climber
     DriveToBar.registerWithTestingDashboard();
@@ -105,14 +105,6 @@ public class RobotContainer {
     LowerIntake.registerWithTestingDashboard();
 
     // Auto
-    
-    
-    
-    
-    
-    
-
-
     
     
     
