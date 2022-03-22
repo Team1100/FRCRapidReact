@@ -36,6 +36,9 @@ import frc.robot.commands.Shooter.PIDBottomShooter;
 import frc.robot.commands.Shooter.PIDTopShooter;
 import frc.robot.commands.Shooter.RunShooter;
 import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
+import frc.robot.commands.Auto.DriveAndSpinIntake;
+import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
@@ -85,6 +88,7 @@ public class RobotContainer {
     UserSpinIntake.registerWithTestingDashboard();
     RaiseIntake.registerWithTestingDashboard();
     LowerIntake.registerWithTestingDashboard();
+    SpinIntake.registerWithTestingDashboard();
     UserSpinConveyor.registerWithTestingDashboard();
     SpinConveyorBackwards.registerWithTestingDashboard();
     SpinConveyorForwards.registerWithTestingDashboard();
@@ -94,6 +98,7 @@ public class RobotContainer {
     RunShooter.registerWithTestingDashboard();
     PIDTurnCaneToAngle.registerWithTestingDashboard();
     RetractCaneToBar.registerWithTestingDashboard();
+    DriveAndSpinIntake.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard

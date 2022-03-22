@@ -5,13 +5,13 @@
 package frc.robot.commands.Conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.input.XboxController.XboxAxis;
 import frc.robot.OI;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.testingdashboard.TestingDashboard;
 
-public class UserSpinConveyor extends CommandBase {
+public class UserSpinConveyor extends SequentialCommandGroup {
 
   private Conveyor m_conveyor;
   private OI m_oi;
