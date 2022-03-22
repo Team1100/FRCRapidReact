@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
     if (m_shooter == null) {
       m_shooter = new Shooter();
       TestingDashboard.getInstance().registerSubsystem(m_shooter, "Shooter");
-      //Controlling shooter speeds
+      // Controlling shooter speeds
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterInputSpeed", 0.2);
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "Setpoint", 2000);
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterDist", 0);
