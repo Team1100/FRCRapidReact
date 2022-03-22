@@ -46,7 +46,7 @@ public class OI {
     // TODO: Tune deadband
     leftStick = new AttackThree(RobotMap.U_JOYSTICK_LEFT, 0.01);
     rightStick = new AttackThree(RobotMap.U_JOYSTICK_RIGHT, 0.01);
-    xbox = new XboxController(RobotMap.U_XBOX_CONTROLLER, 0.3);
+    xbox = new XboxController(RobotMap.U_XBOX_CONTROLLER, 0.1);
     buttonBox = new ButtonBox(RobotMap.U_BUTTON_BOX);
     keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
 

@@ -46,9 +46,13 @@ public class ArcadeDrive extends CommandBase {
 
     double rotation = m_xbox.getAxis(XboxAxis.kXRight);
     double speed = m_xbox.getAxis(XboxAxis.kYLeft);
-    boolean square_inputs = true;
+    boolean squareInputs = true;
 
-    m_drive.arcadeDrive(-speed, rotation, square_inputs);
+    if (rotation != 0) {
+      rotation = rotation - 0.1;
+    }
+    
+    m_drive.arcadeDrive(-speed, rotation, squareInputs);
   }
 
   // Called once the command ends or is interrupted.
