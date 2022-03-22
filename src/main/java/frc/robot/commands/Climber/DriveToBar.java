@@ -80,21 +80,26 @@ public class DriveToBar extends CommandBase {
      * The tankDrive is automatically set to go straight.
      * If the left sensor is activated, the left motor is stopped and the right motor continues at half it's speed.
      * If the right sensor is activated, the right motor is stopped and the left motor continues at half it's speed.
-     **/ 
-    m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction);
+     **/
     if (m_barSensor.leftSensorActivated(m_sensor)) {
-      m_drive.tankDrive(0, (m_speed) * m_direction);
       m_leftSensorHasActivated = true;
     }
+
     if (m_barSensor.rightSensorActivated(m_sensor)) {
-      m_drive.tankDrive((m_speed) * m_direction, 0);
       m_rightSensorHasActivated = true;
+    }
+
+    if (!m_leftSensorHasActivated && !m_rightSensorHasActivated) {
+      m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction);
+    } else {
+      m_drive.tankDrive(0, 0);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_drive.tankDrive(0, 0);
   }
 
   // Returns true when the command should end.
@@ -118,7 +123,7 @@ public class DriveToBar extends CommandBase {
         }
       }
     } else {
-      if (m_leftSensorHasActivated && m_rightSensorHasActivated) {
+      if (m_leftSensorHasActivated || m_rightSensorHasActivated) {
         finished = true;
       }
     }

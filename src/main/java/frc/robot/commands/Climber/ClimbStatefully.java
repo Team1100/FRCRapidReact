@@ -8,8 +8,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.commands.Auto.Wait;
-import frc.robot.commands.Climber.CaneExtendDistance.CanesToExtend;
+
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -31,24 +30,32 @@ public class ClimbStatefully extends CommandBase {
   private static final double INITIAL_CANE_EXTENSION_DISTANCE = 21; // in inches
   private static final double INTIIAL_CANE_EXTENSION_SPEED = 0.3; // % power
   private static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
-  private static final double CANE_RETRACTION_DISTANCE = -INITIAL_CANE_EXTENSION_DISTANCE;
+  private static final double CANE_RETRACTION_DISTANCE = -(INITIAL_CANE_EXTENSION_DISTANCE+3);
   private static final double CANE_RETRACTION_SPEED = INTIIAL_CANE_EXTENSION_SPEED;
+  private static final double CANE_ROTATION_SPEED = 0.2;
+  private static final double NUMBER_OF_CYCLES = 0;
   private DriveToBar m_driveToBar;
   private CaneExtendDistance m_raiseCaneToBar;
   private CaneExtendDistance m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
   private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
+  private ReachForNextBarStatefully m_reachForNextBarStatefully;
   private State m_state;
   private boolean m_isFinished;
+  private boolean m_commandsHaveBeenScheduled;
+  private int m_cycle;
 
   /** Creates a new ClimbStatefully. */
   public ClimbStatefully() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_driveToBar = new DriveToBar(DRIVE_TO_BAR_DISTANCE, DRIVE_TO_BAR_SPEED, Constants.MOTOR_CURRENT, true);
-    m_raiseCaneToBar = new CaneExtendDistance(CanesToExtend.CANE_BOTH, INITIAL_CANE_EXTENSION_DISTANCE, INTIIAL_CANE_EXTENSION_SPEED, true);
-    m_retractCane = new CaneExtendDistance(CanesToExtend.CANE_BOTH, CANE_RETRACTION_DISTANCE, CANE_RETRACTION_SPEED, true);
+    m_driveToBar = new DriveToBar(-DRIVE_TO_BAR_DISTANCE, DRIVE_TO_BAR_SPEED, Constants.MOTOR_CURRENT, true);
+    m_raiseCaneToBar = new CaneExtendDistance(INITIAL_CANE_EXTENSION_DISTANCE, INTIIAL_CANE_EXTENSION_SPEED, true);
+    m_retractCane = new CaneExtendDistance(CANE_RETRACTION_DISTANCE, CANE_RETRACTION_SPEED, true);
     m_forceUpright = new ConstantSpeedRotateCane(UPRIGHT_CANE_ROTATION_SPEED, true);
+    m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE/2, CANE_ROTATION_SPEED);
     m_state = State.INIT;
     m_isFinished = false;
+    m_commandsHaveBeenScheduled = false;
+    m_cycle = 0;
   }
 
   //Register with TestingDashboard
@@ -63,6 +70,7 @@ public class ClimbStatefully extends CommandBase {
   public void initialize() {
     m_state = State.INIT;
     m_isFinished = false;
+    m_cycle = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -74,23 +82,54 @@ public class ClimbStatefully extends CommandBase {
         m_state = State.DRIVE_TO_BAR;
         break;
       case DRIVE_TO_BAR:
-        m_raiseCaneToBar.schedule();
-        m_driveToBar.schedule();
+        if (!m_commandsHaveBeenScheduled) {
+          m_forceUpright.schedule();
+          m_raiseCaneToBar.schedule();
+          m_driveToBar.schedule();
+          m_commandsHaveBeenScheduled = true;
+        }
         if (m_driveToBar.isFinished() && m_raiseCaneToBar.isFinished()) {
           m_state = State.RETRACT_CANE;
+          m_commandsHaveBeenScheduled = false;
         }
         break;
       case RETRACT_CANE:
-        m_forceUpright.schedule();
-        m_retractCane.schedule();
+        if (!m_commandsHaveBeenScheduled) {
+          m_retractCane.schedule();
+          m_commandsHaveBeenScheduled = true;
+        }
         if (m_retractCane.isFinished()) {
-          m_forceUpright.cancel();
-          m_state = State.STOP;
+          m_state = State.REACH_FOR_NEXT_BAR;
+          m_commandsHaveBeenScheduled = false;
         }
         break;
       case REACH_FOR_NEXT_BAR:
+        if (!m_commandsHaveBeenScheduled) {
+          m_forceUpright.cancel();
+          m_reachForNextBarStatefully.schedule();
+          m_commandsHaveBeenScheduled = true;
+        }
+        if (m_reachForNextBarStatefully.isFinished()) {
+          m_state = State.RELEASE_AND_STABALIZE;
+          m_commandsHaveBeenScheduled = false;
+        }
         break;
       case RELEASE_AND_STABALIZE:
+        if (!m_commandsHaveBeenScheduled) {
+          m_forceUpright.schedule();
+          m_retractCane.schedule();
+          m_commandsHaveBeenScheduled = true;
+        }
+        if (m_retractCane.isFinished()) {
+          if (m_cycle == NUMBER_OF_CYCLES) {
+            m_state = State.STOP;
+            m_commandsHaveBeenScheduled = false;
+          } else {
+            m_state = State.REACH_FOR_NEXT_BAR;
+            m_commandsHaveBeenScheduled = false;
+            m_cycle++;
+          }
+        }
         break;
       case STOP:
         m_isFinished = true;

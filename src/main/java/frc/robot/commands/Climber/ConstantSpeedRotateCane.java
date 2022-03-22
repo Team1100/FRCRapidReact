@@ -20,6 +20,7 @@ public class ConstantSpeedRotateCane extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     m_climberCaneRotation = ClimberCaneRotation.getInstance();
     addRequirements(m_climberCaneRotation);
+    m_climber = Climber.getInstance();
     m_caneSpeed = speed;
     m_parameterized = parameterized;
   }
