@@ -37,7 +37,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void initialize() {
     oi = OI.getInstance();
-    m_xbox = oi.getXbox();
+    m_xbox = oi.getDriverXboxController();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

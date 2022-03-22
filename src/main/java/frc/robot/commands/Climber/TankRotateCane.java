@@ -43,7 +43,7 @@ public class TankRotateCane extends CommandBase {
   public void execute() {
     m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
     double rotationSpeed = 0;
-    XboxController xbox = m_oi.getXbox();
+    XboxController xbox = m_oi.getOperatorXboxController();
     if (xbox.getDPad().getRight().get()) {
       rotationSpeed = m_caneSpeed;
     }

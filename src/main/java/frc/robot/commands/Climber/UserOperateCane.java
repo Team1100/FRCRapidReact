@@ -60,12 +60,20 @@ public class UserOperateCane extends CommandBase {
   }
 
   private void extendCane() {
+<<<<<<< HEAD
     XboxController xbox = m_oi.getXbox();
     
     double extensionSpeed = 0;
     if (xbox.getDPad().getDown().get()) {
       extensionSpeed = m_caneExtensionSpeed;
     } else if (xbox.getDPad().getUp().get()) {
+=======
+    XboxController xbox = m_oi.getOperatorXboxController();
+    double extensionSpeed = 0;
+    if (xbox.getDPad().getUp().getAsBoolean()) { 
+      extensionSpeed = m_caneExtensionSpeed;
+    } else if (xbox.getDPad().getDown().getAsBoolean()) { 
+>>>>>>> f664e025ca28b860b7df991ea59faaff11527073
       extensionSpeed = -m_caneExtensionSpeed;
     }
 
@@ -74,10 +82,17 @@ public class UserOperateCane extends CommandBase {
 
   private void rotateCane() {
     double rotationSpeed = 0;
+<<<<<<< HEAD
     XboxController xbox = m_oi.getXbox();
     if (xbox.getDPad().getRight().get()) {
       rotationSpeed = m_caneRotationSpeed;
     } else if (xbox.getDPad().getLeft().get()) {
+=======
+    XboxController xbox = m_oi.getOperatorXboxController();
+    if (xbox.getDPad().getLeft().getAsBoolean()) { 
+      rotationSpeed = m_caneRotationSpeed;
+    } else if (xbox.getDPad().getRight().getAsBoolean()) { 
+>>>>>>> f664e025ca28b860b7df991ea59faaff11527073
       rotationSpeed = -m_caneRotationSpeed;
     }
     m_climber.rotateBothCanes(rotationSpeed);

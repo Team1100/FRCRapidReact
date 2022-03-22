@@ -15,6 +15,7 @@ public class UserSpinConveyor extends CommandBase {
 
   private Conveyor m_conveyor;
   private OI m_oi;
+  private static final double CONVEYOR_SPEED = 0.15;
 
   /** Creates a new UserSpinConveyorForward. */
   public UserSpinConveyor() {
@@ -41,14 +42,14 @@ public class UserSpinConveyor extends CommandBase {
   public void execute() {
 
     //Drives the ball Conveyor with the left and right triggers.
-    double speedRight = m_oi.getXbox().getAxis(XboxAxis.kRightTrigger);
-    double speedLeft = m_oi.getXbox().getAxis(XboxAxis.kLeftTrigger);
+    boolean conveyorIn = m_oi.getOperatorXboxController().getButtonRightBumper().getAsBoolean();
+    boolean conveyorOut = m_oi.getOperatorXboxController().getButtonLeftBumper().getAsBoolean();
     double speed = 0;
-    if(speedRight > 0) {
-      speed = speedRight / 2;
+    if(conveyorIn) {
+      speed = CONVEYOR_SPEED;
     }
-    else if(speedLeft > 0) {
-      speed = -speedLeft / 2;
+    else if(conveyorOut) {
+      speed = -CONVEYOR_SPEED;
     }
     else {
       speed = 0;
