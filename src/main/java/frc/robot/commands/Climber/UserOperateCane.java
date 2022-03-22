@@ -73,10 +73,11 @@ public class UserOperateCane extends CommandBase {
 
   private void rotateCane() {
     double rotationSpeed = 0;
+
     XboxController xbox = m_oi.getOperatorXboxController();
     if (xbox.getDPad().getLeft().getAsBoolean()) { 
       rotationSpeed = m_caneRotationSpeed;
-    } else if (xbox.getDPad().getRight().getAsBoolean()) { 
+    } else if (xbox.getDPad().getRight().getAsBoolean()) {  
       rotationSpeed = -m_caneRotationSpeed;
     }
     m_climber.rotateBothCanes(rotationSpeed);
