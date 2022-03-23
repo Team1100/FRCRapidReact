@@ -27,6 +27,7 @@ import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
+import frc.robot.commands.Drive.TurnAngle;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
 import frc.robot.commands.Intake.UserSpinIntake;
@@ -80,6 +81,7 @@ public class RobotContainer {
     ArcadeDrive.registerWithTestingDashboard();
     DriveDistance.registerWithTestingDashboard();
     KeyboardDrive.registerWithTestingDashboard();
+    TurnAngle.registerWithTestingDashboard();
 
     // Shooter
     ShootBall.registerWithTestingDashboard();

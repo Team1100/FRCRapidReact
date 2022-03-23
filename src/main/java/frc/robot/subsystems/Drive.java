@@ -14,6 +14,7 @@ import frc.robot.RoboRioAccelerometerHelper;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
@@ -37,6 +38,7 @@ public class Drive extends SubsystemBase {
   private boolean m_measureVelocity;
   private boolean m_measureDistance;
   private double accelIntCount = 0;
+  private AHRS m_navx;
 
   // Motor current variables
   ArrayList<Double> m_left_motor_current_values;
@@ -60,6 +62,9 @@ public class Drive extends SubsystemBase {
 
   /** Creates a new Drive. */
   private Drive() {
+    // Add Navx
+    m_navx = new AHRS(RobotMap.D_NAVX);
+
     m_backLeft = new CANSparkMax(RobotMap.D_BACK_LEFT, MotorType.kBrushless);
     m_backRight = new CANSparkMax(RobotMap.D_BACK_RIGHT, MotorType.kBrushless);
     m_frontLeft = new CANSparkMax(RobotMap.D_FRONT_LEFT, MotorType.kBrushless);
@@ -228,6 +233,10 @@ public class Drive extends SubsystemBase {
     m_leftSpeed = leftSpeed;
     drivetrain.tankDrive(leftSpeed, rightSpeed);
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
+  }
+
+  public double getYaw() {
+    return m_navx.getYaw();
   }
 
   //Encoder Methods

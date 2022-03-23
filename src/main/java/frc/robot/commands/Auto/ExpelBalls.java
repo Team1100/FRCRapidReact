@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.commands.Shooter.SpinShooter;
-import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
