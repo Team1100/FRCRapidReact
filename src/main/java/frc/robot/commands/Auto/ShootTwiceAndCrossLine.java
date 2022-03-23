@@ -7,8 +7,6 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Intake.LowerIntake;
-import frc.robot.commands.Intake.RaiseIntake;
-import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.subsystems.Auto;
 import frc.robot.testingdashboard.TestingDashboard;
 

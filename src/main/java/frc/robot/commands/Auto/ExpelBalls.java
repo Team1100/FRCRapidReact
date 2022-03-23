@@ -18,9 +18,6 @@ import frc.robot.subsystems.Shooter;
 public class ExpelBalls extends ParallelCommandGroup {
   public static final double SHOOTER_EXPEL_SPEED = -0.3;
   public static final double INTAKE_EXPEL_SPEED  = -0.2;
-  private Intake m_intake;
-  private Conveyor m_conveyor;
-  private Shooter m_shooter;
  
   /** Creates a new ExpelBalls. */
   public ExpelBalls() {
@@ -32,12 +29,5 @@ public class ExpelBalls extends ParallelCommandGroup {
       new SpinConveyorBackwards(),
       new SpinIntake(INTAKE_EXPEL_SPEED)
     );
-
-    m_intake = Intake.getInstance();
-    addRequirements(m_intake);
-    m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
-    m_shooter = Shooter.getInstance();
-    addRequirements(m_shooter);
   }
 }

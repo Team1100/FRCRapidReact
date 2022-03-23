@@ -5,19 +5,21 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.Intake.LowerIntake;
-import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.subsystems.Conveyor;
 
 public class OpenGateWhileActive extends CommandBase {
+  Conveyor m_conveyor;
   /** Creates a new OpenGateWhileActive. */
   public OpenGateWhileActive() {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_conveyor = Conveyor.getInstance();
+    addRequirements(m_conveyor);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    new LowerIntake();
+    m_conveyor.openGate();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -27,7 +29,7 @@ public class OpenGateWhileActive extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    new RaiseIntake();
+    m_conveyor.closeGate();
   }
 
   // Returns true when the command should end.

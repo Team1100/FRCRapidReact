@@ -7,15 +7,13 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.Shooter.SpinShooter;
-import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Auto;
+import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootBallsHigh extends SequentialCommandGroup {
-  private Conveyor m_conveyor;
-  private Shooter m_shooter;
   
   /** Creates a new ShootBallsHigh. */
   public ShootBallsHigh() {
@@ -25,10 +23,11 @@ public class ShootBallsHigh extends SequentialCommandGroup {
       new SpinShooter(Constants.SHOOTER_SPEED_HIGH, true),
       new DelayThenFeedBalls(1)
     );
+  }
 
-    m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
-    m_shooter = Shooter.getInstance();
-    addRequirements(m_shooter);
+  public static void registerWithTestingDashboard() {
+    Auto auto = Auto.getInstance();
+    ShootBallsHigh cmd = new ShootBallsHigh();
+    TestingDashboard.getInstance().registerCommand(auto, "Shooting", cmd);
   }
 }
