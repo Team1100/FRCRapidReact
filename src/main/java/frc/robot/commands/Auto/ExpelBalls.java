@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.commands.Shooter.SpinShooter;
+import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -32,12 +34,11 @@ public class ExpelBalls extends ParallelCommandGroup {
       new SpinConveyorBackwards(),
       new SpinIntake(INTAKE_EXPEL_SPEED)
     );
+  }
 
-    m_intake = Intake.getInstance();
-    addRequirements(m_intake);
-    m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
-    m_shooter = Shooter.getInstance();
-    addRequirements(m_shooter);
+  public static void registerWithTestingDashboard() {
+    Auto auto = Auto.getInstance();
+    ExpelBalls cmd = new ExpelBalls();
+    TestingDashboard.getInstance().registerCommand(auto, "AutoMoveBalls", cmd);
   }
 }

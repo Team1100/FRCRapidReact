@@ -7,6 +7,8 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.subsystems.Auto;
+import frc.robot.testingdashboard.TestingDashboard;
 
 public class OpenGateWhileActive extends CommandBase {
   /** Creates a new OpenGateWhileActive. */
@@ -34,5 +36,11 @@ public class OpenGateWhileActive extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  public static void registerWithTestingDashboard() {
+    Auto auto = Auto.getInstance();
+    OpenGateWhileActive cmd = new OpenGateWhileActive();
+    TestingDashboard.getInstance().registerCommand(auto, "AutoMoveBalls", cmd);
   }
 }

@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
+import frc.robot.subsystems.Auto;
+import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,5 +27,11 @@ public class DelayThenFeedBalls extends SequentialCommandGroup {
       new SpinConveyorForwards(),
       new RaiseIntake()
     );
+  }
+
+  public static void registerWithTestingDashboard() {
+    Auto auto = Auto.getInstance();
+    DelayThenFeedBalls cmd = new DelayThenFeedBalls(1);
+    TestingDashboard.getInstance().registerCommand(auto, "AutoMoveBalls", cmd);
   }
 }
