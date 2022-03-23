@@ -45,9 +45,6 @@ public class SmartCaneExtendDistance extends CommandBase {
         double distance = 12;
         SmartCaneExtendDistance cmdBoth = new SmartCaneExtendDistance(distance, Climber.INITIAL_CANE_EXTENTION_SPEED, false);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CaneHeightToTravel", 0);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentLeftCaneHeight", 0);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentRightCaneHeight", 0);
     }
 
     void initializeTimer() {
