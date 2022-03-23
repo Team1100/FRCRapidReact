@@ -21,6 +21,8 @@ public final class Constants {
 
     // Defines Shooter command constants
     public static final double DEFAULT_SHOOTER_SPEED = 0.35;
+    public static final double SHOOTER_SPEED_HIGH = 0.55;
+    public static final double SHOOTER_SPEED_LOW = 0.25;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
