@@ -7,22 +7,22 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.Climber.CaneExtendDistance;
-import frc.robot.commands.Climber.ClimbStatefully;
 import frc.robot.commands.Climber.CloseClaws;
 import frc.robot.commands.Climber.ConstantSpeedRotateCane;
 import frc.robot.commands.Climber.OpenClaws;
 import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.PIDTurnCaneToAngle;
-import frc.robot.commands.Climber.ReachForNextBarSequence;
-import frc.robot.commands.Climber.ReachForNextBarStatefully;
-import frc.robot.commands.Climber.RetractCaneToBar;
 import frc.robot.commands.Climber.RotateCaneToBar;
-import frc.robot.commands.Climber.TankCane;
 import frc.robot.commands.Climber.TankRotateCane;
-import frc.robot.commands.Climber.TestStateMachineSequence;
 import frc.robot.commands.Climber.UserOperateCane;
-import frc.robot.commands.Conveyor.SpinConveyorForwards;
+import frc.robot.commands.Climber.CaneExtension.CaneExtendDistance;
+import frc.robot.commands.Climber.CaneExtension.ExtendCaneToLimit;
+import frc.robot.commands.Climber.CaneExtension.RetractCaneToBar;
+import frc.robot.commands.Climber.CaneExtension.TankCane;
+import frc.robot.commands.Climber.Sequences.ClimbStatefully;
+import frc.robot.commands.Climber.Sequences.ReachForNextBarSequence;
+import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
+import frc.robot.commands.Climber.Sequences.TestStateMachineSequence;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
@@ -33,6 +33,13 @@ import frc.robot.commands.Intake.UserSpinIntake;
 import frc.robot.commands.Shooter.PIDShooter;
 import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Shooter.SpinShooter;
+import frc.robot.commands.Conveyor.UserSpinConveyor;
+import frc.robot.commands.Conveyor.SpinConveyorBackwards;
+import frc.robot.commands.Conveyor.SpinConveyorForwards;
+import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
+import frc.robot.commands.Auto.DriveAndSpinIntake;
+import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneExtension;
@@ -95,14 +102,20 @@ public class RobotContainer {
     ReachForNextBarSequence.registerWithTestingDashboard();
     RotateCaneToBar.registerWithTestingDashboard();
     ReachForNextBarStatefully.registerWithTestingDashboard();
+    ExtendCaneToLimit.registerWithTestingDashboard();
+    
 
     // Conveyor
     SpinConveyorForwards.registerWithTestingDashboard();
+    SpinConveyorBackwards.registerWithTestingDashboard();
+    UserSpinConveyor.registerWithTestingDashboard();
 
     // Intake
     UserSpinIntake.registerWithTestingDashboard();
     RaiseIntake.registerWithTestingDashboard();
     LowerIntake.registerWithTestingDashboard();
+    SpinIntake.registerWithTestingDashboard();
+    DriveAndSpinIntake.registerWithTestingDashboard();
 
     // Auto
     

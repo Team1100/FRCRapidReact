@@ -5,6 +5,7 @@
 package frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.input.XboxController;
@@ -37,7 +38,7 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void initialize() {
     oi = OI.getInstance();
-    m_xbox = oi.getXbox();
+    m_xbox = oi.getDriverXboxController();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,9 +47,13 @@ public class ArcadeDrive extends CommandBase {
 
     double rotation = m_xbox.getAxis(XboxAxis.kXRight);
     double speed = m_xbox.getAxis(XboxAxis.kYLeft);
-    boolean square_inputs = true;
+    boolean squareInputs = true;
 
-    m_drive.arcadeDrive(-speed, rotation, square_inputs);
+    if (rotation != 0) {
+      rotation = rotation - Constants.XBOX_DEADBAND_LIMIT;
+    }
+    
+    m_drive.arcadeDrive(-speed, rotation, squareInputs);
   }
 
   // Called once the command ends or is interrupted.

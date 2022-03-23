@@ -16,6 +16,14 @@ public final class Constants {
     // Controls which software should run based on hardware availability
     public static final boolean HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE = true;
     public static final boolean HW_ENABLE_SHOOTER = true;
+    public static final boolean HW_ENABLE_CONVEYOR = true;
+    public static final boolean HW_ENABLE_DRIVE = true;
+
+    // Defines Shooter command constants
+    public static final double DEFAULT_SHOOTER_SPIN_UP_TIME = 0.5; // seconds
+    public static final double DEFAULT_SHOOTER_SPEED = 0.35;
+    public static final double SHOOTER_SPEED_HIGH = 0.55;
+    public static final double SHOOTER_SPEED_LOW = 0.25;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
@@ -25,13 +33,15 @@ public final class Constants {
     public static final int MOTOR_CURRENT = 1;
     public static final int LIMIT_SWITCH = 2;
 
+    // Defines OI deadband constants
+    public static final double XBOX_DEADBAND_LIMIT = 0.1;
+
     // Defines constants associated with sensors
     // 15 Amps for 1 second at a speed of 0.3 indicates that contact with
     // a bar has been detected
-    public static final double MOTOR_CURRENT_THRESHOLD = 15; // Amps
+    public static final double MOTOR_CURRENT_THRESHOLD = 20; // Amps
     public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
-
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
 }

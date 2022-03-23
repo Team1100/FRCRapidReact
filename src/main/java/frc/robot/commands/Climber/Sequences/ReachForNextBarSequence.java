@@ -1,6 +1,8 @@
-package frc.robot.commands.Climber;
+package frc.robot.commands.Climber.Sequences;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Climber.RotateCaneToBar;
+import frc.robot.commands.Climber.CaneExtension.CaneExtendDistance;
 import frc.robot.subsystems.Climber;
 import frc.robot.testingdashboard.TestingDashboard;
 

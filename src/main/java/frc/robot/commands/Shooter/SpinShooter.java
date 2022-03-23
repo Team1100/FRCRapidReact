@@ -14,7 +14,7 @@ import frc.robot.subsystems.Shooter;
 public class SpinShooter extends CommandBase {
   private Shooter m_shooter;
   private double m_speed;
-  private static final double DEF_SPEED = 0.5;
+  private static final double DEFAULT_SHOOTER_SPEED = 0.5;
   private boolean m_parameterized = true;
 
   /**
@@ -30,7 +30,7 @@ public class SpinShooter extends CommandBase {
 
   public static void registerWithTestingDashboard() {
     Shooter shooter = Shooter.getInstance();
-    double speed = DEF_SPEED;
+    double speed = DEFAULT_SHOOTER_SPEED;
     SpinShooter cmd = new SpinShooter(speed, false);
     TestingDashboard.getInstance().registerCommand(shooter, "Basic", cmd);
   }

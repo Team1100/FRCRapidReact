@@ -1,4 +1,4 @@
-package frc.robot.commands.Climber;
+package frc.robot.commands.Climber.CaneExtension;
 
 import com.revrobotics.RelativeEncoder;
 
@@ -8,42 +8,43 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.testingdashboard.TestingDashboard;
 
-
-public class CaneExtendDistance extends CommandBase {
+// This extends the cane fully to a maximum/minimum distance
+// It requires the encoders to be zeroed when fully retracted
+public class SmartExtendCaneFully extends CommandBase {
 
     private static final double START_DELAY = 1; // 1 second start delay to test if encoder rate is 0
     private static final double MINIMUM_ENCODER_VELOCITY = -0.2;
     private static final double MAXIMUM_ENCODER_VELOCITY = 0.2;
+    private static final double MAXIMUM_ENCODER_DISTANCE = 23.0; // Distance of the encoder when fully extended (in)
+    private static final double TOLERANCE = 1; // Sets the tolerance for when to stop (in)
+    private static final double MINIMUM_TARGET = TOLERANCE;
+    private static final double MAXIMUM_TARGET = MAXIMUM_ENCODER_DISTANCE - TOLERANCE;
+    private static final double SLOW_ZONE_OFFSET = 7; // distance away from target where the motors are reduced in power.
     private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
     private double m_caneSpeed;
     private boolean m_parameterized;
-    private double m_leftCaneCurrentHeight;
-    private double m_rightCaneCurrentHeight;
-    private double m_caneHeightToTravel;
-    private double m_currentDistance;
-    private double m_currentCaneHeight;
-    private double m_direction; // 1 indicates extension of the cane
     private Timer m_timer;
     private boolean m_timer_running = false;
+    RelativeEncoder m_leftEncoder;
+    RelativeEncoder m_rightEncoder;
 
-    public CaneExtendDistance(double caneHeightToTravel, double caneSpeed, boolean parameterized) { 
+    public SmartExtendCaneFully(double caneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
         m_climberCaneExtension = ClimberCaneExtension.getInstance();
         m_climber = Climber.getInstance();
         addRequirements(m_climberCaneExtension);
+        m_leftEncoder = m_climber.getLeftCaneEncoder();
+        m_rightEncoder = m_climber.getRightCaneEncoder();
         m_caneSpeed = caneSpeed;
-        m_caneHeightToTravel = caneHeightToTravel;
         m_parameterized = parameterized;
-        m_direction = 1;
         m_timer = new Timer();
         m_timer_running = false;
       }
 
     public static void registerWithTestingDashboard() {
         Climber climber = Climber.getInstance();
-        double distance = 12;
-        CaneExtendDistance cmdBoth = new CaneExtendDistance(distance, Climber.INITIAL_CANE_EXTENTION_SPEED, false);
+        SmartExtendCaneFully cmdBoth = new SmartExtendCaneFully(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);
         TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CaneHeightToTravel", 0);
         TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentLeftCaneHeight", 0);
@@ -62,9 +63,7 @@ public class CaneExtendDistance extends CommandBase {
     }
 
     boolean caneStoppedMoving() {
-      RelativeEncoder leftEncoder = m_climber.getLeftCaneEncoder();
-      RelativeEncoder rightEncoder = m_climber.getRightCaneEncoder();
-      double encoder_velocity = (leftEncoder.getVelocity() + rightEncoder.getVelocity()) / 2;
+      double encoder_velocity = (m_leftEncoder.getVelocity() + m_rightEncoder.getVelocity()) / 2;
       if (m_timer_running) {
         boolean in_dead_zone = (encoder_velocity > MINIMUM_ENCODER_VELOCITY && encoder_velocity < MAXIMUM_ENCODER_VELOCITY);
         return (m_timer.hasElapsed(START_DELAY) && in_dead_zone);
@@ -75,8 +74,6 @@ public class CaneExtendDistance extends CommandBase {
 
     @Override
     public void initialize() {
-      m_climber.getLeftCaneEncoder().setPosition(0);
-      m_climber.getRightCaneEncoder().setPosition(0);
       initializeTimer();
     }
   
@@ -85,21 +82,26 @@ public class CaneExtendDistance extends CommandBase {
     public void execute() {
       if (!m_parameterized) {
         m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
-        m_caneHeightToTravel = TestingDashboard.getInstance().getNumber(m_climber, "CaneHeightToTravel");
       }
-      
-      if (m_caneHeightToTravel < 0) {
-        m_climber.extendCane(-m_caneSpeed);
+
+      if (m_caneSpeed >= 0) {
+        if (m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
+          m_climber.extendCane(m_caneSpeed/2);
+        }
+      } else if (m_caneSpeed < 0) {
+        if (m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
+          m_climber.extendCane(m_caneSpeed/2);
+        }
       } else {
         m_climber.extendCane(m_caneSpeed);
       }
+      
+      
     }
   
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-      m_climber.getLeftCaneMotor().set(Climber.ENCODER_INITIAL_POSITION);
-      m_climber.getRightCaneMotor().set(Climber.ENCODER_INITIAL_POSITION);
       stopTimer();
     }
 
@@ -107,14 +109,13 @@ public class CaneExtendDistance extends CommandBase {
    @Override
    public boolean isFinished() {
       boolean finished = false;
-      RelativeEncoder leftEncoder = m_climber.getLeftCaneEncoder();
-      RelativeEncoder rightEncoder = m_climber.getRightCaneEncoder();
-      if (m_caneHeightToTravel >= 0) {
-        if (leftEncoder.getPosition() >= m_caneHeightToTravel || rightEncoder.getPosition() >= m_caneHeightToTravel) {
+      
+      if (m_caneSpeed >= 0) {
+        if (m_leftEncoder.getPosition() >= MAXIMUM_TARGET || m_rightEncoder.getPosition() >= MAXIMUM_TARGET) {
           finished = true;
         }
-      } else if (m_caneHeightToTravel < 0) {
-        if (leftEncoder.getPosition() <= m_caneHeightToTravel || rightEncoder.getPosition() <= m_caneHeightToTravel) {
+      } else if (m_caneSpeed < 0) {
+        if (m_leftEncoder.getPosition() <= MINIMUM_TARGET || m_rightEncoder.getPosition() <= MINIMUM_TARGET) {
           finished = true;
         }
       }

@@ -217,14 +217,15 @@ public class RobotMap {
 
 	//[I]ntake
 	public static final int I_LEFT_ROLLER = CAN_27;
-	public static final int I_LEFT_PISTON_PORT1 = PCM_4;
-	public static final int I_LEFT_PISTON_PORT2 = PCM_5;
-	public static final int I_RIGHT_PISTON_PORT1 = PCM_6;
-	public static final int I_RIGHT_PISTON_PORT2 = PCM_7;
+	public static final int I_PISTON_PORT1 = PCM_4;
+	public static final int I_PISTON_PORT2 = PCM_5;
+
 
 	//[C]onveyor
 	public static final int C_LEFT_MOTOR = CAN_30;
 	public static final int C_RIGHT_MOTOR = CAN_31;
+	public static final int C_GATE_PISTON_PORT1 = PCM_6;
+	public static final int C_GATE_PISTON_PORT2 = PCM_7;
 	
 	//[S]hooter
 	public static final int S_MOTOR = CAN_28;
@@ -232,8 +233,9 @@ public class RobotMap {
 	//[U]ser Input
 	public static final int U_JOYSTICK_LEFT = 0;
 	public static final int U_JOYSTICK_RIGHT = 1;
-	public static final int U_XBOX_CONTROLLER = 2;
+	public static final int U_DRIVER_XBOX_CONTROLLER = 2;
 	public static final int U_BUTTON_BOX = 3;
 	public static final int U_KEYBOARD_BOX = 4;
+	public static final int U_OPERATOR_XBOX_CONTROLLER = 5;
 
 }
