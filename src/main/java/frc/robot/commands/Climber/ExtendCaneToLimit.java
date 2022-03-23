@@ -6,37 +6,35 @@ package frc.robot.commands.Climber;
 
 import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.wpilibj.AnalogAccelerometer;
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.sensors.BarDetectionSensorHelper;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ClimberCaneRotation;
+import frc.robot.subsystems.ClimberCaneExtension;
 import frc.robot.testingdashboard.TestingDashboard;
 
-public class RotateCaneToBar extends CommandBase {
+public class ExtendCaneToLimit extends CommandBase {
   private Climber m_climber;
-  private ClimberCaneRotation m_climberCaneRotation;
-  private double m_caneSpeed;
+  private ClimberCaneExtension m_climberCaneExtension;
+  private double m_caneSpeed; 
   private boolean m_parameterized;
+
   private static final double START_DELAY = 1; // 1 second start delay to test if encoder rate is 0
   private static final double RATE_TOLERANCE = 5; // Used to detect if cane has essentially stopped moving
   private Timer m_timer;
-
-  /** Creates a new RotateCaneToBar. */
-  public RotateCaneToBar(double caneSpeed, boolean parameterized) {
-    m_climber = Climber.getInstance();
-    m_climberCaneRotation = ClimberCaneRotation.getInstance();
+  
+  /** Creates a new ExtendCaneToLimit. */
+  public ExtendCaneToLimit(double caneSpeed, boolean parameterized) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_climberCaneRotation);
+    m_climber = Climber.getInstance();
+    m_climberCaneExtension = ClimberCaneExtension.getInstance();
+    addRequirements(m_climberCaneExtension);
     m_caneSpeed = caneSpeed;
     m_parameterized = parameterized;
     m_timer = new Timer();
   }
 
+  
   void initializeTimer() {
     m_timer.reset();
     m_timer.start();
@@ -48,8 +46,8 @@ public class RotateCaneToBar extends CommandBase {
 
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    RotateCaneToBar cmd = new RotateCaneToBar(climber.INITIAL_CANE_ROTATION_SPEED, false);
-    TestingDashboard.getInstance().registerCommand(climber, "CaneRotation", cmd);
+    ExtendCaneToLimit cmd = new ExtendCaneToLimit(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
+    TestingDashboard.getInstance().registerCommand(climber, "CaneExtension", cmd);
   }
 
   // Called when the command is initially scheduled.
@@ -62,28 +60,31 @@ public class RotateCaneToBar extends CommandBase {
   @Override
   public void execute() {
     if (!m_parameterized) {
-      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
+      m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
     }
-    m_climber.rotateBothCanes(m_caneSpeed);
-
+    m_climber.extendCane(m_caneSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     stopTimer();
-    m_climber.rotateBothCanes(0);
+    m_climber.extendCane(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    Encoder leftEncoder = m_climber.getCaneRotationEncoder();
+    RelativeEncoder leftEncoder = m_climber.getLeftCaneEncoder();
+    RelativeEncoder rightEncoder = m_climber.getRightCaneEncoder();
     // TODO: figure out which tolerance is approprate for the command using the rate posted on TestingDashboard
-    double encoderRate = leftEncoder.getRate();
+    double leftEncoderVelocity = leftEncoder.getVelocity();
+    double rightEncoderVelocity = rightEncoder.getVelocity();
     if (m_timer.hasElapsed(START_DELAY)) {
-      if (encoderRate > 0 - RATE_TOLERANCE && encoderRate < 0 + RATE_TOLERANCE) {
-        return true;
+      if (leftEncoderVelocity > 0 - RATE_TOLERANCE && leftEncoderVelocity < 0 + RATE_TOLERANCE) {
+        if (rightEncoderVelocity > 0 - RATE_TOLERANCE && rightEncoderVelocity < 0 + RATE_TOLERANCE) {
+          return true;
+        }
       }
     }
     return false;

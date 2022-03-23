@@ -89,9 +89,9 @@ public class CaneExtendDistance extends CommandBase {
       }
       
       if (m_caneHeightToTravel < 0) {
-        m_climber.extendCane(-m_caneSpeed);
-      } else {
         m_climber.extendCane(m_caneSpeed);
+      } else {
+        m_climber.extendCane(-m_caneSpeed);
       }
     }
   

@@ -13,6 +13,7 @@ import frc.robot.commands.Climber.CloseClaws;
 import frc.robot.commands.Climber.ConstantSpeedRotateCane;
 import frc.robot.commands.Climber.OpenClaws;
 import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.ExtendCaneToLimit;
 import frc.robot.commands.Climber.PIDTurnCaneToAngle;
 import frc.robot.commands.Climber.ReachForNextBarSequence;
 import frc.robot.commands.Climber.ReachForNextBarStatefully;
@@ -101,6 +102,8 @@ public class RobotContainer {
     ReachForNextBarSequence.registerWithTestingDashboard();
     RotateCaneToBar.registerWithTestingDashboard();
     ReachForNextBarStatefully.registerWithTestingDashboard();
+    ExtendCaneToLimit.registerWithTestingDashboard();
+    
 
     // Conveyor
     SpinConveyorForwards.registerWithTestingDashboard();

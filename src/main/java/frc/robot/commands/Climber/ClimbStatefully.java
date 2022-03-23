@@ -27,16 +27,16 @@ public class ClimbStatefully extends CommandBase {
 
   private static final double DRIVE_TO_BAR_DISTANCE = 24; // in inches
   private static final double DRIVE_TO_BAR_SPEED = 0.4; // in % power
-  private static final double INITIAL_CANE_EXTENSION_DISTANCE = 21; // in inches
-  private static final double INTIIAL_CANE_EXTENSION_SPEED = 0.3; // % power
+  private static final double INITIAL_CANE_EXTENSION_DISTANCE = 5; // in inches
+  private static final double INTIIAL_CANE_EXTENSION_SPEED = 0.2; // % power
   private static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
-  private static final double CANE_RETRACTION_DISTANCE = -(INITIAL_CANE_EXTENSION_DISTANCE+3);
-  private static final double CANE_RETRACTION_SPEED = INTIIAL_CANE_EXTENSION_SPEED;
-  private static final double CANE_ROTATION_SPEED = 0.2;
+  private static final double CANE_RETRACTION_SPEED = -INTIIAL_CANE_EXTENSION_SPEED;
+  private static final double CANE_BACKWARDS_ROTATION_SPEED = 0.2;
+  private static final double CANE_FORWARDS_ROTATION_SPEED = 0.3;
   private static final double NUMBER_OF_CYCLES = 0;
   private DriveToBar m_driveToBar;
-  private CaneExtendDistance m_raiseCaneToBar;
-  private CaneExtendDistance m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
+  private ExtendCaneToLimit m_raiseCaneToBar;
+  private ExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
   private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
   private ReachForNextBarStatefully m_reachForNextBarStatefully;
   private State m_state;
@@ -47,11 +47,11 @@ public class ClimbStatefully extends CommandBase {
   /** Creates a new ClimbStatefully. */
   public ClimbStatefully() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_driveToBar = new DriveToBar(-DRIVE_TO_BAR_DISTANCE, DRIVE_TO_BAR_SPEED, Constants.MOTOR_CURRENT, true);
-    m_raiseCaneToBar = new CaneExtendDistance(INITIAL_CANE_EXTENSION_DISTANCE, INTIIAL_CANE_EXTENSION_SPEED, true);
-    m_retractCane = new CaneExtendDistance(CANE_RETRACTION_DISTANCE, CANE_RETRACTION_SPEED, true);
+    m_driveToBar = new DriveToBar(DRIVE_TO_BAR_DISTANCE, DRIVE_TO_BAR_SPEED, Constants.MOTOR_CURRENT, true);
+    m_raiseCaneToBar = new ExtendCaneToLimit(INTIIAL_CANE_EXTENSION_SPEED, true);
+    m_retractCane = new ExtendCaneToLimit(CANE_RETRACTION_SPEED, true);
     m_forceUpright = new ConstantSpeedRotateCane(UPRIGHT_CANE_ROTATION_SPEED, true);
-    m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE/2, CANE_ROTATION_SPEED);
+    m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
     m_state = State.INIT;
     m_isFinished = false;
     m_commandsHaveBeenScheduled = false;
@@ -71,6 +71,7 @@ public class ClimbStatefully extends CommandBase {
     m_state = State.INIT;
     m_isFinished = false;
     m_cycle = 0;
+    m_commandsHaveBeenScheduled = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -221,8 +221,8 @@ public class Climber extends SubsystemBase {
   }
 
   public void extendCane(double speed) {
-    m_leftCaneMotor.set(speed);
-    m_rightCaneMotor.set(speed);
+    m_leftCaneMotor.set(-speed);
+    m_rightCaneMotor.set(-speed);
   }
 
   public CANSparkMax getLeftCaneMotor() {
@@ -246,11 +246,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void rotateLeftCane(double speed) {
-    m_leftCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, speed);
+    m_leftCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, -speed);
   }
 
   public void rotateRightCane(double speed) {
-    m_rightCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, -speed);
+    m_rightCaneRotationMotor.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
   public void rotateBothCanes(double speed) {

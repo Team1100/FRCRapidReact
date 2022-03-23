@@ -26,26 +26,27 @@ public class ReachForNextBarStatefully extends CommandBase {
     ROTATE_TO_BAR,
     DONE
   }
-  static final double CANE_EXTENSION_SPEED = .5;
-    static final double CANE_HEIGHT = 12;
-    static final double CANE_ROTATION_SPEED = .2;
+    static final double CANE_FORWARDS_ROTATION_SPEED = .3;
+    static final double CANE_BACKWARDS_ROTATION_SPEED = .2;
+    static final double CANE_HEIGHT = 5;
+    static final double CANE_EXTENSION_SPEED = .3;
 
 
   private CaneExtendDistance m_liftOffBar;
   private RotateCaneToBar m_rotateBack;
-  private CaneExtendDistance m_extendFully;
+  private ExtendCaneToLimit m_extendFully;
   private RotateCaneToBar m_rotateToBar;
   
   private boolean m_isFinished;
   private State m_state;
   /** Creates a new ReachForNextBarStatefully. */
-  public ReachForNextBarStatefully(double caneExtensionSpeed, double caneHeight,  double caneRotationSpeed) {
+  public ReachForNextBarStatefully(double caneExtensionSpeed, double caneHeight,  double caneForwardsRotationSpeed, double caneBackwardsRotationSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     m_liftOffBar = new CaneExtendDistance(caneHeight, caneExtensionSpeed, true);
-    m_rotateBack = new RotateCaneToBar(caneRotationSpeed, true);
-    m_extendFully = new CaneExtendDistance(caneHeight, caneExtensionSpeed, true);
-    m_rotateToBar = new RotateCaneToBar(caneRotationSpeed, true);
+    m_rotateBack = new RotateCaneToBar(-caneForwardsRotationSpeed, true);
+    m_extendFully = new ExtendCaneToLimit(caneExtensionSpeed, true);
+    m_rotateToBar = new RotateCaneToBar(caneBackwardsRotationSpeed, true);
 
     m_state = State.INIT;
     m_isFinished = false;
@@ -54,7 +55,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    ReachForNextBarStatefully cmd = new ReachForNextBarStatefully(CANE_EXTENSION_SPEED, CANE_HEIGHT, CANE_ROTATION_SPEED);
+    ReachForNextBarStatefully cmd = new ReachForNextBarStatefully(CANE_EXTENSION_SPEED, CANE_HEIGHT, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
     TestingDashboard.getInstance().registerCommand(climber, "TestCommands", cmd);
   }
 
