@@ -2,12 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Climber;
+package frc.robot.commands.Climber.Sequences;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.Auto.Wait;
+import frc.robot.commands.Climber.ConstantSpeedRotateCane;
+import frc.robot.commands.Climber.RotateCaneToBar;
+import frc.robot.commands.Climber.CaneExtension.CaneExtendDistance;
+import frc.robot.commands.Climber.CaneExtension.ExtendCaneToLimit;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
@@ -24,18 +28,26 @@ public class ReachForNextBarStatefully extends CommandBase {
     EXTEND_2,
     SCHEDULE_ROTATE_TO_BAR,
     ROTATE_TO_BAR,
+    SCHEDULE_LIFT_OFF_BAR,
+    LIFT_OFF_BAR,
     DONE
   }
     static final double CANE_FORWARDS_ROTATION_SPEED = .3;
     static final double CANE_BACKWARDS_ROTATION_SPEED = .2;
     static final double CANE_HEIGHT = 5;
     static final double CANE_EXTENSION_SPEED = .3;
+    private static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
+
 
 
   private CaneExtendDistance m_liftOffBar;
   private RotateCaneToBar m_rotateBack;
   private ExtendCaneToLimit m_extendFully;
   private RotateCaneToBar m_rotateToBar;
+  private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
+  private ExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
+
+
   
   private boolean m_isFinished;
   private State m_state;
@@ -47,6 +59,9 @@ public class ReachForNextBarStatefully extends CommandBase {
     m_rotateBack = new RotateCaneToBar(-caneForwardsRotationSpeed, true);
     m_extendFully = new ExtendCaneToLimit(caneExtensionSpeed, true);
     m_rotateToBar = new RotateCaneToBar(caneBackwardsRotationSpeed, true);
+    m_forceUpright = new ConstantSpeedRotateCane(caneForwardsRotationSpeed, true);
+    m_retractCane = new ExtendCaneToLimit(-caneExtensionSpeed, true);
+    
 
     m_state = State.INIT;
     m_isFinished = false;
@@ -103,6 +118,14 @@ public class ReachForNextBarStatefully extends CommandBase {
         break;
       case ROTATE_TO_BAR:
         if (m_rotateToBar.isFinished())
+          m_state = State.SCHEDULE_LIFT_OFF_BAR;
+        break;
+      case SCHEDULE_LIFT_OFF_BAR:
+        m_forceUpright.schedule();
+        m_retractCane.schedule();
+        break;
+      case LIFT_OFF_BAR:
+        if (m_retractCane.isFinished())
           m_state = State.DONE;
         break;
       case DONE:
