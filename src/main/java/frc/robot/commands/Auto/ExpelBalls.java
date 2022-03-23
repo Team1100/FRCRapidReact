@@ -20,9 +20,6 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class ExpelBalls extends ParallelCommandGroup {
   public static final double SHOOTER_EXPEL_SPEED = -0.3;
   public static final double INTAKE_EXPEL_SPEED  = -0.2;
-  private Intake m_intake;
-  private Conveyor m_conveyor;
-  private Shooter m_shooter;
  
   /** Creates a new ExpelBalls. */
   public ExpelBalls() {

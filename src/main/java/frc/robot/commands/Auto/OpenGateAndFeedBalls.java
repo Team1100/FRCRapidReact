@@ -4,36 +4,26 @@
 
 package frc.robot.commands.Auto;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
-import frc.robot.commands.Intake.LowerIntake;
-import frc.robot.commands.Intake.RaiseIntake;
-import frc.robot.Constants;
 import frc.robot.subsystems.Auto;
 import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DelayThenFeedBalls extends SequentialCommandGroup {
-  private double m_delayTime;
-  /** Creates a new DelayThenFeedBalls. */
-  public DelayThenFeedBalls(double delayTime) {
-    m_delayTime = delayTime;
+public class OpenGateAndFeedBalls extends ParallelCommandGroup {
+  /** Creates a new OpenGateAndFeedBalls. */
+  public OpenGateAndFeedBalls() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new Wait(m_delayTime, true),
-      new OpenGateAndFeedBalls()
-    );
+    addCommands(new OpenGateWhileActive(),
+                new SpinConveyorForwards());
   }
 
   public static void registerWithTestingDashboard() {
     Auto auto = Auto.getInstance();
-    DelayThenFeedBalls cmd = new DelayThenFeedBalls(1);
-    TestingDashboard.getInstance().registerCommand(auto, "AutoMoveBalls", cmd);
-    double delayTime = Constants.DEFAULT_SHOOTER_SPIN_UP_TIME;
-    DelayThenFeedBalls cmd = new DelayThenFeedBalls(delayTime);
+    OpenGateAndFeedBalls cmd = new OpenGateAndFeedBalls();
     TestingDashboard.getInstance().registerCommand(auto, "BallFeeding", cmd);
   }
 }

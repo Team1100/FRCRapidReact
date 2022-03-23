@@ -16,10 +16,8 @@ import frc.robot.testingdashboard.TestingDashboard;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootBallsLow extends SequentialCommandGroup {
-  private Conveyor m_conveyor;
-  private Shooter m_shooter;
   
-  /** Creates a new ShootBallsHigh. */
+  /** Creates a new ShootBallsLow. */
   public ShootBallsLow() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -27,11 +25,6 @@ public class ShootBallsLow extends SequentialCommandGroup {
       new SpinShooter(Constants.SHOOTER_SPEED_LOW, true),
       new DelayThenFeedBalls(0.5)
     );
-
-    m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
-    m_shooter = Shooter.getInstance();
-    addRequirements(m_shooter);
   }
 
   public static void registerWithTestingDashboard() {
@@ -39,4 +32,8 @@ public class ShootBallsLow extends SequentialCommandGroup {
     ShootBallsHigh cmd = new ShootBallsHigh();
     TestingDashboard.getInstance().registerCommand(auto, "AutoShoot", cmd);
   }
+    ShootBallsLow cmd = new ShootBallsLow();
+    TestingDashboard.getInstance().registerCommand(auto, "Shooting", cmd);
+  }
+
 }
