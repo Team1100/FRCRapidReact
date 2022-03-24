@@ -44,18 +44,19 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
+      double rotation = m_xbox.getAxis(XboxAxis.kXRight);
+      double speed = m_xbox.getAxis(XboxAxis.kYLeft);
+      boolean squareInputs = true;
 
-    double rotation = m_xbox.getAxis(XboxAxis.kXRight);
-    double speed = m_xbox.getAxis(XboxAxis.kYLeft);
-    boolean squareInputs = true;
-
-    if (rotation < 0) {
-      rotation = rotation + Constants.XBOX_DEADBAND_LIMIT;
-    } else if (rotation > 0) {
-      rotation = rotation - Constants.XBOX_DEADBAND_LIMIT;
+      if (rotation < 0) {
+        rotation = rotation + Constants.XBOX_DEADBAND_LIMIT;
+      } else if (rotation > 0) {
+        rotation = rotation - Constants.XBOX_DEADBAND_LIMIT;
+      }
+      
+      m_drive.arcadeDrive(-speed, rotation, squareInputs);
     }
-    
-    m_drive.arcadeDrive(-speed, rotation, squareInputs);
   }
 
   // Called once the command ends or is interrupted.

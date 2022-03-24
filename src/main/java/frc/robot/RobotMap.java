@@ -231,11 +231,10 @@ public class RobotMap {
 	public static final int S_MOTOR = CAN_28;
 	
 	//[U]ser Input
-	public static final int U_JOYSTICK_LEFT = 0;
-	public static final int U_JOYSTICK_RIGHT = 1;
-	public static final int U_DRIVER_XBOX_CONTROLLER = 2;
-	public static final int U_BUTTON_BOX = 3;
-	public static final int U_KEYBOARD_BOX = 4;
-	public static final int U_OPERATOR_XBOX_CONTROLLER = 5;
-
+	public static final int U_DRIVER_XBOX_CONTROLLER = 0;
+	public static final int U_OPERATOR_XBOX_CONTROLLER = 1;
+	public static final int U_BUTTON_BOX = 2;
+	public static final int U_JOYSTICK_LEFT = 3;
+	public static final int U_JOYSTICK_RIGHT = 4;
+	public static final int U_KEYBOARD_BOX = 5;
 }

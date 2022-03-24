@@ -8,6 +8,7 @@
 package frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.testingdashboard.TestingDashboard;
 import frc.robot.input.AttackThree;
@@ -52,25 +53,27 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // NOTE: Forward on the left and right sticks is negative
-    //       Backwards is positive, hence the inversion below
-    AttackThree leftJoystick = oi.getLeftStick();
-    AttackThree rightJoystick = oi.getRightStick();
-    double leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
-    double rightJoystickSpeed = rightJoystick.getAxis(yAxis);
-    
-    // Reverses the direction of the drive train upon pressing 2 on the right joystick
-    if (rightJoystick.getRawButtonPressed(2)) {
-      counter++;
+    if (Constants.ATTACK_THREE_ENABLE) {
+      // NOTE: Forward on the left and right sticks is negative
+      //       Backwards is positive, hence the inversion below
+      AttackThree leftJoystick = oi.getLeftStick();
+      AttackThree rightJoystick = oi.getRightStick();
+      double leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
+      double rightJoystickSpeed = rightJoystick.getAxis(yAxis);
+      
+      // Reverses the direction of the drive train upon pressing 2 on the right joystick
+      if (rightJoystick.getRawButtonPressed(2)) {
+        counter++;
+      }
+      if (counter % 2 == 1) {
+        leftJoystickSpeed = rightJoystick.getAxis(yAxis);
+        rightJoystickSpeed = leftJoystick.getAxis(yAxis);
+      } else {
+        leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
+        rightJoystickSpeed = rightJoystick.getAxis(yAxis);
+      }
+      m_drive.tankDrive(leftJoystickSpeed, rightJoystickSpeed);
     }
-    if (counter % 2 == 1) {
-      leftJoystickSpeed = rightJoystick.getAxis(yAxis);
-      rightJoystickSpeed = leftJoystick.getAxis(yAxis);
-    } else {
-      leftJoystickSpeed = -leftJoystick.getAxis(yAxis);
-      rightJoystickSpeed = rightJoystick.getAxis(yAxis);
-    }
-    m_drive.tankDrive(leftJoystickSpeed, rightJoystickSpeed);
   }
 
   // Called once the command ends or is interrupted. (Unused)

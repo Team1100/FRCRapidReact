@@ -5,6 +5,7 @@
 package frc.robot.commands.Climber.CaneExtension;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.input.XboxController;
 import frc.robot.input.XboxController.XboxAxis;
@@ -49,20 +50,22 @@ public class TankCane extends CommandBase {
       m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
     }
     
-    XboxController xbox = m_oi.getDriverXboxController();
     double leftSpeed = 0;
     double rightSpeed = 0;
-    if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) {
-      leftSpeed = m_caneSpeed;
-    } else if (xbox.getButtonLeftBumper().get()) {
-      leftSpeed = -m_caneSpeed;
-    }
-    if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) {
-      rightSpeed = m_caneSpeed;
-    } else if (xbox.getButtonRightBumper().get()) {
-      rightSpeed = -m_caneSpeed;
-    }
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
+      XboxController xbox = m_oi.getDriverXboxController();
 
+      if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) {
+        leftSpeed = m_caneSpeed;
+      } else if (xbox.getButtonLeftBumper().get()) {
+        leftSpeed = -m_caneSpeed;
+      }
+      if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) {
+        rightSpeed = m_caneSpeed;
+      } else if (xbox.getButtonRightBumper().get()) {
+        rightSpeed = -m_caneSpeed;
+      }
+    }
     m_climber.tankCane(leftSpeed, rightSpeed);
   }
 

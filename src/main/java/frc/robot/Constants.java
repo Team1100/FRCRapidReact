@@ -50,12 +50,13 @@ public final class Constants {
 
     // Subsystem periodic loops
     public static final boolean DRIVE_PERIODIC_ENABLE = true;
-    public static final boolean CLIMBER_PERIODIC_ENABLE = false;
-    public static final boolean SHOOTER_PERIODIC_ENABLE = false;
+    public static final boolean CLIMBER_PERIODIC_ENABLE = true;
+    public static final boolean SHOOTER_PERIODIC_ENABLE = true;
 
     // Joysticks enabled
     public static final boolean ATTACK_THREE_ENABLE = false;
     public static final boolean BUTTON_BOX_ENABLE = false;
     public static final boolean KEYBOARD_BOX_ENABLE = false;
-    public static final boolean XBOX_CONTROLLER_ENABLE = true;
+    public static final boolean XBOX_CONTROLLER_DRIVER_ENABLE = true;
+    public static final boolean XBOX_CONTROLLER_OPERATOR_ENABLE = true;
 }

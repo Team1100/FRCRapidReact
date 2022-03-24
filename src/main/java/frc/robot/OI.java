@@ -62,16 +62,20 @@ public class OI {
     if (Constants.KEYBOARD_BOX_ENABLE) {
       keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
     }
-    if (Constants.XBOX_CONTROLLER_ENABLE) {
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
       DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
+    }
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
     }
     
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    if (Constants.XBOX_CONTROLLER_ENABLE) {
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
       DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
+    }
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
       OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
       OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());

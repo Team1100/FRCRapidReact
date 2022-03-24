@@ -7,6 +7,7 @@ package frc.robot.commands.Conveyor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.input.XboxController.XboxAxis;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -41,14 +42,17 @@ public class UserSpinConveyor extends CommandBase {
   @Override
   public void execute() {
 
-    // Drives the ball Conveyor with the left and right triggers.
-    boolean conveyorIn = m_oi.getOperatorXboxController().getButtonRightBumper().getAsBoolean();
-    boolean conveyorOut = m_oi.getOperatorXboxController().getButtonLeftBumper().getAsBoolean();
     double speed = 0;
-    if (conveyorIn) {
-      speed = CONVEYOR_SPEED;
-    } else if (conveyorOut) {
-      speed = -CONVEYOR_SPEED;
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      // Drives the ball Conveyor with the left and right triggers.
+      boolean conveyorIn = m_oi.getOperatorXboxController().getButtonRightBumper().getAsBoolean();
+      boolean conveyorOut = m_oi.getOperatorXboxController().getButtonLeftBumper().getAsBoolean();
+
+      if (conveyorIn) {
+        speed = CONVEYOR_SPEED;
+      } else if (conveyorOut) {
+        speed = -CONVEYOR_SPEED;
+      }
     }
     m_conveyor.spinConveyor(speed);
   }
