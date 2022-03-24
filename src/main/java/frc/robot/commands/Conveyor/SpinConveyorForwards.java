@@ -17,7 +17,6 @@ public class SpinConveyorForwards extends CommandBase {
   private OI m_oi;
   private boolean m_finished;
   private final double F_SPEED = 0.15;
-  private final double B_SPEED = -0.15;
 
   /** Creates a new SpinConveyor. */
   public SpinConveyorForwards() {
@@ -44,18 +43,17 @@ public class SpinConveyorForwards extends CommandBase {
   @Override
   public void execute() {
     m_conveyor.spinConveyor(F_SPEED);
-    m_finished = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_finished = false;
+    m_conveyor.spinConveyor(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_finished;
+    return false;
   }
 }

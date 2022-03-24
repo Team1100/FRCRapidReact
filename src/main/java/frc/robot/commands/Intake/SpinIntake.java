@@ -47,6 +47,7 @@ public class SpinIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_intake.spinIntakeRoller(0);
     m_finished = false;
   }
 
