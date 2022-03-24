@@ -29,5 +29,5 @@ public class IntakeBalls extends ParallelCommandGroup {
     Auto auto = Auto.getInstance();
     IntakeBalls cmdBoth = new IntakeBalls();
     TestingDashboard.getInstance().registerCommand(auto, "CaneExtensionBoth", cmdBoth);
-}
+  }
 }

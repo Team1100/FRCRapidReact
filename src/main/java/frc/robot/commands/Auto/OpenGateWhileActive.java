@@ -5,7 +5,9 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Conveyor;
+import frc.robot.testingdashboard.TestingDashboard;
 
 public class OpenGateWhileActive extends CommandBase {
   Conveyor m_conveyor;
@@ -13,7 +15,12 @@ public class OpenGateWhileActive extends CommandBase {
   public OpenGateWhileActive() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
+  }
+
+  public static void registerWithTestingDashboard() {
+    Auto auto = Auto.getInstance();
+    OpenGateWhileActive cmd = new OpenGateWhileActive();
+    TestingDashboard.getInstance().registerCommand(auto, "AutoPieces", cmd);
   }
 
   // Called when the command is initially scheduled.
