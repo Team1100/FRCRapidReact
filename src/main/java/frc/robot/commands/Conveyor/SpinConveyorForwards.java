@@ -23,7 +23,6 @@ public class SpinConveyorForwards extends CommandBase {
   public SpinConveyorForwards() {
     // Use addRequirements() here to declare subsystem dependencies.
     m_conveyor = Conveyor.getInstance();
-    addRequirements(m_conveyor);
     m_finished = false;
   }
 
