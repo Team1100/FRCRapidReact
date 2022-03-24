@@ -45,11 +45,14 @@ import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
 import frc.robot.commands.Auto.DelayThenFeedBalls;
 import frc.robot.commands.Auto.DriveAndSpinIntake;
 import frc.robot.commands.Auto.ExpelBalls;
+<<<<<<< HEAD
 import frc.robot.commands.Auto.OpenGateAndFeedBalls;
 import frc.robot.commands.Auto.OpenGateWhileActive;
 import frc.robot.commands.Auto.ShootBallsHigh;
 import frc.robot.commands.Auto.ShootBallsLow;
+=======
 import frc.robot.commands.Auto.IntakeBalls;
+>>>>>>> origin/master
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
@@ -133,13 +136,17 @@ public class RobotContainer {
     DriveAndSpinIntake.registerWithTestingDashboard();
 
     // Auto
+<<<<<<< HEAD
     DelayThenFeedBalls.registerWithTestingDashboard();
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
     OpenGateAndFeedBalls.registerWithTestingDashboard();
     ShootBallsLow.registerWithTestingDashboard();
     ShootBallsHigh.registerWithTestingDashboard();
+
+=======
     IntakeBalls.registerWithTestingDashboard();
+>>>>>>> origin/master
     
     
     // Create Testing Dashboard

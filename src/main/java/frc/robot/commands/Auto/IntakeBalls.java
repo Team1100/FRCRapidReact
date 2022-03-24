@@ -5,38 +5,29 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.Conveyor.SpinConveyorBackwards;
+import frc.robot.Constants;
+import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Intake.SpinIntake;
-import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.subsystems.Auto;
-import frc.robot.subsystems.Conveyor;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 import frc.robot.testingdashboard.TestingDashboard;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ExpelBalls extends ParallelCommandGroup {
-  public static final double SHOOTER_EXPEL_SPEED = -0.3;
-  public static final double INTAKE_EXPEL_SPEED  = -0.2;
- 
-  /** Creates a new ExpelBalls. */
-  public ExpelBalls() {
-    
+public class IntakeBalls extends ParallelCommandGroup {
+  /** Creates a new SpinIntake. */
+  public IntakeBalls() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    super(
-      new SpinShooter(SHOOTER_EXPEL_SPEED, true),
-      new SpinConveyorBackwards(),
-      new SpinIntake(INTAKE_EXPEL_SPEED)
+    addCommands(
+      new SpinConveyorForwards(),
+      new SpinIntake(Constants.DEFAULT_INTAKE_SPEED)
     );
   }
 
   public static void registerWithTestingDashboard() {
     Auto auto = Auto.getInstance();
-    ExpelBalls cmd = new ExpelBalls();
-    TestingDashboard.getInstance().registerCommand(auto, "AutoPieces", cmd);
+    IntakeBalls cmdBoth = new IntakeBalls();
+    TestingDashboard.getInstance().registerCommand(auto, "CaneExtensionBoth", cmdBoth);
   }
-  
 }

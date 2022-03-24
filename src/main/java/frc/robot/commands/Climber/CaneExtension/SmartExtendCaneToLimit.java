@@ -49,9 +49,6 @@ public class SmartExtendCaneToLimit extends CommandBase {
         Climber climber = Climber.getInstance();
         SmartExtendCaneToLimit cmdBoth = new SmartExtendCaneToLimit(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CaneHeightToTravel", 0);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentLeftCaneHeight", 0);
-        TestingDashboard.getInstance().registerNumber(climber, "ElevatorClimber", "CurrentRightCaneHeight", 0);
     }
 
     void initializeTimer() {

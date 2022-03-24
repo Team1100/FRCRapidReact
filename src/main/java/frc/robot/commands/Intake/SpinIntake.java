@@ -13,8 +13,6 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class SpinIntake extends CommandBase {
 
   private Intake m_intake;
-  private boolean m_parameterized;
-  private OI m_oi;
   private boolean m_finished;
   private double m_speed = Constants.DEFAULT_SHOOTER_SPEED;
 
@@ -30,14 +28,13 @@ public class SpinIntake extends CommandBase {
   //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Intake intake = Intake.getInstance();
-    SpinIntake cmd = new SpinIntake(Constants.DEFAULT_SHOOTER_SPEED);
+    SpinIntake cmd = new SpinIntake(Constants.DEFAULT_INTAKE_SPEED);
     TestingDashboard.getInstance().registerCommand(intake, "Basic", cmd);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_oi = OI.getInstance();
     m_finished = false;
   }
 
@@ -50,6 +47,7 @@ public class SpinIntake extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_intake.spinIntakeRoller(0);
     m_finished = false;
   }
 
