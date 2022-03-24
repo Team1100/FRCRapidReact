@@ -39,8 +39,6 @@ public class Climber extends SubsystemBase {
   public static final double CONVERSION_FACTOR = 0.34; // 1 revolution of the motor will extend the cane by 0.34 inches
   public final static double DISTANCE = CONVERSION_FACTOR * GEAR_CIRCUMFERENCE_IN_INCHES;
 
-  private DoubleSolenoid m_leftClawPiston;
-  private DoubleSolenoid m_rightClawPiston;
   private CANSparkMax m_leftCaneMotor;
   private CANSparkMax m_rightCaneMotor;
 
@@ -90,10 +88,7 @@ public class Climber extends SubsystemBase {
     m_leftCaneMotor.setInverted(true);
     leftSwitch = new DigitalInput(RobotMap.CL_LEFT_LIMIT_SWITCH);
     rightSwitch = new DigitalInput(RobotMap.CL_RIGHT_LIMIT_SWITCH);
-    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_LEFT_CLAW_PISTON_PORT1, RobotMap.CL_LEFT_CLAW_PISTON_PORT2);
-      m_rightClawPiston = new DoubleSolenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.CL_RIGHT_CLAW_PISTON_PORT1, RobotMap.CL_RIGHT_CLAW_PISTON_PORT2);
-    }
+   
     m_leftCaneEncoder = m_leftCaneMotor.getEncoder();
     m_rightCaneEncoder = m_rightCaneMotor.getEncoder();
 
@@ -274,39 +269,7 @@ public class Climber extends SubsystemBase {
     return m_rightCaneEncoder.getPosition() * GEAR_CIRCUMFERENCE_IN_INCHES;
   }
 
-  public void openLeftClaw() {
-    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kForward);
-    }
-  }
-
-  public void openRightClaw() {
-    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kForward);
-    }
-  }
-
-  public void openClaws() {
-    openLeftClaw();
-    openRightClaw();
-  }
-
-  public void closeLeftClaw() {
-    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_leftClawPiston.set(DoubleSolenoid.Value.kReverse);
-    }
-  }
-
-  public void closeRightClaw() {
-    if (Constants.HW_AVAILABLE_PNEUMATIC_CONTROL_MODULE) {
-      m_rightClawPiston.set(DoubleSolenoid.Value.kReverse);
-    }
-  }
-
-  public void closeClaws() {
-    closeLeftClaw();
-    closeRightClaw();
-  }
+  
 
   @Override
   public void periodic() {

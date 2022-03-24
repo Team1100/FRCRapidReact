@@ -208,24 +208,20 @@ public class RobotMap {
 	public static final int CL_CANE_TURN_ENCODER_B = DIO_3;
 	public static final int CL_LEFT_LIMIT_SWITCH = DIO_0;
 	public static final int CL_RIGHT_LIMIT_SWITCH = DIO_1;
-	public static final int CL_LEFT_CLAW_PISTON_PORT1 = PCM_0;
-	public static final int CL_LEFT_CLAW_PISTON_PORT2 = PCM_1;
-	public static final int CL_RIGHT_CLAW_PISTON_PORT1 = PCM_2;
-	public static final int CL_RIGHT_CLAW_PISTON_PORT2 = PCM_3;
 	public static final int CL_POTENTIOMETER = ANALOG_0;
 
 
 	//[I]ntake
 	public static final int I_LEFT_ROLLER = CAN_27;
-	public static final int I_PISTON_PORT1 = PCM_4;
-	public static final int I_PISTON_PORT2 = PCM_5;
+	public static final int I_PISTON_PORT1 = PCM_2;
+	public static final int I_PISTON_PORT2 = PCM_3;
 
 
 	//[C]onveyor
 	public static final int C_LEFT_MOTOR = CAN_30;
 	public static final int C_RIGHT_MOTOR = CAN_31;
-	public static final int C_GATE_PISTON_PORT1 = PCM_6;
-	public static final int C_GATE_PISTON_PORT2 = PCM_7;
+	public static final int C_GATE_PISTON_PORT1 = PCM_0;
+	public static final int C_GATE_PISTON_PORT2 = PCM_1;
 	
 	//[S]hooter
 	public static final int S_MOTOR = CAN_28;

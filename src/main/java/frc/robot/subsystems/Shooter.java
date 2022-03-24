@@ -30,6 +30,7 @@ public class Shooter extends SubsystemBase {
     
     if (Constants.HW_ENABLE_SHOOTER) {
       m_shooterMotor = new CANSparkMax(RobotMap.S_MOTOR, MotorType.kBrushless);
+      m_shooterMotor.setInverted(true);
       m_shooterEncoder = m_shooterMotor.getEncoder();
     }
 

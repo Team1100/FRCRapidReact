@@ -29,7 +29,8 @@ public class ExpelBalls extends ParallelCommandGroup {
     super(
       new SpinShooter(SHOOTER_EXPEL_SPEED, true),
       new SpinConveyorBackwards(),
-      new SpinIntake(INTAKE_EXPEL_SPEED)
+      new SpinIntake(INTAKE_EXPEL_SPEED),
+      new OpenGateWhileActive()
     );
   }
 
