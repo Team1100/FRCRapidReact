@@ -6,6 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drive.DriveDistance;
+import frc.robot.commands.Drive.TurnAngle;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -21,14 +22,28 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
   /** Creates a new ShootTwiceAndCrossLine. */
   public ShootTwiceAndCrossLine() {
     // Add your commands in the addCommands() call, e.g.
+
+    /* 
+    1 - Shoot Ball
+    2 - Turn 180 degrees
+    3 - Lower Intake
+    4 - Drive Forwards
+    5 - Pick Up Ball
+    6 - Turn 180 Degrees
+    7 - Drive Forwards
+    8 - Shoot Ball
+    9 - Drive Backwards out of the Zone
+    */
+
     addCommands(
-      new RunShooterTimed(),
+      new ShootBallsHighTimed(),
+      new TurnAngle(180, 0.35, true),
       new LowerIntake(),
-      // Turn
       new DriveAndSpinIntake(AUTO_DRIVE_DIST, AUTO_DRIVE_SPEED),
-      // Turn
+      new TurnAngle(180, 0.35, true),
       new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_SPEED, true),
-      new RunShooterTimed()
+      new ShootBallsHighTimed(),
+      new DriveDistance(AUTO_DRIVE_DIST, (AUTO_DRIVE_SPEED * -1.5), true)
     );
   }
 

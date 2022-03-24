@@ -156,6 +156,7 @@ public class Drive extends SubsystemBase {
     if (m_drive == null) {
       m_drive = new Drive();
       TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
+      TestingDashboard.getInstance().registerString(m_drive, "NAVX", "CurrentYawAngle", "");
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorDistance", 0);
@@ -320,6 +321,7 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorSpeed", m_backRightEncoder.getVelocity());
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorSpeed", m_frontLeftEncoder.getVelocity());
     TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorSpeed", m_frontRightEncoder.getVelocity());
+    TestingDashboard.getInstance().updateNumber(m_drive, "CurrentYawAngle", m_navx.getYaw());
     TestingDashboard.getInstance().updateNumber(m_drive, "currentTime", m_accelHelper.getCurrentTime());
     TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
    
