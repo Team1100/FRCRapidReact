@@ -9,6 +9,8 @@ package frc.robot;
 
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
+import frc.robot.commands.Auto.ShootBallsHigh;
+import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
@@ -52,28 +54,46 @@ public class OI {
   public OI() {
     // User Input
     // TODO: Tune deadband
-    leftStick = new AttackThree(RobotMap.U_JOYSTICK_LEFT, 0.01);
-    rightStick = new AttackThree(RobotMap.U_JOYSTICK_RIGHT, 0.01);
-    DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
-    OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
-    buttonBox = new ButtonBox(RobotMap.U_BUTTON_BOX);
-    keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
-
+    if (Constants.ATTACK_THREE_ENABLE) {
+      leftStick = new AttackThree(RobotMap.U_JOYSTICK_LEFT, 0.01);
+      rightStick = new AttackThree(RobotMap.U_JOYSTICK_RIGHT, 0.01);
+    }
+    if (Constants.BUTTON_BOX_ENABLE) {
+      buttonBox = new ButtonBox(RobotMap.U_BUTTON_BOX);
+    }
+    if (Constants.KEYBOARD_BOX_ENABLE) {
+      keyboardBox = new KeyboardBox(RobotMap.U_KEYBOARD_BOX);
+    }
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
+      DriverXboxController = new XboxController(RobotMap.U_DRIVER_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
+    }
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      OperatorXboxController = new XboxController(RobotMap.U_OPERATOR_XBOX_CONTROLLER, Constants.XBOX_DEADBAND_LIMIT);
+    }
+    
     ////////////////////////////////////////////////////
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
-    DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
-    OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
-    OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
-    OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
-    OperatorXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+    if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
+      DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
+    }
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
+      OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
+      OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
+      OperatorXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+      OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
+    }
+    
 
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to AttackThree controllers
     ////////////////////////////////////////////////////
-    leftStick.getButton(2).toggleWhenPressed(new TankDrive());
-   
+    if (Constants.ATTACK_THREE_ENABLE) {
+      leftStick.getButton(2).toggleWhenPressed(new TankDrive());
+    }
+
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
@@ -83,10 +103,13 @@ public class OI {
     // Now Mapping Commands to Keyboard Box
     ////////////////////////////////////////////////////
 
-    keyboardBox.getKForward().whileHeld(new KeyboardDrive(0.75, 0));
-    keyboardBox.getKBack().whileHeld(new KeyboardDrive(-0.75, 0));
-    keyboardBox.getKLeft().whileHeld(new KeyboardDrive(0, 0.67));
-    keyboardBox.getKRight().whileHeld(new KeyboardDrive(0, -0.67));
+    if (Constants.KEYBOARD_BOX_ENABLE) {
+      keyboardBox.getKForward().whileHeld(new KeyboardDrive(0.75, 0));
+      keyboardBox.getKBack().whileHeld(new KeyboardDrive(-0.75, 0));
+      keyboardBox.getKLeft().whileHeld(new KeyboardDrive(0, 0.67));
+      keyboardBox.getKRight().whileHeld(new KeyboardDrive(0, -0.67));
+    }
+    
   }
 
   /**

@@ -22,21 +22,23 @@ public class SmartExtendCaneFully extends CommandBase {
     private static final double SLOW_ZONE_OFFSET = 7; // distance away from target where the motors are reduced in power.
     private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
-    private double m_caneSpeed;
+    private double m_initialCaneSpeed;
+    private double m_slowerCaneSpeed;
     private boolean m_parameterized;
     private Timer m_timer;
     private boolean m_timer_running = false;
     RelativeEncoder m_leftEncoder;
     RelativeEncoder m_rightEncoder;
 
-    public SmartExtendCaneFully(double caneSpeed, boolean parameterized) { 
+    public SmartExtendCaneFully(double initialCaneSpeed, double slowerCaneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
         m_climberCaneExtension = ClimberCaneExtension.getInstance();
         m_climber = Climber.getInstance();
         addRequirements(m_climberCaneExtension);
         m_leftEncoder = m_climber.getLeftCaneEncoder();
         m_rightEncoder = m_climber.getRightCaneEncoder();
-        m_caneSpeed = caneSpeed;
+        m_initialCaneSpeed = initialCaneSpeed;
+        m_slowerCaneSpeed = slowerCaneSpeed;
         m_parameterized = parameterized;
         m_timer = new Timer();
         m_timer_running = false;
@@ -44,7 +46,7 @@ public class SmartExtendCaneFully extends CommandBase {
 
     public static void registerWithTestingDashboard() {
         Climber climber = Climber.getInstance();
-        SmartExtendCaneFully cmdBoth = new SmartExtendCaneFully(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
+        SmartExtendCaneFully cmdBoth = new SmartExtendCaneFully(Climber.INITIAL_CANE_EXTENTION_SPEED, Climber.INITIAL_CANE_EXTENTION_SPEED/2, false);
         TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);
     }
 
@@ -78,19 +80,18 @@ public class SmartExtendCaneFully extends CommandBase {
     @Override
     public void execute() {
       if (!m_parameterized) {
-        m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
+        m_initialCaneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
+        m_slowerCaneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "SlowerExtensionSpeed");
       }
-
-      if (m_caneSpeed >= 0) {
-        if (m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
-          m_climber.extendCane(m_caneSpeed/2);
+      m_climber.extendCane(m_initialCaneSpeed);
+      if (m_initialCaneSpeed >= 0) {
+        if (-m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
+          m_climber.extendCane(m_slowerCaneSpeed);
         }
-      } else if (m_caneSpeed < 0) {
-        if (m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
-          m_climber.extendCane(m_caneSpeed/2);
+      } else if (m_initialCaneSpeed < 0) {
+        if (-m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
+          m_climber.extendCane(m_slowerCaneSpeed);
         }
-      } else {
-        m_climber.extendCane(m_caneSpeed);
       }
       
       
@@ -100,6 +101,7 @@ public class SmartExtendCaneFully extends CommandBase {
     @Override
     public void end(boolean interrupted) {
       stopTimer();
+      m_climber.extendCane(0);
     }
 
    // Returns true when the command should end.
@@ -107,18 +109,18 @@ public class SmartExtendCaneFully extends CommandBase {
    public boolean isFinished() {
       boolean finished = false;
       
-      if (m_caneSpeed >= 0) {
-        if (m_leftEncoder.getPosition() >= MAXIMUM_TARGET || m_rightEncoder.getPosition() >= MAXIMUM_TARGET) {
+      if (m_initialCaneSpeed >= 0) {
+        if (-m_leftEncoder.getPosition() >= MAXIMUM_TARGET || -m_rightEncoder.getPosition() >= MAXIMUM_TARGET) {
           finished = true;
         }
-      } else if (m_caneSpeed < 0) {
-        if (m_leftEncoder.getPosition() <= MINIMUM_TARGET || m_rightEncoder.getPosition() <= MINIMUM_TARGET) {
+      } else if (m_initialCaneSpeed < 0) {
+        if (-m_leftEncoder.getPosition() <= MINIMUM_TARGET || -m_rightEncoder.getPosition() <= MINIMUM_TARGET) {
           finished = true;
         }
       }
-      if (caneStoppedMoving()) {
-        finished = true;
-      }
+      // if (caneStoppedMoving()) {
+      //   finished = true;
+      // }
       return finished;
     }
 }

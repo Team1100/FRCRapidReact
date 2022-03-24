@@ -7,9 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.Climber.CloseClaws;
+
 import frc.robot.commands.Climber.ConstantSpeedRotateCane;
-import frc.robot.commands.Climber.OpenClaws;
+
 import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.PIDTurnCaneToAngle;
 import frc.robot.commands.Climber.RotateCaneToBar;
@@ -22,6 +22,7 @@ import frc.robot.commands.Climber.CaneExtension.SmartCaneExtendDistance;
 import frc.robot.commands.Climber.CaneExtension.SmartExtendCaneFully;
 import frc.robot.commands.Climber.CaneExtension.SmartExtendCaneToLimit;
 import frc.robot.commands.Climber.CaneExtension.TankCane;
+import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
 import frc.robot.commands.Climber.Sequences.ClimbStatefully;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarSequence;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
@@ -105,8 +106,7 @@ public class RobotContainer {
     // Climber
     DriveToBar.registerWithTestingDashboard();
     TankCane.registerWithTestingDashboard();
-    OpenClaws.registerWithTestingDashboard();
-    CloseClaws.registerWithTestingDashboard();
+
     TankRotateCane.registerWithTestingDashboard();
     UserOperateCane.registerWithTestingDashboard();
     ConstantSpeedRotateCane.registerWithTestingDashboard();
@@ -122,6 +122,7 @@ public class RobotContainer {
     SmartCaneExtendDistance.registerWithTestingDashboard();
     SmartExtendCaneFully.registerWithTestingDashboard();
     SmartExtendCaneToLimit.registerWithTestingDashboard();
+    ZeroCaneEncoders.registerWithTestingDashboard();
     
 
     // Conveyor

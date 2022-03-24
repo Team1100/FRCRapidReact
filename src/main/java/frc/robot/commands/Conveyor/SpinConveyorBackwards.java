@@ -6,17 +6,13 @@ package frc.robot.commands.Conveyor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.OI;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.testingdashboard.TestingDashboard;
 
 public class SpinConveyorBackwards extends CommandBase {
 
   private Conveyor m_conveyor;
-  private boolean m_parameterized;
-  private OI m_oi;
   private boolean m_finished;
-  private final double F_SPEED = 0.15;
   private final double B_SPEED = -0.15;
 
   /** Creates a new SpinConveyor. */
@@ -37,7 +33,6 @@ public class SpinConveyorBackwards extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_oi = OI.getInstance();
     m_finished = false;
   }
 
@@ -45,7 +40,6 @@ public class SpinConveyorBackwards extends CommandBase {
   @Override
   public void execute() {
     m_conveyor.spinConveyor(B_SPEED);
-    m_finished = true;
   }
 
   // Called once the command ends or is interrupted.
