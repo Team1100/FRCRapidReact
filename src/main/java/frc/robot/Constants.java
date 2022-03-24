@@ -26,7 +26,7 @@ public final class Constants {
     public static final double SHOOTER_SPEED_LOW = 0.25;
 
     // Defines Intake command constants
-    public static final double DEFAULT_INTAKE_SPEED = 0.5;
+    public static final double DEFAULT_INTAKE_SPEED = -0.33;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;

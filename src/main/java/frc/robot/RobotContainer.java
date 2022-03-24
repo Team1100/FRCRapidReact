@@ -43,6 +43,8 @@ import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
 import frc.robot.commands.Auto.DriveAndSpinIntake;
+import frc.robot.commands.Auto.ExpelBalls;
+import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
@@ -124,10 +126,9 @@ public class RobotContainer {
     LowerIntake.registerWithTestingDashboard();
     SpinIntake.registerWithTestingDashboard();
     DriveAndSpinIntake.registerWithTestingDashboard();
-    SpinIntake.registerWithTestingDashboard();
 
     // Auto
-    
+    IntakeBalls.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard
