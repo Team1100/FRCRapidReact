@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RoboRioAccelerometerHelper;
 import frc.robot.RobotMap;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -291,39 +292,41 @@ public class Drive extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    m_accelHelper.captureTimeData();
-    m_accelHelper.captureAccelerometerData();
-    //accelIntCount += 1;
+    if (Constants.DRIVE_PERIODIC_ENABLE) {
+      // This method will be called once per scheduler run
+      m_accelHelper.captureTimeData();
+      m_accelHelper.captureAccelerometerData();
+      //accelIntCount += 1;
 
-    if (m_accelHelper.getAccelIntCount() > 2) {
-      m_measureVelocity = true;
+      if (m_accelHelper.getAccelIntCount() > 2) {
+        m_measureVelocity = true;
+      }
+
+      if (m_accelHelper.getAccelIntCount() > 4) {
+        m_measureDistance = true;
+      }
+
+      if (m_measureVelocity) {
+        m_accelHelper.calculateVelocity();
+      }
+
+      if (m_measureDistance) {
+        m_accelHelper.calculateDistance();
+      }
+
+      TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorDistance", m_backLeftEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorDistance", m_backRightEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorDistance", m_frontLeftEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorDistance", m_frontRightEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorSpeed", m_backLeftEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorSpeed", m_backRightEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorSpeed", m_frontLeftEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorSpeed", m_frontRightEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_drive, "currentTime", m_accelHelper.getCurrentTime());
+      TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
+
+      // Publish motor current values
+      updateMotorCurrentAverages();
     }
-
-    if (m_accelHelper.getAccelIntCount() > 4) {
-      m_measureDistance = true;
-    }
-
-    if (m_measureVelocity) {
-      m_accelHelper.calculateVelocity();
-    }
-
-    if (m_measureDistance) {
-      m_accelHelper.calculateDistance();
-    }
-
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorDistance", m_backLeftEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorDistance", m_backRightEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorDistance", m_frontLeftEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorDistance", m_frontRightEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackLeftMotorSpeed", m_backLeftEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_drive, "BackRightMotorSpeed", m_backRightEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontLeftMotorSpeed", m_frontLeftEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorSpeed", m_frontRightEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_drive, "currentTime", m_accelHelper.getCurrentTime());
-    TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
-   
-    // Publish motor current values
-    updateMotorCurrentAverages();
   }
 }

@@ -5,6 +5,7 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.input.XboxController;
 import frc.robot.input.XboxController.XboxAxis;
@@ -60,25 +61,27 @@ public class UserOperateCane extends CommandBase {
   }
 
   private void extendCane() {
-    XboxController xbox = m_oi.getOperatorXboxController();
     double extensionSpeed = 0;
-    if (xbox.getDPad().getUp().getAsBoolean()) { 
-      extensionSpeed = m_caneExtensionSpeed;
-    } else if (xbox.getDPad().getDown().getAsBoolean()) { 
-      extensionSpeed = -m_caneExtensionSpeed;
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      XboxController xbox = m_oi.getOperatorXboxController();
+      if (xbox.getDPad().getUp().getAsBoolean()) { 
+        extensionSpeed = m_caneExtensionSpeed;
+      } else if (xbox.getDPad().getDown().getAsBoolean()) { 
+        extensionSpeed = -m_caneExtensionSpeed;
+      }
     }
-
     m_climber.extendCane(extensionSpeed);
   }
 
   private void rotateCane() {
     double rotationSpeed = 0;
-
-    XboxController xbox = m_oi.getOperatorXboxController();
-    if (xbox.getDPad().getLeft().getAsBoolean()) { 
-      rotationSpeed = m_caneRotationSpeed;
-    } else if (xbox.getDPad().getRight().getAsBoolean()) {  
-      rotationSpeed = -m_caneRotationSpeed;
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      XboxController xbox = m_oi.getOperatorXboxController();
+      if (xbox.getDPad().getLeft().getAsBoolean()) { 
+        rotationSpeed = m_caneRotationSpeed;
+      } else if (xbox.getDPad().getRight().getAsBoolean()) {  
+        rotationSpeed = -m_caneRotationSpeed;
+      }
     }
     m_climber.rotateBothCanes(rotationSpeed);
   }

@@ -22,11 +22,11 @@ public final class Constants {
     // Defines Shooter command constants
     public static final double DEFAULT_SHOOTER_SPIN_UP_TIME = 0.5; // seconds
     public static final double DEFAULT_SHOOTER_SPEED = 0.35;
-    public static final double SHOOTER_SPEED_HIGH = 0.55;
+    public static final double SHOOTER_SPEED_HIGH = 0.60;
     public static final double SHOOTER_SPEED_LOW = 0.25;
 
     // Defines Intake command constants
-    public static final double DEFAULT_INTAKE_SPEED = -0.33;
+    public static final double DEFAULT_INTAKE_SPEED = 0.33; // positive goes into robot, negative expels
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
@@ -42,9 +42,21 @@ public final class Constants {
     // Defines constants associated with sensors
     // 15 Amps for 1 second at a speed of 0.3 indicates that contact with
     // a bar has been detected
-    public static final double MOTOR_CURRENT_THRESHOLD = 20; // Amps
+    public static final double MOTOR_CURRENT_THRESHOLD = 25; // Amps
     public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
+
+    // Subsystem periodic loops
+    public static final boolean DRIVE_PERIODIC_ENABLE = true;
+    public static final boolean CLIMBER_PERIODIC_ENABLE = true;
+    public static final boolean SHOOTER_PERIODIC_ENABLE = true;
+
+    // Joysticks enabled
+    public static final boolean ATTACK_THREE_ENABLE = false;
+    public static final boolean BUTTON_BOX_ENABLE = false;
+    public static final boolean KEYBOARD_BOX_ENABLE = false;
+    public static final boolean XBOX_CONTROLLER_DRIVER_ENABLE = true;
+    public static final boolean XBOX_CONTROLLER_OPERATOR_ENABLE = true;
 }

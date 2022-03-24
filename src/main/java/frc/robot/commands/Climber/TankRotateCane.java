@@ -5,6 +5,7 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.OI;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberCaneRotation;
@@ -43,12 +44,14 @@ public class TankRotateCane extends CommandBase {
   public void execute() {
     m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
     double rotationSpeed = 0;
-    XboxController xbox = m_oi.getOperatorXboxController();
-    if (xbox.getDPad().getRight().get()) {
-      rotationSpeed = m_caneSpeed;
-    }
-    else if (xbox.getDPad().getLeft().get()) {
-      rotationSpeed = -m_caneSpeed;
+    if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      XboxController xbox = m_oi.getOperatorXboxController();
+      if (xbox.getDPad().getRight().get()) {
+        rotationSpeed = m_caneSpeed;
+      }
+      else if (xbox.getDPad().getLeft().get()) {
+        rotationSpeed = -m_caneSpeed;
+      }
     }
     m_climber.rotateBothCanes(rotationSpeed);
   }
