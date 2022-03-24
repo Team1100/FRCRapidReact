@@ -70,8 +70,8 @@ public class SmartCaneExtendDistance extends CommandBase {
 
     @Override
     public void initialize() {
-      initialRightEncoderDistance = m_rightEncoder.getPosition();
-      initialLeftEncoderDistance = m_leftEncoder.getPosition();
+      initialRightEncoderDistance = -m_rightEncoder.getPosition();
+      initialLeftEncoderDistance = -m_leftEncoder.getPosition();
       initializeTimer();
     }
   

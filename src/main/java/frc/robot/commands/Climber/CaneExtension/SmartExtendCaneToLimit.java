@@ -20,35 +20,39 @@ public class SmartExtendCaneToLimit extends CommandBase {
     private static final double TOLERANCE = 1; // Sets the tolerance for when to stop (in)
     private static final double MINIMUM_TARGET = TOLERANCE;
     private static final double MAXIMUM_TARGET = MAXIMUM_ENCODER_DISTANCE - TOLERANCE;
-    private static final double SLOW_ZONE_OFFSET = 7; // distance away from target where the motors are reduced in power.
+    private static final double SLOW_ZONE_OFFSET = 2; // distance away from target where the motors are reduced in power.
     private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
-    private double m_caneSpeed;
+    private double m_initialCaneSpeed;
+    private double m_slowerCaneSpeed;
     private boolean m_parameterized;
     private Timer m_timer;
     private boolean m_timer_running = false;
     RelativeEncoder m_leftEncoder;
     RelativeEncoder m_rightEncoder;
     ExtendCaneToLimit m_eLimit;
+    private boolean slowPeriodHasStarted;
 
-    public SmartExtendCaneToLimit(double caneSpeed, boolean parameterized) { 
+    public SmartExtendCaneToLimit(double initialCaneSpeed, double slowerCaneSpeed, boolean parameterized) { 
         // Use addRequirements() here to declare subsystem dependencies.
         m_climberCaneExtension = ClimberCaneExtension.getInstance();
         m_climber = Climber.getInstance();
-        m_eLimit = new ExtendCaneToLimit(caneSpeed/2, parameterized);
+        m_eLimit = new ExtendCaneToLimit(slowerCaneSpeed, parameterized);
         addRequirements(m_climberCaneExtension);
         m_leftEncoder = m_climber.getLeftCaneEncoder();
         m_rightEncoder = m_climber.getRightCaneEncoder();
-        m_caneSpeed = caneSpeed;
+        m_initialCaneSpeed = initialCaneSpeed;
+        m_slowerCaneSpeed = slowerCaneSpeed;
         m_parameterized = parameterized;
         m_timer = new Timer();
         m_timer_running = false;
+        slowPeriodHasStarted = false;
       }
 
     public static void registerWithTestingDashboard() {
         Climber climber = Climber.getInstance();
-        SmartExtendCaneToLimit cmdBoth = new SmartExtendCaneToLimit(Climber.INITIAL_CANE_EXTENTION_SPEED, false);
-        TestingDashboard.getInstance().registerCommand(climber, "CaneExtensionBoth", cmdBoth);
+        SmartExtendCaneToLimit cmdBoth = new SmartExtendCaneToLimit(Climber.INITIAL_CANE_EXTENTION_SPEED,Climber.INITIAL_CANE_EXTENTION_SPEED/2, false);
+        TestingDashboard.getInstance().registerCommand(climber, "CaneExtension", cmdBoth);
     }
 
     void initializeTimer() {
@@ -75,27 +79,29 @@ public class SmartExtendCaneToLimit extends CommandBase {
     @Override
     public void initialize() {
       initializeTimer();
+      slowPeriodHasStarted = false;
+      m_eLimit = new ExtendCaneToLimit(m_slowerCaneSpeed, true);
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
       if (!m_parameterized) {
-        m_caneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
+        m_initialCaneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
+        m_slowerCaneSpeed = TestingDashboard.getInstance().getNumber(m_climber, "SlowerExtensionSpeed");
+        m_eLimit = new ExtendCaneToLimit(m_slowerCaneSpeed, true);
       }
-
-      if (m_caneSpeed >= 0) {
+      m_climber.extendCane(m_initialCaneSpeed);
+      if (m_initialCaneSpeed >= 0) {
         if (-m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
-          m_climber.extendCane(0);
           m_eLimit.schedule();
+          slowPeriodHasStarted = true;
         }
-      } else if (m_caneSpeed < 0) {
+      } else if (m_initialCaneSpeed < 0) {
         if (-m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
-          m_climber.extendCane(0);
           m_eLimit.schedule();
+          slowPeriodHasStarted = true;
         }
-      } else {
-        m_climber.extendCane(m_caneSpeed);
       }
       
       
@@ -111,13 +117,13 @@ public class SmartExtendCaneToLimit extends CommandBase {
    @Override
    public boolean isFinished() {
       boolean finished = false;
-      if (m_eLimit.isFinished()) {
+      if (m_eLimit.isFinished() && slowPeriodHasStarted) {
         finished = true;
       }
       
-      if (caneStoppedMoving()) {
-        finished = true;
-      }
+      // if (caneStoppedMoving()) {
+      //   finished = true;
+      // }
       return finished;
     }
 }

@@ -123,6 +123,7 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "SpeedToTravel", INITIAL_TRAVEL_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "Travel", "Sensor", Constants.NO_SENSOR);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "ExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
+      TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "SlowerExtensionSpeed", INITIAL_CANE_EXTENTION_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneInputs", "RotationSpeed", INITIAL_CANE_ROTATION_SPEED);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentLeftExtensionSpeed", 0);
       TestingDashboard.getInstance().registerNumber(m_climber, "CaneOutputs", "CurrentRightExtensionSpeed", 0);

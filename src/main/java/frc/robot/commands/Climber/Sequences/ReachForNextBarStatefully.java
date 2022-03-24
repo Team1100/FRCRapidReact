@@ -12,6 +12,8 @@ import frc.robot.commands.Climber.ConstantSpeedRotateCane;
 import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Climber.CaneExtension.CaneExtendDistance;
 import frc.robot.commands.Climber.CaneExtension.ExtendCaneToLimit;
+import frc.robot.commands.Climber.CaneExtension.SmartCaneExtendDistance;
+import frc.robot.commands.Climber.CaneExtension.SmartExtendCaneToLimit;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drive;
@@ -33,34 +35,35 @@ public class ReachForNextBarStatefully extends CommandBase {
     DONE
   }
     static final double CANE_FORWARDS_ROTATION_SPEED = .3;
-    static final double CANE_BACKWARDS_ROTATION_SPEED = .2;
+    static final double CANE_BACKWARDS_ROTATION_SPEED = .15;
     static final double CANE_HEIGHT = 5;
-    static final double CANE_EXTENSION_SPEED = .3;
+    static final double CANE_EXTENSION_SPEED = .5;
+    static final double SLOWER_CANE_EXTENSION_SPEED = .2;
     private static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
 
 
 
-  private CaneExtendDistance m_liftOffBar;
+  private SmartCaneExtendDistance m_liftOffBar;
   private RotateCaneToBar m_rotateBack;
-  private ExtendCaneToLimit m_extendFully;
+  private SmartExtendCaneToLimit m_extendFully;
   private RotateCaneToBar m_rotateToBar;
   private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
-  private ExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
+  private SmartExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
 
 
   
   private boolean m_isFinished;
   private State m_state;
   /** Creates a new ReachForNextBarStatefully. */
-  public ReachForNextBarStatefully(double caneExtensionSpeed, double caneHeight,  double caneForwardsRotationSpeed, double caneBackwardsRotationSpeed) {
+  public ReachForNextBarStatefully(double caneExtensionSpeed, double caneSlowerExtensionSpeed, double caneHeight,  double caneForwardsRotationSpeed, double caneBackwardsRotationSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
-    m_liftOffBar = new CaneExtendDistance(caneHeight, caneExtensionSpeed, true);
-    m_rotateBack = new RotateCaneToBar(-caneForwardsRotationSpeed, true);
-    m_extendFully = new ExtendCaneToLimit(caneExtensionSpeed, true);
-    m_rotateToBar = new RotateCaneToBar(caneBackwardsRotationSpeed, true);
+    m_liftOffBar = new SmartCaneExtendDistance(caneHeight, caneExtensionSpeed, true);
+    m_rotateBack = new RotateCaneToBar(-caneBackwardsRotationSpeed, true);
+    m_extendFully = new SmartExtendCaneToLimit(caneExtensionSpeed, caneSlowerExtensionSpeed, true);
+    m_rotateToBar = new RotateCaneToBar(caneForwardsRotationSpeed, true);
     m_forceUpright = new ConstantSpeedRotateCane(caneForwardsRotationSpeed, true);
-    m_retractCane = new ExtendCaneToLimit(-caneExtensionSpeed, true);
+    m_retractCane = new SmartExtendCaneToLimit(-caneExtensionSpeed, -caneSlowerExtensionSpeed, true);
     
 
     m_state = State.INIT;
@@ -70,7 +73,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Climber climber = Climber.getInstance();
-    ReachForNextBarStatefully cmd = new ReachForNextBarStatefully(CANE_EXTENSION_SPEED, CANE_HEIGHT, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
+    ReachForNextBarStatefully cmd = new ReachForNextBarStatefully(CANE_EXTENSION_SPEED, SLOWER_CANE_EXTENSION_SPEED, CANE_HEIGHT, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
     TestingDashboard.getInstance().registerCommand(climber, "TestCommands", cmd);
   }
 
@@ -121,12 +124,15 @@ public class ReachForNextBarStatefully extends CommandBase {
           m_state = State.SCHEDULE_LIFT_OFF_BAR;
         break;
       case SCHEDULE_LIFT_OFF_BAR:
-        m_forceUpright.schedule();
-        m_retractCane.schedule();
+          m_forceUpright.schedule();
+          m_retractCane.schedule();
+          m_state = State.LIFT_OFF_BAR;        
         break;
       case LIFT_OFF_BAR:
-        if (m_retractCane.isFinished())
+        if (m_retractCane.isFinished()) {
           m_state = State.DONE;
+          m_forceUpright.cancel();
+        }
         break;
       case DONE:
         m_isFinished = true;
