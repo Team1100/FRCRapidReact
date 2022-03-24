@@ -9,6 +9,8 @@ package frc.robot;
 
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
+import frc.robot.commands.Auto.ShootBallsHigh;
+import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
@@ -80,6 +82,7 @@ public class OI {
       OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
       OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
       OperatorXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+      OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
     }
     
 

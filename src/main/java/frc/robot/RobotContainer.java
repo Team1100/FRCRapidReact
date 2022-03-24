@@ -22,6 +22,7 @@ import frc.robot.commands.Climber.CaneExtension.SmartCaneExtendDistance;
 import frc.robot.commands.Climber.CaneExtension.SmartExtendCaneFully;
 import frc.robot.commands.Climber.CaneExtension.SmartExtendCaneToLimit;
 import frc.robot.commands.Climber.CaneExtension.TankCane;
+import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
 import frc.robot.commands.Climber.Sequences.ClimbStatefully;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarSequence;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
@@ -117,6 +118,7 @@ public class RobotContainer {
     SmartCaneExtendDistance.registerWithTestingDashboard();
     SmartExtendCaneFully.registerWithTestingDashboard();
     SmartExtendCaneToLimit.registerWithTestingDashboard();
+    ZeroCaneEncoders.registerWithTestingDashboard();
     
 
     // Conveyor

@@ -85,12 +85,12 @@ public class SmartExtendCaneToLimit extends CommandBase {
       }
 
       if (m_caneSpeed >= 0) {
-        if (m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
+        if (-m_leftEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() >= MAXIMUM_TARGET - SLOW_ZONE_OFFSET) {
           m_climber.extendCane(0);
           m_eLimit.schedule();
         }
       } else if (m_caneSpeed < 0) {
-        if (m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
+        if (-m_leftEncoder.getPosition() <= SLOW_ZONE_OFFSET || -m_rightEncoder.getPosition() <= SLOW_ZONE_OFFSET) {
           m_climber.extendCane(0);
           m_eLimit.schedule();
         }

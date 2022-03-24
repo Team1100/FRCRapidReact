@@ -83,7 +83,7 @@ public class SmartCaneExtendDistance extends CommandBase {
         m_caneHeightToTravel = TestingDashboard.getInstance().getNumber(m_climber, "CaneHeightToTravel");
       }
       
-      if (m_caneHeightToTravel < 0) {
+      if (m_caneHeightToTravel > 0) {
         m_climber.extendCane(m_caneSpeed);
       } else {
         m_climber.extendCane(-m_caneSpeed);
@@ -94,6 +94,7 @@ public class SmartCaneExtendDistance extends CommandBase {
     @Override
     public void end(boolean interrupted) {
       stopTimer();
+      m_climber.extendCane(0);
     }
 
    // Returns true when the command should end.
@@ -102,11 +103,11 @@ public class SmartCaneExtendDistance extends CommandBase {
       boolean finished = false;
       
       if (m_caneHeightToTravel >= 0) {
-        if (m_leftEncoder.getPosition() >= m_caneHeightToTravel + initialLeftEncoderDistance || m_rightEncoder.getPosition() >= m_caneHeightToTravel + initialRightEncoderDistance) {
+        if (-m_leftEncoder.getPosition() >= m_caneHeightToTravel + initialLeftEncoderDistance || -m_rightEncoder.getPosition() >= m_caneHeightToTravel + initialRightEncoderDistance) {
           finished = true;
         }
       } else if (m_caneHeightToTravel < 0) {
-        if (m_leftEncoder.getPosition() <= initialLeftEncoderDistance + m_caneHeightToTravel || m_rightEncoder.getPosition() <= initialRightEncoderDistance + m_caneHeightToTravel) {
+        if (-m_leftEncoder.getPosition() <= initialLeftEncoderDistance + m_caneHeightToTravel || -m_rightEncoder.getPosition() <= initialRightEncoderDistance + m_caneHeightToTravel) {
           finished = true;
         }
       }
