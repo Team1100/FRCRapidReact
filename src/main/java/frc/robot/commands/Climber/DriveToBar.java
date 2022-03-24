@@ -59,6 +59,7 @@ public class DriveToBar extends CommandBase {
     rightEncoder.setPosition(ENCODER_INITIAL_POSITION);
     m_leftSensorHasActivated = false;
     m_rightSensorHasActivated = false;
+    m_climber.startCollectingCurrentData();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -100,6 +101,7 @@ public class DriveToBar extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drive.tankDrive(0, 0);
+    m_climber.stopCollectingCurrentData();
   }
 
   // Returns true when the command should end.

@@ -71,6 +71,8 @@ public class Climber extends SubsystemBase {
   public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 50; // This is 1000 miliseconds divided in 20 millisecond chunks
   private int m_max_num_current_values;
 
+  private boolean collectingData;
+
   // limit switches on the top of the cane (one per cane) for detecting
   // contact with a bar
   private DigitalInput leftSwitch, rightSwitch;
@@ -112,6 +114,7 @@ public class Climber extends SubsystemBase {
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
 
     setExtensionEncoderConversionFactor(CONVERSION_FACTOR);
+    collectingData = false;
   }
   
 
@@ -269,6 +272,14 @@ public class Climber extends SubsystemBase {
     return m_rightCaneEncoder.getPosition() * GEAR_CIRCUMFERENCE_IN_INCHES;
   }
 
+  public void startCollectingCurrentData() {
+    collectingData = true;
+  }
+
+  public void stopCollectingCurrentData() {
+    collectingData = false;
+  }
+
   
 
   @Override
@@ -284,7 +295,10 @@ public class Climber extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderVelocity", m_rightCaneEncoder.getVelocity());
     TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRotationEncoderRate", m_caneRotationEncoder.getRate());
 
-    updateMotorCurrentAverages();    
+    if (collectingData) {
+      updateMotorCurrentAverages(); 
+    }
+       
   }
 }
 
