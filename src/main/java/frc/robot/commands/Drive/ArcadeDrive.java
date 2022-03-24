@@ -49,7 +49,9 @@ public class ArcadeDrive extends CommandBase {
     double speed = m_xbox.getAxis(XboxAxis.kYLeft);
     boolean squareInputs = true;
 
-    if (rotation != 0) {
+    if (rotation < 0) {
+      rotation = rotation + Constants.XBOX_DEADBAND_LIMIT;
+    } else if (rotation > 0) {
       rotation = rotation - Constants.XBOX_DEADBAND_LIMIT;
     }
     

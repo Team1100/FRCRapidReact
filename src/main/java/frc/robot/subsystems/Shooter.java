@@ -106,8 +106,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    TestingDashboard.getInstance().updateNumber(this, "ShooterDist", getMotorDistance());
-    TestingDashboard.getInstance().updateNumber(this, "ShooterOutputSpeed", getMotorRpm());
+    if (Constants.SHOOTER_PERIODIC_ENABLE) {
+      // This method will be called once per scheduler run
+      TestingDashboard.getInstance().updateNumber(this, "ShooterDist", getMotorDistance());
+      TestingDashboard.getInstance().updateNumber(this, "ShooterOutputSpeed", getMotorRpm());
+    }
   }
 }

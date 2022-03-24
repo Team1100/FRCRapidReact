@@ -310,18 +310,21 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    TestingDashboard.getInstance().updateNumber(m_climber, "CaneAngle", getRotationAngle());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CaneMotorSpeed", m_caneRotateSpeed);
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftExtensionSpeed", m_leftCaneMotor.get());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightExtensionSpeed", m_rightCaneMotor.get());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderPostition", m_leftCaneEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderPostition", m_rightCaneEncoder.getPosition());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderVelocity", m_leftCaneEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderVelocity", m_rightCaneEncoder.getVelocity());
-    TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRotationEncoderRate", m_caneRotationEncoder.getRate());
+    if (Constants.CLIMBER_PERIODIC_ENABLE) {
+      // This method will be called once per scheduler run
+      TestingDashboard.getInstance().updateNumber(m_climber, "CaneAngle", getRotationAngle());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CaneMotorSpeed", m_caneRotateSpeed);
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftExtensionSpeed", m_leftCaneMotor.get());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightExtensionSpeed", m_rightCaneMotor.get());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderPostition", m_leftCaneEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderPostition", m_rightCaneEncoder.getPosition());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderVelocity", m_leftCaneEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderVelocity", m_rightCaneEncoder.getVelocity());
+      TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRotationEncoderRate", m_caneRotationEncoder.getRate());
+      
+      updateMotorCurrentAverages();
+    }
 
-    updateMotorCurrentAverages();    
   }
 }
 

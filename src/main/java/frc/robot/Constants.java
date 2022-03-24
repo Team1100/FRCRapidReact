@@ -47,4 +47,15 @@ public final class Constants {
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
+
+    // Subsystem periodic loops
+    public static final boolean DRIVE_PERIODIC_ENABLE = true;
+    public static final boolean CLIMBER_PERIODIC_ENABLE = false;
+    public static final boolean SHOOTER_PERIODIC_ENABLE = false;
+
+    // Joysticks enabled
+    public static final boolean ATTACK_THREE_ENABLE = false;
+    public static final boolean BUTTON_BOX_ENABLE = false;
+    public static final boolean KEYBOARD_BOX_ENABLE = false;
+    public static final boolean XBOX_CONTROLLER_ENABLE = true;
 }
