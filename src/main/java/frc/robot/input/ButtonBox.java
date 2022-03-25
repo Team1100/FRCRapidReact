@@ -8,22 +8,23 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * can be accessed through the functions written here.
  */
 public class ButtonBox extends Joystick {
-	private JoystickButton WideFocus;
-	private JoystickButton FineFocus;
-	private JoystickButton Fire;
-	private JoystickButton IntakeIn;
-	private JoystickButton IntakeOut;
-	private JoystickButton Hopper;
-	private JoystickButton CPDeploy;
-	private JoystickButton CPSpin;
-	private JoystickButton CPYellow;
-	private JoystickButton CPGreen;
-	private JoystickButton CPRed;
-	private JoystickButton CPBlue;
-	private JoystickButton ClimberDeploy;
-	private JoystickButton Climb;
-	private JoystickButton ClimberLeft;
-	private JoystickButton ClimberRight;
+	/*buttons are named in numerical order, reading the buttonbox from left to right like a book
+	  button1 would be the top-left button, button2 top-middle, and so-forth
+	*/
+	private JoystickButton button1;
+	private JoystickButton button2;
+	private JoystickButton button3;
+	private JoystickButton button4;
+	private JoystickButton button5;
+	private JoystickButton button6;
+	private JoystickButton button7;
+	private JoystickButton button8;
+	private JoystickButton button9;
+	private JoystickButton button10;
+	private JoystickButton button11;
+	private JoystickButton button12;
+	private JoystickButton button13;
+	private JoystickButton button14;
 
 	/**
 	 * Initializes a ButtonBox Controller on a specific channel, mapping the buttons. The
@@ -32,23 +33,22 @@ public class ButtonBox extends Joystick {
 	 */
 	public ButtonBox(int channel) {
 		super(channel);
-		
-		WideFocus = new JoystickButton(this, 3);
-		FineFocus = new JoystickButton(this, 2);
-		Fire = new JoystickButton(this, 1);
-		IntakeIn = new JoystickButton(this, 5);
-		IntakeOut = new JoystickButton(this, 12);
-		Hopper = new JoystickButton(this, 4);
-		CPDeploy = new JoystickButton(this, 6);
-		CPSpin = new JoystickButton(this, 11);
-		CPYellow = new JoystickButton(this, 10);
-		CPGreen = new JoystickButton(this, 9);
-		CPRed = new JoystickButton(this, 8);
-		CPBlue = new JoystickButton(this, 7);
-		ClimberDeploy = new JoystickButton(this, 16);
-		Climb = new JoystickButton(this, 15);
-		ClimberLeft = new JoystickButton(this, 14);
-		ClimberRight = new JoystickButton(this, 13);
+		//buttons are named in numerical order, reading the buttonbox from left to right like a book
+
+		button1 = new JoystickButton(this, 3);
+		button2 = new JoystickButton(this, 2);
+		button3 = new JoystickButton(this, 1);
+		button4 = new JoystickButton(this, 12);
+		button5 = new JoystickButton(this, 5);
+		button6 = new JoystickButton(this, 4);
+		//button 7 does not work
+		button8 = new JoystickButton(this, 11);
+		button9 = new JoystickButton(this, 8);
+		button10 = new JoystickButton(this, 7);
+		button11 = new JoystickButton(this, 10);
+		button12 = new JoystickButton(this, 9);
+		button13 = new JoystickButton(this, 16);
+		button14 = new JoystickButton(this, 15);
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Wide Focus button
 	 */
-	public JoystickButton getWideFocus() {
-		return this.WideFocus;
+	public JoystickButton getButton1() {
+		return this.button1;
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Fine Focus button
 	 */
-	public JoystickButton getFineFocus() {
-		return this.FineFocus;
+	public JoystickButton getButton2() {
+		return this.button2;
 	}
 
 	/**
@@ -74,8 +74,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Fire button
 	 */
-	public JoystickButton getFire() {
-		return this.Fire;
+	public JoystickButton getButton3() {
+		return this.button3;
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Intake In Button
 	 */
-	public JoystickButton getIntakeIn() {
-		return this.IntakeIn;
+	public JoystickButton getButton4() {
+		return this.button4;
 	}
 
 	/**
@@ -92,8 +92,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Intake Out Button
 	 */
-	public JoystickButton getIntakeOut() {
-		return this.IntakeOut;
+	public JoystickButton getButton5() {
+		return this.button5;
 	}
 
 	/**
@@ -101,8 +101,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Hopper button
 	 */
-	public JoystickButton getHopper() {
-		return this.Hopper;
+	public JoystickButton getButton6() {
+		return this.button6;
 	}
 
 	/**
@@ -110,8 +110,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Deploy button
 	 */
-	public JoystickButton getCPDeploy() {
-		return this.CPDeploy;
+	public JoystickButton getButton8() {
+		return this.button8;
 	}
 
 	/**
@@ -119,8 +119,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Spin button
 	 */
-	public JoystickButton getCPSpin() {
-		return this.CPSpin;
+	public JoystickButton getButton9() {
+		return this.button9;
 	}
 
 	/**
@@ -128,8 +128,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Yellow button
 	 */
-	public JoystickButton getCPYellow() {
-		return this.CPYellow;
+	public JoystickButton getButton10() {
+		return this.button10;
 	}
 
 	/**
@@ -137,8 +137,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Green button
 	 */
-	public JoystickButton getCPGreen() {
-		return this.CPGreen;
+	public JoystickButton getButton11() {
+		return this.button11;
 	}
 
 	/**
@@ -146,8 +146,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Red button
 	 */
-	public JoystickButton getCPRed() {
-		return this.CPRed;
+	public JoystickButton getButton12() {
+		return this.button12;
 	}
 
 	/**
@@ -155,8 +155,8 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Color Panel Blue button
 	 */
-	public JoystickButton getCPBlue() {
-		return this.CPBlue;
+	public JoystickButton getButton13() {
+		return this.button13;
 	}
 
 	/**
@@ -164,34 +164,7 @@ public class ButtonBox extends Joystick {
 	 * 
 	 * @return Climber Deploy button
 	 */
-	public JoystickButton getClimberDeploy() {
-		return this.ClimberDeploy;
-	}
-
-	/**
-	 * Gets the Climb button from the ButtonBox
-	 * 
-	 * @return Climb button
-	 */
-	public JoystickButton getClimb() {
-		return this.Climb;
-	}
-
-	/**
-	 * Gets the Climber Left button from the ButtonBox
-	 * 
-	 * @return Climber Left button
-	 */
-	public JoystickButton getClimberLeft() {
-		return this.ClimberLeft;
-	}
-
-	/**
-	 * Gets the Climber Right button from the ButtonBox
-	 * 
-	 * @return Climber Right button
-	 */
-	public JoystickButton getClimberRight() {
-		return this.ClimberRight;
+	public JoystickButton getButton14() {
+		return this.button14;
 	}
 }

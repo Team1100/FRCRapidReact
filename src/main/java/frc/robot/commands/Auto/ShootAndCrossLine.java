@@ -17,7 +17,8 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class ShootAndCrossLine extends SequentialCommandGroup {
 
   public static final double AUTO_DRIVE_SPEED = 0.45;
-  public static final double AUTO_DRIVE_DIST = -30.0;
+  public static final double AUTO_DISTANCE_TO_DRIVE = -30.0;
+  public static final double AUTO_WAIT_TIME_BEFORE_DRIVING = 1; // seconds
 
   /** Creates a new ShootTwiceAndCrossLine. */
   public ShootAndCrossLine() {
@@ -31,8 +32,8 @@ public class ShootAndCrossLine extends SequentialCommandGroup {
 
     addCommands(
       new ShootBallsHighTimed(),
-      new Wait(1, true),
-      new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_SPEED, true)
+      new Wait(AUTO_WAIT_TIME_BEFORE_DRIVING, true),
+      new DriveDistance(AUTO_DISTANCE_TO_DRIVE, AUTO_DRIVE_SPEED, true)
     );
   }
 
