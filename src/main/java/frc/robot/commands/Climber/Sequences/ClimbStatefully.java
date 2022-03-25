@@ -32,14 +32,14 @@ public class ClimbStatefully extends CommandBase {
   public static final double DRIVE_TO_BAR_DISTANCE = 24; // in inches
   public static final double DRIVE_TO_BAR_SPEED = 0.4; // in % power
   public static final double INITIAL_CANE_EXTENSION_DISTANCE = 5; // in inches
-  public static final double INTIIAL_CANE_EXTENSION_SPEED = 0.5; // % power
-  public static final double SLOWER_CANE_EXTENSION_SPEED = 0.25; // % power
+  public static final double INTIIAL_CANE_EXTENSION_SPEED = 0.45; // % power
+  public static final double SLOWER_CANE_EXTENSION_SPEED = 0.3; // % power
   public static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
   public static final double CANE_RETRACTION_SPEED = -INTIIAL_CANE_EXTENSION_SPEED;
   public static final double SLOWER_CANE_RETRACTION_SPEED = -SLOWER_CANE_EXTENSION_SPEED;
   public static final double CANE_BACKWARDS_ROTATION_SPEED = 0.15;
   public static final double CANE_FORWARDS_ROTATION_SPEED = 0.4;
-  public static final double NUMBER_OF_CYCLES = 1;
+  public  static final double NUMBER_OF_CYCLES = 1;
   private DriveToBar m_driveToBar;
   private SmartExtendCaneToLimit m_raiseCaneToBar;
   private SmartExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
@@ -59,7 +59,7 @@ public class ClimbStatefully extends CommandBase {
     m_retractCane = new SmartExtendCaneToLimit(CANE_RETRACTION_SPEED, SLOWER_CANE_RETRACTION_SPEED, true);
     m_forceUpright = new ConstantSpeedRotateCane(UPRIGHT_CANE_ROTATION_SPEED, true);
     m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, SLOWER_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
-    m_wait = new Wait(10, true);
+    m_wait = new Wait(5, true);
     m_state = State.INIT;
     m_isFinished = false;
     m_commandsHaveBeenScheduled = false;
@@ -87,17 +87,24 @@ public class ClimbStatefully extends CommandBase {
   public void execute() {
     switch (m_state) {
       case INIT:
-        Drive.getInstance().setIdleMode(IdleMode.kBrake);
-        m_state = State.DRIVE_TO_BAR;
-        break;
-      case DRIVE_TO_BAR:
         if (!m_commandsHaveBeenScheduled) {
           m_forceUpright.schedule();
           m_raiseCaneToBar.schedule();
+          m_commandsHaveBeenScheduled = true;
+          Drive.getInstance().setIdleMode(IdleMode.kBrake);
+          Climber.getInstance().enableBrakeMode();
+        } 
+        if (m_raiseCaneToBar.isFinished()) {
+          m_state = State.DRIVE_TO_BAR;
+          m_commandsHaveBeenScheduled = false;
+        }
+        break;
+      case DRIVE_TO_BAR:
+        if (!m_commandsHaveBeenScheduled) {
           m_driveToBar.schedule();
           m_commandsHaveBeenScheduled = true;
         }
-        if (m_driveToBar.isFinished() && m_raiseCaneToBar.isFinished()) {
+        if (m_driveToBar.isFinished()) {
           m_state = State.RETRACT_CANE;
           m_commandsHaveBeenScheduled = false;
         }
@@ -153,8 +160,10 @@ public class ClimbStatefully extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Drive.getInstance().setIdleMode(IdleMode.kCoast);
+    Climber.getInstance().disableBrakeMode();
     Climber.getInstance().extendCane(0);
     Climber.getInstance().rotateBothCanes(0);
+    m_state = State.INIT;
   }
 
   // Returns true when the command should end.
