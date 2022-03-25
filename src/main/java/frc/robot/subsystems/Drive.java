@@ -202,8 +202,7 @@ public class Drive extends SubsystemBase {
       setIdleMode(IdleMode.kBrake);
       m_currentIdleMode = IdleMode.kBrake;
       TestingDashboard.getInstance().updateString(m_drive, "DriveIdleMode", "Brake");
-    }
-    else if (m_currentIdleMode == IdleMode.kBrake) {
+    } else if (m_currentIdleMode == IdleMode.kBrake) {
       setIdleMode(IdleMode.kCoast);
       m_currentIdleMode = IdleMode.kCoast;
       TestingDashboard.getInstance().updateString(m_drive, "DriveIdleMode", "Coast");

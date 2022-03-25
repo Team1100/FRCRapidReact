@@ -5,6 +5,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
@@ -20,7 +21,7 @@ public class OpenGateAndFeedBalls extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new OpenGateWhileActive(),
                 new SpinConveyorForwards(),
-                new SpinIntake(0.15));
+                new SpinIntake(Constants.DEFAULT_INTAKE_SPEED));
   }
 
   public static void registerWithTestingDashboard() {
