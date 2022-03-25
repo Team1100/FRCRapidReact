@@ -11,6 +11,11 @@ import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.ShootBallsHigh;
 import frc.robot.commands.Auto.ShootBallsLow;
+import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.Sequences.ClimbStatefully;
+import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
+import frc.robot.commands.Conveyor.SpinConveyorBackwards;
+import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
 import frc.robot.commands.Drive.TankDrive;
@@ -97,7 +102,14 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
-
+    buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
+    buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
+    buttonBox.getButton4().whenPressed(new RaiseIntake());
+    buttonBox.getButton5().whenPressed(new LowerIntake());
+    buttonBox.getButton6().whenHeld(new IntakeBalls());
+    buttonBox.getButton8().whenPressed(new ClimbStatefully());
+    buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
+    buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Keyboard Box
