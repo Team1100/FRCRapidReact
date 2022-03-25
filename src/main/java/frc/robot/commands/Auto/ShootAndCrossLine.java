@@ -16,23 +16,23 @@ import frc.robot.testingdashboard.TestingDashboard;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootAndCrossLine extends SequentialCommandGroup {
 
-  public static final double AUTO_DRIVE_SPEED = 0.3;
-  public static final double AUTO_DRIVE_DIST = 90.0;
+  public static final double AUTO_DRIVE_SPEED = 0.45;
+  public static final double AUTO_DRIVE_DIST = -30.0;
 
   /** Creates a new ShootTwiceAndCrossLine. */
   public ShootAndCrossLine() {
     // Add your commands in the addCommands() call, e.g.
 
     /* 
-    1 - Shoot Ball
-    2 - Wait 5-10 secs
-    3 - Drive back out of Zone
+       1 - Shoot Ball
+       2 - Wait 5-10 secs
+       3 - Drive back out of Zone
     */
 
     addCommands(
       new ShootBallsHighTimed(),
-      new Wait(10, true),
-      new DriveDistance(AUTO_DRIVE_DIST, (AUTO_DRIVE_SPEED * -1.5), true)
+      new Wait(1, true),
+      new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_SPEED, true)
     );
   }
 

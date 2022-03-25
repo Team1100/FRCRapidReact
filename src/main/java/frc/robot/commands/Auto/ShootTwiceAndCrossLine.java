@@ -43,7 +43,7 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
       new TurnAngle(180, 0.35, true),
       new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_SPEED, true),
       new ShootBallsHighTimed(),
-      new DriveDistance(AUTO_DRIVE_DIST, (AUTO_DRIVE_SPEED * -1.5), true)
+      new DriveDistance(-AUTO_DRIVE_DIST, (AUTO_DRIVE_SPEED * 1.5), true)
     );
   }
 

@@ -73,7 +73,7 @@ public class RobotContainer {
   
   private final Drive m_drive;
   private final Climber m_climber;
-
+  private ShootAndCrossLine m_ShootAndCrossLineAuto;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -82,6 +82,7 @@ public class RobotContainer {
     Auto.getInstance();
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
+    m_ShootAndCrossLineAuto = new ShootAndCrossLine();
 
 
     m_drive.setDefaultCommand(new ArcadeDrive());
@@ -174,6 +175,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return m_ShootAndCrossLineAuto;
   }
 }

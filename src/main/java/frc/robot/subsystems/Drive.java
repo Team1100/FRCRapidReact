@@ -157,7 +157,10 @@ public class Drive extends SubsystemBase {
     if (m_drive == null) {
       m_drive = new Drive();
       TestingDashboard.getInstance().registerSubsystem(m_drive, "Drive");
-      TestingDashboard.getInstance().registerString(m_drive, "NAVX", "CurrentYawAngle", "");
+      TestingDashboard.getInstance().registerNumber(m_drive, "Output", "InitialAngle", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Input", "SpeedWhenTurning", 0.3);
+      TestingDashboard.getInstance().registerNumber(m_drive, "NAVX", "CurrentYawAngle", 0);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Input", "TurnAngleInDegrees", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackLeftMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "BackRightMotorDistance", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Encoders", "FrontLeftMotorDistance", 0);
