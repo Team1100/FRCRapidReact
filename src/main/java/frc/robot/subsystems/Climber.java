@@ -24,6 +24,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Climber extends SubsystemBase {
@@ -194,6 +195,16 @@ public class Climber extends SubsystemBase {
     return arrayListAverage(m_right_cane_motor_current_values);
   }
 
+  public void enableBrakeMode() {
+    m_rightCaneMotor.setIdleMode(IdleMode.kBrake);
+    m_leftCaneMotor.setIdleMode(IdleMode.kBrake);
+  }
+
+  public void disableBrakeMode() {
+    m_rightCaneMotor.setIdleMode(IdleMode.kCoast);
+    m_leftCaneMotor.setIdleMode(IdleMode.kCoast);
+  }
+
   public double getLeftCaneHeight() {
     m_currentLeftCaneHeight = m_leftCaneEncoder.getPosition();
     return m_currentLeftCaneHeight;
@@ -286,7 +297,6 @@ public class Climber extends SubsystemBase {
       TestingDashboard.getInstance().updateNumber(m_climber, "CurrentLeftEncoderVelocity", m_leftCaneEncoder.getVelocity());
       TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRightEncoderVelocity", m_rightCaneEncoder.getVelocity());
       TestingDashboard.getInstance().updateNumber(m_climber, "CurrentRotationEncoderRate", m_caneRotationEncoder.getRate());
-      
       updateMotorCurrentAverages();
     }
 

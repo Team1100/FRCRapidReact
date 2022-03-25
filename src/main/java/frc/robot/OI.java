@@ -116,10 +116,11 @@ public class OI {
       buttonBox.getButton5().whenPressed(new LowerIntake());
       buttonBox.getButton6().whenHeld(new IntakeBalls());
       buttonBox.getButton8().whenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
-      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
+      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
       buttonBox.getButton10().whenPressed(new SwitchDriveIdleMode());
       buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
     }
+
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Keyboard Box
