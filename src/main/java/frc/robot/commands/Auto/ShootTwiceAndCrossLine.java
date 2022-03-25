@@ -18,7 +18,7 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
 
   public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.3;
   public static final double AUTO_DRIVE_CROSS_LINE_SPEED = AUTO_DRIVE_COLLECT_BALL_SPEED*1.5;
-  public static final double AUTO_DRIVE_DIST = 95.0;
+  public static final double AUTO_DRIVE_DIST = 55.0;
 
   /** Creates a new ShootTwiceAndCrossLine. */
   public ShootTwiceAndCrossLine() {
@@ -38,12 +38,12 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
 
     addCommands(
       new ShootBallsHighTimed(),
-      new TurnAngle(90, 0.35, true),
-      new TurnAngle(90, 0.35, true),
+      //new TurnAngle(179, 0.35, true),
+      new TimedTurn(3.7, 180, 0.4, true),
       new LowerIntake(),
-      new DriveAndSpinIntake(AUTO_DRIVE_DIST, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      new TurnAngle(90, 0.35, true),
-      new TurnAngle(90, 0.35, true),
+      new DriveAndSpinIntake(AUTO_DRIVE_DIST + 12, AUTO_DRIVE_COLLECT_BALL_SPEED),
+      //new TurnAngle(-179, 0.35, true),
+      new TimedTurn(3.4, 180, 0.4, true),
       new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
       new ShootBallsHighTimed(),
       new DriveDistance(-AUTO_DRIVE_DIST, AUTO_DRIVE_CROSS_LINE_SPEED, true)

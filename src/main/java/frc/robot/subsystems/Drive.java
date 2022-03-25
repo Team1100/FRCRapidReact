@@ -230,10 +230,12 @@ public class Drive extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
+    m_drive.setIdleMode(IdleMode.kCoast); //Added to fix drive issue!
     drivetrain.arcadeDrive(fwd, rot, sqInputs);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
+    m_drive.setIdleMode(IdleMode.kCoast); //Added to fix drive issue!
     m_rightSpeed = rightSpeed;
     m_leftSpeed = leftSpeed;
     drivetrain.tankDrive(leftSpeed, rightSpeed);
