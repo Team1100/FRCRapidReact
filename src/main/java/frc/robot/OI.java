@@ -102,14 +102,16 @@ public class OI {
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
-    buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
-    buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
-    buttonBox.getButton4().whenPressed(new RaiseIntake());
-    buttonBox.getButton5().whenPressed(new LowerIntake());
-    buttonBox.getButton6().whenHeld(new IntakeBalls());
-    buttonBox.getButton8().whenPressed(new ClimbStatefully());
-    buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
-    buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
+    if (Constants.BUTTON_BOX_ENABLE) {
+      buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
+      buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
+      buttonBox.getButton4().whenPressed(new RaiseIntake());
+      buttonBox.getButton5().whenPressed(new LowerIntake());
+      buttonBox.getButton6().whenHeld(new IntakeBalls());
+      buttonBox.getButton8().whenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
+      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
+      buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
+    }
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Keyboard Box

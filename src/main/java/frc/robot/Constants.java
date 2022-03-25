@@ -28,6 +28,9 @@ public final class Constants {
     // Defines Intake command constants
     public static final double DEFAULT_INTAKE_SPEED = 0.33; // positive goes into robot, negative expels
 
+    // Defines Climber command constants
+    public static final int DEFAULT_NUMBER_OF_CLIMB_CYCLES = 1;
+
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
 
