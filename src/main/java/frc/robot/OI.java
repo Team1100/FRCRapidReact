@@ -14,6 +14,7 @@ import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.ShootBallsHigh;
 import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Climber.Sequences.ClimbStatefully;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
@@ -86,11 +87,12 @@ public class OI {
       DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
-      OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
-      OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
-      OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
-      OperatorXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+      OperatorXboxController.getDPad().getUp().whenPressed(new LowerIntake());
+      OperatorXboxController.getDPad().getDown().whenPressed(new RaiseIntake());
+      OperatorXboxController.getButtonA().whileHeld(new IntakeBalls());
+      OperatorXboxController.getButtonB().whileHeld(new ExpelBalls());
       OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
+      OperatorXboxController.getButtonY().toggleWhenPressed(new UserOperateCane());
     }
     
 
