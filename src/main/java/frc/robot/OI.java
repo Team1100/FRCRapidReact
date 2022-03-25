@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.ShootBallsHigh;
@@ -18,6 +20,7 @@ import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
+import frc.robot.commands.Drive.SwitchDriveIdleMode;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
@@ -109,6 +112,7 @@ public class OI {
     buttonBox.getButton6().whenHeld(new IntakeBalls());
     buttonBox.getButton8().whenPressed(new ClimbStatefully());
     buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
+    buttonBox.getButton10().whenPressed(new SwitchDriveIdleMode());
     buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
 
     ////////////////////////////////////////////////////
