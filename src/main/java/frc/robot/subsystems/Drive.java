@@ -40,6 +40,7 @@ public class Drive extends SubsystemBase {
   private boolean m_measureDistance;
   private double accelIntCount = 0;
   private AHRS m_navx;
+  private IdleMode m_currentIdleMode;
 
   // Motor current variables
   ArrayList<Double> m_left_motor_current_values;
@@ -92,6 +93,7 @@ public class Drive extends SubsystemBase {
     drivetrain = new DifferentialDrive(m_frontLeft, m_frontRight);
 
     setIdleMode(IdleMode.kCoast);
+    m_currentIdleMode = IdleMode.kCoast;
     setEncoderConversionFactor(CONVERSION_FACTOR);
 
     m_accelerometer = new BuiltInAccelerometer(); // unit: g
@@ -190,9 +192,23 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "MotorCurrent", "MaxNumCurrentValues", MOTOR_CURRENT_INITIAL_CAPACITY);
       TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontLeftMotorCurrentAverage", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontRightMotorCurrentAverage", 0);
+      TestingDashboard.getInstance().registerString(m_drive, "Robot", "DriveIdleMode", "Coast");
     }
     return m_drive;
   }
+
+  public void switchIdleMode() {
+    if (m_currentIdleMode == IdleMode.kCoast) {
+      setIdleMode(IdleMode.kBrake);
+      m_currentIdleMode = IdleMode.kBrake;
+      TestingDashboard.getInstance().updateString(m_drive, "DriveIdleMode", "Brake");
+    } else if (m_currentIdleMode == IdleMode.kBrake) {
+      setIdleMode(IdleMode.kCoast);
+      m_currentIdleMode = IdleMode.kCoast;
+      TestingDashboard.getInstance().updateString(m_drive, "DriveIdleMode", "Coast");
+    }
+  }
+  
 
   //Drive Methods:
 

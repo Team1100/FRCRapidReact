@@ -14,13 +14,13 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class SmartExtendCaneToLimit extends CommandBase {
 
     private static final double START_DELAY = 1; // 1 second start delay to test if encoder rate is 0
-    private static final double MINIMUM_ENCODER_VELOCITY = -0.2;
-    private static final double MAXIMUM_ENCODER_VELOCITY = 0.2;
+    private static final double MINIMUM_ENCODER_VELOCITY = -10;
+    private static final double MAXIMUM_ENCODER_VELOCITY = 10;
     private static final double MAXIMUM_ENCODER_DISTANCE = 23.0; // Distance of the encoder when fully extended (in)
     private static final double TOLERANCE = 1; // Sets the tolerance for when to stop (in)
     private static final double MINIMUM_TARGET = TOLERANCE;
     private static final double MAXIMUM_TARGET = MAXIMUM_ENCODER_DISTANCE - TOLERANCE;
-    private static final double SLOW_ZONE_OFFSET = 2; // distance away from target where the motors are reduced in power.
+    private static final double SLOW_ZONE_OFFSET = 0; // distance away from target where the motors are reduced in power.
     private ClimberCaneExtension m_climberCaneExtension;
     private Climber m_climber;
     private double m_initialCaneSpeed;

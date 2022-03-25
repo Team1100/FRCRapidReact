@@ -64,9 +64,9 @@ public class UserOperateCane extends CommandBase {
     double extensionSpeed = 0;
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       XboxController xbox = m_oi.getOperatorXboxController();
-      if (xbox.getDPad().getUp().getAsBoolean()) { 
+      if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) { 
         extensionSpeed = m_caneExtensionSpeed;
-      } else if (xbox.getDPad().getDown().getAsBoolean()) { 
+      } else if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) { 
         extensionSpeed = -m_caneExtensionSpeed;
       }
     }
@@ -77,9 +77,9 @@ public class UserOperateCane extends CommandBase {
     double rotationSpeed = 0;
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       XboxController xbox = m_oi.getOperatorXboxController();
-      if (xbox.getDPad().getLeft().getAsBoolean()) { 
+      if (xbox.getButtonRightBumper().get()) { 
         rotationSpeed = m_caneRotationSpeed;
-      } else if (xbox.getDPad().getRight().getAsBoolean()) {  
+      } else if (xbox.getButtonLeftBumper().get()) {  
         rotationSpeed = -m_caneRotationSpeed;
       }
     }

@@ -7,17 +7,21 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.ShootBallsHigh;
 import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Climber.Sequences.ClimbStatefully;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.KeyboardDrive;
+import frc.robot.commands.Drive.SwitchDriveIdleMode;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
@@ -83,11 +87,14 @@ public class OI {
       DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
-      OperatorXboxController.getButtonY().whenPressed(new LowerIntake());
-      OperatorXboxController.getButtonB().whenPressed(new RaiseIntake());
-      OperatorXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
-      OperatorXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+      OperatorXboxController.getDPad().getUp().whenPressed(new LowerIntake());
+      OperatorXboxController.getDPad().getDown().whenPressed(new RaiseIntake());
+      OperatorXboxController.getButtonA().whileHeld(new IntakeBalls());
+      OperatorXboxController.getButtonB().whileHeld(new ExpelBalls());
       OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
+      OperatorXboxController.getButtonY().toggleWhenPressed(new UserOperateCane());
+      OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
+      OperatorXboxController.getButtonStart().toggleWhenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
     }
     
 
@@ -103,16 +110,17 @@ public class OI {
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
     if (Constants.BUTTON_BOX_ENABLE) {
-      buttonBox.getButton1().whenHeld(new ExpelBalls());
+      buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
       buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
-      buttonBox.getButton3().whenHeld(new ShootBallsHigh());
       buttonBox.getButton4().whenPressed(new RaiseIntake());
       buttonBox.getButton5().whenPressed(new LowerIntake());
       buttonBox.getButton6().whenHeld(new IntakeBalls());
-      buttonBox.getButton8().whenPressed(new ClimbStatefully());
-      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(.5, .25, 5, .4, .15));
+      buttonBox.getButton8().whenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
+      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
+      buttonBox.getButton10().whenPressed(new SwitchDriveIdleMode());
       buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
     }
+
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Keyboard Box
