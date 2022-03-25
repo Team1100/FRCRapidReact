@@ -93,6 +93,8 @@ public class OI {
       OperatorXboxController.getButtonB().whileHeld(new ExpelBalls());
       OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
       OperatorXboxController.getButtonY().toggleWhenPressed(new UserOperateCane());
+      OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully());
+      OperatorXboxController.getButtonStart().toggleWhenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
     }
     
 
