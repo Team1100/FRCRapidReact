@@ -19,6 +19,7 @@ public class TurnAngle extends CommandBase {
   
   final double CLOCKWISE = 1;
   final double COUNTER_CLOCKWISE = -1;
+  private final boolean getTDAngle = false;
 
   /** Creates a new TurnAngle. */
   public TurnAngle(double angle, double speed, boolean parameterized) {
@@ -42,7 +43,9 @@ public class TurnAngle extends CommandBase {
     m_initialAngle = m_drive.getYaw();
     if (!m_parameterized) {
       TestingDashboard.getInstance().updateNumber(m_drive, "InitialAngle", m_initialAngle);
+      if(getTDAngle == true) {
       m_angle = TestingDashboard.getInstance().getNumber(m_drive, "TurnAngleInDegrees");
+      }
     }
     m_direction = m_angle/Math.abs(m_angle);
     m_angle = (Math.abs(m_angle) % 360) * m_direction;
