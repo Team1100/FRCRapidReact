@@ -13,14 +13,15 @@ import frc.robot.testingdashboard.TestingDashboard;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootBallsHighTimed extends ParallelDeadlineGroup {
+  private static final double AUTO_SECONDS_TO_SHOOT_BALL = 3; // seconds
   /** Creates a new ShootBallsHighTimed. */
   public ShootBallsHighTimed() {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
-    super(new Wait(3, true),
-    new ShootBallsHigh()
-    );
     // addCommands(new FooCommand(), new BarCommand());
+    super(new Wait(AUTO_SECONDS_TO_SHOOT_BALL, true),
+          new ShootBallsHigh()
+         );
   }
    //Register with TestingDashboard
    public static void registerWithTestingDashboard() {

@@ -65,7 +65,7 @@ public class TurnAngle extends CommandBase {
   public void execute() {
     if (!m_parameterized) {
       m_speed = TestingDashboard.getInstance().getNumber(m_drive, "SpeedWhenTurning");
-    } 
+    }
     m_drive.tankDrive(m_speed * m_direction, m_speed * m_direction * -1);
   }
 
