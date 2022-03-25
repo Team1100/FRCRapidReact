@@ -29,17 +29,16 @@ public class ClimbStatefully extends CommandBase {
     STOP
   }
 
-  private static final double DRIVE_TO_BAR_DISTANCE = 24; // in inches
-  private static final double DRIVE_TO_BAR_SPEED = 0.4; // in % power
-  private static final double INITIAL_CANE_EXTENSION_DISTANCE = 5; // in inches
-  private static final double INTIIAL_CANE_EXTENSION_SPEED = 0.5; // % power
-  private static final double SLOWER_CANE_EXTENSION_SPEED = 0.25; // % power
-  private static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
-  private static final double CANE_RETRACTION_SPEED = -INTIIAL_CANE_EXTENSION_SPEED;
-  private static final double SLOWER_CANE_RETRACTION_SPEED = -SLOWER_CANE_EXTENSION_SPEED;
-  private static final double CANE_BACKWARDS_ROTATION_SPEED = 0.15;
-  private static final double CANE_FORWARDS_ROTATION_SPEED = 0.4;
-
+  public static final double DRIVE_TO_BAR_DISTANCE = 24; // in inches
+  public static final double DRIVE_TO_BAR_SPEED = 0.4; // in % power
+  public static final double INITIAL_CANE_EXTENSION_DISTANCE = 5; // in inches
+  public static final double INTIIAL_CANE_EXTENSION_SPEED = 0.5; // % power
+  public static final double SLOWER_CANE_EXTENSION_SPEED = 0.25; // % power
+  public static final double UPRIGHT_CANE_ROTATION_SPEED = 0.4; // % power
+  public static final double CANE_RETRACTION_SPEED = -INTIIAL_CANE_EXTENSION_SPEED;
+  public static final double SLOWER_CANE_RETRACTION_SPEED = -SLOWER_CANE_EXTENSION_SPEED;
+  public static final double CANE_BACKWARDS_ROTATION_SPEED = 0.15;
+  public static final double CANE_FORWARDS_ROTATION_SPEED = 0.4;
   private DriveToBar m_driveToBar;
   private SmartExtendCaneToLimit m_raiseCaneToBar;
   private SmartExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
