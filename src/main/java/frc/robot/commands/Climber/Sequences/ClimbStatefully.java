@@ -122,8 +122,13 @@ public class ClimbStatefully extends CommandBase {
           m_commandsHaveBeenScheduled = true;
         }
         if (m_retractCane.isFinished()) {
-          m_state = State.REACH_FOR_NEXT_BAR;
-          m_commandsHaveBeenScheduled = false;
+          if (m_cycle == m_numCycles) {
+            m_state = State.STOP;
+            m_commandsHaveBeenScheduled = false;
+          } else {
+            m_state = State.REACH_FOR_NEXT_BAR;
+            m_commandsHaveBeenScheduled = false;
+          }
         }
         break;
       case REACH_FOR_NEXT_BAR:
@@ -135,6 +140,7 @@ public class ClimbStatefully extends CommandBase {
         if (m_reachForNextBarStatefully.isFinished()) {
           m_state = State.RELEASE_AND_STABALIZE;
           m_commandsHaveBeenScheduled = false;
+          m_cycle++;
         }
         break;
         // TODO: add wait before repeating the sequence. Could possibly move contents of RELEASE_AND_STABALIZE state into ReachForNextBarStatefully and then have RELEASE_AND_STABALIZE state simply as a settling period
@@ -151,7 +157,6 @@ public class ClimbStatefully extends CommandBase {
           } else {
             m_state = State.REACH_FOR_NEXT_BAR;
             m_commandsHaveBeenScheduled = false;
-            m_cycle++;
           }
         }
         break;
