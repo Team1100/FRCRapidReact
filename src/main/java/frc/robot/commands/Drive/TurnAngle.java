@@ -42,7 +42,7 @@ public class TurnAngle extends CommandBase {
     m_initialAngle = m_drive.getYaw();
     if (!m_parameterized) {
       TestingDashboard.getInstance().updateNumber(m_drive, "InitialAngle", m_initialAngle);
-      m_angle = TestingDashboard.getInstance().getNumber(m_drive, "AngleToTurnInDegrees");
+      m_angle = TestingDashboard.getInstance().getNumber(m_drive, "TurnAngleInDegrees");
     }
     m_direction = m_angle/Math.abs(m_angle);
     m_angle = (Math.abs(m_angle) % 360) * m_direction;

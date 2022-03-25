@@ -43,14 +43,18 @@ import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
+import frc.robot.commands.Auto.ShootAndCrossLine;
+import frc.robot.commands.Auto.Wait;
+import frc.robot.commands.Auto.ShootBallsHighTimed;
+import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Auto.DelayThenFeedBalls;
 import frc.robot.commands.Auto.DriveAndSpinIntake;
 import frc.robot.commands.Auto.ExpelBalls;
+import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.OpenGateAndFeedBalls;
 import frc.robot.commands.Auto.OpenGateWhileActive;
+import frc.robot.commands.Auto.RunShooterTimed;
 import frc.robot.commands.Auto.ShootBallsHigh;
-import frc.robot.commands.Auto.ShootBallsLow;
-import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
@@ -69,7 +73,7 @@ public class RobotContainer {
   
   private final Drive m_drive;
   private final Climber m_climber;
-
+  private ShootAndCrossLine m_ShootAndCrossLineAuto;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -78,6 +82,7 @@ public class RobotContainer {
     Auto.getInstance();
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
+    m_ShootAndCrossLineAuto = new ShootAndCrossLine();
 
 
     m_drive.setDefaultCommand(new ArcadeDrive());
@@ -134,13 +139,18 @@ public class RobotContainer {
     DriveAndSpinIntake.registerWithTestingDashboard();
 
     // Auto
+    ShootBallsHighTimed.registerWithTestingDashboard();
+    ShootAndCrossLine.registerWithTestingDashboard();
+    ShootTwiceAndCrossLine.registerWithTestingDashboard();
+    ShootBallsHigh.registerWithTestingDashboard();
+    ShootBallsLow.registerWithTestingDashboard();
     DelayThenFeedBalls.registerWithTestingDashboard();
+    IntakeBalls.registerWithTestingDashboard();
+    OpenGateAndFeedBalls.registerWithTestingDashboard();
+    Wait.registerWithTestingDashboard();
+    RunShooterTimed.registerWithTestingDashboard();
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
-    OpenGateAndFeedBalls.registerWithTestingDashboard();
-    ShootBallsLow.registerWithTestingDashboard();
-    ShootBallsHigh.registerWithTestingDashboard();
-    IntakeBalls.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard
@@ -165,6 +175,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return m_ShootAndCrossLineAuto;
   }
 }
