@@ -61,7 +61,7 @@ public class ClimbStatefully extends CommandBase {
     m_forceUpright = new ConstantSpeedRotateCane(UPRIGHT_CANE_ROTATION_SPEED, true);
     m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, SLOWER_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
     m_wait = new Wait(5, true);
-    m_state = State.INIT;
+    m_state = State.RETRACT_CANE;
     m_isFinished = false;
     m_commandsHaveBeenScheduled = false;
     m_cycle = 0;
@@ -118,6 +118,7 @@ public class ClimbStatefully extends CommandBase {
         break;
       case RETRACT_CANE:
         if (!m_commandsHaveBeenScheduled) {
+          m_forceUpright.schedule();
           m_retractCane.schedule();
           m_commandsHaveBeenScheduled = true;
         }

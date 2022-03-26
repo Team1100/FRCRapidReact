@@ -57,7 +57,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   /** Creates a new ReachForNextBarStatefully. */
   public ReachForNextBarStatefully(double caneExtensionSpeed, double caneSlowerExtensionSpeed, double caneHeight,  double caneForwardsRotationSpeed, double caneBackwardsRotationSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-
+    
     m_liftOffBar = new SmartCaneExtendDistance(caneHeight, caneExtensionSpeed, true);
     m_rotateBack = new RotateCaneToBar(-caneBackwardsRotationSpeed, true);
     m_extendFully = new SmartExtendCaneToLimit(caneExtensionSpeed, caneSlowerExtensionSpeed, true);
