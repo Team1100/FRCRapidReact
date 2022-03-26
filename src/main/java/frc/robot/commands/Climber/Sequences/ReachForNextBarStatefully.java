@@ -49,7 +49,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   private RotateCaneToBar m_rotateToBar;
   private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
   private SmartExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
-
+  private boolean m_parameterized;
 
   
   private boolean m_isFinished;
@@ -57,7 +57,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   /** Creates a new ReachForNextBarStatefully. */
   public ReachForNextBarStatefully(double caneExtensionSpeed, double caneSlowerExtensionSpeed, double caneHeight,  double caneForwardsRotationSpeed, double caneBackwardsRotationSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+
     m_liftOffBar = new SmartCaneExtendDistance(caneHeight, caneExtensionSpeed, true);
     m_rotateBack = new RotateCaneToBar(-caneBackwardsRotationSpeed, true);
     m_extendFully = new SmartExtendCaneToLimit(caneExtensionSpeed, caneSlowerExtensionSpeed, true);
