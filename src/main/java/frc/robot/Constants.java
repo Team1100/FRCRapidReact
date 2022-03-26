@@ -22,7 +22,7 @@ public final class Constants {
     // Defines Shooter command constants
     public static final double DEFAULT_SHOOTER_SPIN_UP_TIME = 0.5; // seconds
     public static final double DEFAULT_SHOOTER_SPEED = 0.35;
-    public static final double SHOOTER_SPEED_HIGH = 0.60;
+    public static final double SHOOTER_SPEED_HIGH = 0.63;
     public static final double SHOOTER_SPEED_LOW = 0.41;
 
     // Defines Intake command constants
@@ -49,7 +49,7 @@ public final class Constants {
     // 15 Amps for 1 second at a speed of 0.3 indicates that contact with
     // a bar has been detected
     public static final double MOTOR_CURRENT_THRESHOLD = 25; // Amps
-    public static final double MOTOR_CURRENT_TIME_WINDOW = 1; // Seconds
+    public static final double MOTOR_CURRENT_TIME_WINDOW = 1.5; // Seconds
     public static final double DRIVE_TO_BAR_SPEED = 0.3; // percentage
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps

@@ -100,6 +100,8 @@ public class DriveToBar extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drive.tankDrive(0, 0);
+    m_leftSensorHasActivated = false;
+    m_rightSensorHasActivated = false;
   }
 
   // Returns true when the command should end.

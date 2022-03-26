@@ -175,7 +175,9 @@ public class ClimbStatefully extends CommandBase {
     Climber.getInstance().disableBrakeMode();
     Climber.getInstance().extendCane(0);
     Climber.getInstance().rotateBothCanes(0);
+    m_cycle = 0;
     m_state = State.INIT;
+    m_isFinished = false;
   }
 
   // Returns true when the command should end.
