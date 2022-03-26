@@ -6,6 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.subsystems.Auto;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -20,6 +21,7 @@ public class ShootBallsLow extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new RotateCaneToBar(-.2, true),
       new SpinShooter(Constants.SHOOTER_SPEED_LOW, true),
       new DelayThenFeedBalls(0.5)
     );

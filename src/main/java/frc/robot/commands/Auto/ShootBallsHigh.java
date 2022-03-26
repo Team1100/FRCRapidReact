@@ -6,6 +6,7 @@ package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
+import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.subsystems.Auto;

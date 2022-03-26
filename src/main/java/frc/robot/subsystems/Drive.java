@@ -45,7 +45,7 @@ public class Drive extends SubsystemBase {
   // Motor current variables
   ArrayList<Double> m_left_motor_current_values;
   ArrayList<Double> m_right_motor_current_values;
-  public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 75; // This is 1000 miliseconds divided in 20 millisecond chunks
+  public static final int MOTOR_CURRENT_INITIAL_CAPACITY = 50; // This is 1000 miliseconds divided in 20 millisecond chunks
   private int m_max_num_current_values;
 
   double m_rightSpeed;
