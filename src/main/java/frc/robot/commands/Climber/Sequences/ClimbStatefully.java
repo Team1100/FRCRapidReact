@@ -80,7 +80,7 @@ public class ClimbStatefully extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_state = State.INIT;
+    m_state = State.RETRACT_CANE;
     m_isFinished = false;
     m_cycle = 0;
     m_commandsHaveBeenScheduled = false;
@@ -176,7 +176,7 @@ public class ClimbStatefully extends CommandBase {
     Climber.getInstance().extendCane(0);
     Climber.getInstance().rotateBothCanes(0);
     m_cycle = 0;
-    m_state = State.INIT;
+    m_state = State.RETRACT_CANE;
     m_isFinished = false;
   }
 
