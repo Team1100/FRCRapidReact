@@ -23,7 +23,7 @@ public final class Constants {
     public static final double DEFAULT_SHOOTER_SPIN_UP_TIME = 0.5; // seconds
     public static final double DEFAULT_SHOOTER_SPEED = 0.35;
     public static final double SHOOTER_SPEED_HIGH = 0.60;
-    public static final double SHOOTER_SPEED_LOW = 0.25;
+    public static final double SHOOTER_SPEED_LOW = 0.41;
 
     // Defines Intake command constants
     public static final double DEFAULT_INTAKE_SPEED = 0.33; // positive goes into robot, negative expels

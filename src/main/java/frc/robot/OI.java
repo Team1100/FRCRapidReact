@@ -15,6 +15,8 @@ import frc.robot.commands.Auto.ShootBallsHigh;
 import frc.robot.commands.Auto.ShootBallsLow;
 import frc.robot.commands.Climber.DriveToBar;
 import frc.robot.commands.Climber.UserOperateCane;
+import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
+import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
 import frc.robot.commands.Climber.Sequences.ClimbStatefully;
 import frc.robot.commands.Climber.Sequences.ReachForNextBarStatefully;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
@@ -89,11 +91,13 @@ public class OI {
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       OperatorXboxController.getDPad().getUp().whenPressed(new LowerIntake());
       OperatorXboxController.getDPad().getDown().whenPressed(new RaiseIntake());
-      OperatorXboxController.getButtonA().whileHeld(new IntakeBalls());
-      OperatorXboxController.getButtonB().whileHeld(new ExpelBalls());
-      OperatorXboxController.getButtonX().whileHeld(new ShootBallsHigh());
-      OperatorXboxController.getButtonY().toggleWhenPressed(new UserOperateCane());
       OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
+      OperatorXboxController.getButtonB().whileHeld(new IntakeBalls());
+      OperatorXboxController.getButtonX().whileHeld(new ExpelBalls());
+      OperatorXboxController.getButtonY().whileHeld(new ShootBallsHigh());
+      OperatorXboxController.getButtonA().whileHeld(new ShootBallsLow());
+      OperatorXboxController.getDPad().getRight().toggleWhenPressed(new UserOperateCane());
+      OperatorXboxController.getDPad().getLeft().toggleWhenPressed(new ZeroCaneEncoders(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, true));
       OperatorXboxController.getButtonStart().toggleWhenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
     }
     
