@@ -31,8 +31,8 @@ public final class Constants {
     // Defines Climber command constants
     public static final int CLIMBER_LEVEL_2_CLIMB = 0;
     public static final int CLIMBER_LEVEL_3_CLIMB = 1;
-    public static final int CLIMBER_LIVEL_4_CLIMB = 2;
-    public static final int DEFAULT_NUMBER_OF_CLIMB_CYCLES = CLIMBER_LIVEL_4_CLIMB;
+    public static final int CLIMBER_LEVEL_4_CLIMB = 2;
+    public static final int DEFAULT_NUMBER_OF_CLIMB_CYCLES = CLIMBER_LEVEL_4_CLIMB;
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;

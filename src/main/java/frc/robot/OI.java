@@ -114,8 +114,9 @@ public class OI {
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
     if (Constants.BUTTON_BOX_ENABLE) {
-      buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
-      buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
+      buttonBox.getButton1().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_2_CLIMB, true));
+      buttonBox.getButton2().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_3_CLIMB, true));
+      buttonBox.getButton3().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_4_CLIMB, true));
       buttonBox.getButton4().whenPressed(new RaiseIntake());
       buttonBox.getButton5().whenPressed(new LowerIntake());
       buttonBox.getButton6().whenHeld(new IntakeBalls());
