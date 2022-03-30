@@ -282,6 +282,10 @@ public class Climber extends SubsystemBase {
     return m_rightCaneEncoder.getPosition() * GEAR_CIRCUMFERENCE_IN_INCHES;
   }
 
+  public boolean moveToNextState() {
+    return true;
+  }
+
   
 
   @Override
