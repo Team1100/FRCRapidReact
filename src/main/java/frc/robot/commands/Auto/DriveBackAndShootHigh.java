@@ -18,7 +18,7 @@ public class DriveBackAndShootHigh extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveDistance(-30, 0.4, true),
+      new DriveDistance(-22, 0.8, true),
       new ShootBallsHigh()
     );
   }
