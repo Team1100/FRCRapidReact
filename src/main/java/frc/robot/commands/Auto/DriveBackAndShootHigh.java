@@ -4,8 +4,11 @@
 
 package frc.robot.commands.Auto;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Drive.DriveDistance;
+import frc.robot.commands.Drive.ToggleIdleMode;
 import frc.robot.subsystems.Auto;
 import frc.robot.testingdashboard.TestingDashboard;
 
@@ -18,8 +21,10 @@ public class DriveBackAndShootHigh extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveDistance(-22, 0.8, true),
-      new ShootBallsHigh()
+      new ToggleIdleMode(IdleMode.kBrake),
+      new DriveDistance(-30, 0.8, true),
+      new ToggleIdleMode(IdleMode.kCoast),
+      new ShootBallsHighTimed()
     );
   }
   public static void registerWithTestingDashboard() {
