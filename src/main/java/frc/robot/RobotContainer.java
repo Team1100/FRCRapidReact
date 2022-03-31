@@ -56,6 +56,7 @@ import frc.robot.commands.Auto.OpenGateAndFeedBalls;
 import frc.robot.commands.Auto.OpenGateWhileActive;
 import frc.robot.commands.Auto.RunShooterTimed;
 import frc.robot.commands.Auto.ShootBallsHigh;
+import frc.robot.commands.Auto.TimedTurn;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
@@ -74,7 +75,9 @@ public class RobotContainer {
   
   private final Drive m_drive;
   private final Climber m_climber;
+  private ShootTwiceAndCrossLine m_ShootTwiceAndCrossLineAuto;
   private ShootAndCrossLine m_ShootAndCrossLineAuto;
+  private final boolean ADVANCED_AUTO = false;
   
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -83,7 +86,12 @@ public class RobotContainer {
     Auto.getInstance();
     m_drive = Drive.getInstance();
     m_climber = Climber.getInstance();
-    m_ShootAndCrossLineAuto = new ShootAndCrossLine();
+    if(ADVANCED_AUTO == true) {
+    m_ShootTwiceAndCrossLineAuto = new ShootTwiceAndCrossLine();
+    }
+    else if(ADVANCED_AUTO == false) {
+      m_ShootAndCrossLineAuto = new ShootAndCrossLine();
+    }
 
 
     m_drive.setDefaultCommand(new ArcadeDrive());
@@ -153,6 +161,7 @@ public class RobotContainer {
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
     DriveBackAndShootHigh.registerWithTestingDashboard();
+    TimedTurn.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard
@@ -177,6 +186,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_ShootAndCrossLineAuto;
+    if(ADVANCED_AUTO == true) {
+      return m_ShootTwiceAndCrossLineAuto;
+    }
+    else {
+      return m_ShootAndCrossLineAuto;
+    }
   }
 }
