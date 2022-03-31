@@ -47,6 +47,7 @@ import frc.robot.commands.Auto.ShootAndCrossLine;
 import frc.robot.commands.Auto.Wait;
 import frc.robot.commands.Auto.ShootBallsHighTimed;
 import frc.robot.commands.Auto.ShootBallsLow;
+import frc.robot.commands.Auto.DriveBackAndShootHigh;
 import frc.robot.commands.Auto.DelayThenFeedBalls;
 import frc.robot.commands.Auto.DriveAndSpinIntake;
 import frc.robot.commands.Auto.ExpelBalls;
@@ -159,6 +160,7 @@ public class RobotContainer {
     RunShooterTimed.registerWithTestingDashboard();
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
+    DriveBackAndShootHigh.registerWithTestingDashboard();
     TimedTurn.registerWithTestingDashboard();
     
     

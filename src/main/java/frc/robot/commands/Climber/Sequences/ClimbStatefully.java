@@ -51,6 +51,8 @@ public class ClimbStatefully extends CommandBase {
   private int m_cycle;
   private int m_numCycles;
   private boolean m_parametrized;
+  public boolean m_goToNextState;
+  public Climber m_climber;
 
   /** Creates a new ClimbStatefully. */
   public ClimbStatefully(int numCycles, boolean parametrized) {
@@ -61,12 +63,14 @@ public class ClimbStatefully extends CommandBase {
     m_forceUpright = new ConstantSpeedRotateCane(UPRIGHT_CANE_ROTATION_SPEED, true);
     m_reachForNextBarStatefully = new ReachForNextBarStatefully(INTIIAL_CANE_EXTENSION_SPEED, SLOWER_CANE_EXTENSION_SPEED, INITIAL_CANE_EXTENSION_DISTANCE, CANE_FORWARDS_ROTATION_SPEED, CANE_BACKWARDS_ROTATION_SPEED);
     m_wait = new Wait(5, true);
-    m_state = State.INIT;
+    m_state = State.RETRACT_CANE;
     m_isFinished = false;
     m_commandsHaveBeenScheduled = false;
     m_cycle = 0;
     m_numCycles = numCycles;
     m_parametrized = parametrized;
+    m_goToNextState = false;
+    m_climber = Climber.getInstance();
   }
 
   // Register with TestingDashboard
@@ -84,6 +88,7 @@ public class ClimbStatefully extends CommandBase {
     m_isFinished = false;
     m_cycle = 0;
     m_commandsHaveBeenScheduled = false;
+    m_goToNextState = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -101,7 +106,7 @@ public class ClimbStatefully extends CommandBase {
           Drive.getInstance().setIdleMode(IdleMode.kBrake);
           Climber.getInstance().enableBrakeMode();
         } 
-        if (m_raiseCaneToBar.isFinished()) {
+        if (m_raiseCaneToBar.isFinished() || m_goToNextState == true) {
           m_state = State.DRIVE_TO_BAR;
           m_commandsHaveBeenScheduled = false;
         }
@@ -111,17 +116,18 @@ public class ClimbStatefully extends CommandBase {
           m_driveToBar.schedule();
           m_commandsHaveBeenScheduled = true;
         }
-        if (m_driveToBar.isFinished()) {
+        if (m_driveToBar.isFinished() || m_goToNextState == true) {
           m_state = State.RETRACT_CANE;
           m_commandsHaveBeenScheduled = false;
         }
         break;
       case RETRACT_CANE:
         if (!m_commandsHaveBeenScheduled) {
+          m_forceUpright.schedule();
           m_retractCane.schedule();
           m_commandsHaveBeenScheduled = true;
         }
-        if (m_retractCane.isFinished()) {
+        if (m_retractCane.isFinished() || m_goToNextState == true) {
           if (m_cycle == m_numCycles) {
             m_state = State.STOP;
             m_commandsHaveBeenScheduled = false;
@@ -137,7 +143,7 @@ public class ClimbStatefully extends CommandBase {
           m_reachForNextBarStatefully.schedule();
           m_commandsHaveBeenScheduled = true;
         }
-        if (m_reachForNextBarStatefully.isFinished()) {
+        if (m_reachForNextBarStatefully.isFinished() || m_goToNextState == true) {
           m_state = State.RELEASE_AND_STABALIZE;
           m_commandsHaveBeenScheduled = false;
           m_cycle++;
@@ -150,7 +156,7 @@ public class ClimbStatefully extends CommandBase {
           m_commandsHaveBeenScheduled = true;
         }
         
-        if (m_wait.isFinished()) {
+        if (m_wait.isFinished() || m_goToNextState == true) {
           if (m_cycle == m_numCycles) {
             m_state = State.STOP;
             m_commandsHaveBeenScheduled = false;
@@ -166,6 +172,7 @@ public class ClimbStatefully extends CommandBase {
       default:
         break;
     }
+    m_goToNextState = false;
   }
 
   // Called once the command ends or is interrupted.
@@ -178,11 +185,16 @@ public class ClimbStatefully extends CommandBase {
     m_cycle = 0;
     m_state = State.RETRACT_CANE;
     m_isFinished = false;
+    m_goToNextState = false;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return m_isFinished;
+  }
+
+  public void goToNextState() {
+    m_goToNextState = m_climber.moveToNextState();
   }
 }

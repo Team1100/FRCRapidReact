@@ -21,6 +21,7 @@ public class UserOperateCane extends CommandBase {
   private OI m_oi;
   private double m_caneExtensionSpeed;
   private double m_caneRotationSpeed;
+  private boolean m_flag;
 
   /** Creates a new UserOperateCane. */
   public UserOperateCane() {
@@ -33,6 +34,7 @@ public class UserOperateCane extends CommandBase {
     addRequirements(m_climberCaneRotation);
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
+    m_flag = false;
   }
 
   public static void registerWithTestingDashboard() {
@@ -48,6 +50,7 @@ public class UserOperateCane extends CommandBase {
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
     m_climber.tankCane(0, 0);
     m_oi = OI.getInstance();
+    m_flag = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,12 +58,16 @@ public class UserOperateCane extends CommandBase {
   public void execute() {
     m_caneExtensionSpeed = TestingDashboard.getInstance().getNumber(m_climber, "ExtensionSpeed");
     m_caneRotationSpeed = TestingDashboard.getInstance().getNumber(m_climber, "RotationSpeed");
-
+    if (!m_flag) {
+      rotateCane();
+    }
+    
     extendCane();
-    rotateCane();
+    
   }
 
   private void extendCane() {
+    m_flag = false;
     double extensionSpeed = 0;
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       XboxController xbox = m_oi.getOperatorXboxController();
@@ -68,6 +75,8 @@ public class UserOperateCane extends CommandBase {
         extensionSpeed = m_caneExtensionSpeed;
       } else if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) { 
         extensionSpeed = -m_caneExtensionSpeed;
+        m_climber.rotateBothCanes(.4);
+        m_flag = true;
       }
     }
     m_climber.extendCane(extensionSpeed);

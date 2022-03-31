@@ -49,7 +49,7 @@ public class ReachForNextBarStatefully extends CommandBase {
   private RotateCaneToBar m_rotateToBar;
   private ConstantSpeedRotateCane m_forceUpright; // Forces cane and claw to stick together while lifting up
   private SmartExtendCaneToLimit m_retractCane; // Add CaneRetractToBar that uses motor current? This command will lift the robot to the bar and "click in"
-
+  private boolean m_parameterized;
 
   
   private boolean m_isFinished;
