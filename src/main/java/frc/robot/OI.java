@@ -9,11 +9,11 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import frc.robot.commands.Auto.DriveBackAndShootHigh;
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
-import frc.robot.commands.Auto.ShootBallsHigh;
-import frc.robot.commands.Auto.ShootBallsLow;
-import frc.robot.commands.Climber.DriveToBar;
+import frc.robot.commands.Auto.LowerCaneShootBallsHigh;
+import frc.robot.commands.Auto.LowerCaneShootBallsLow;
 import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
 import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
@@ -27,14 +27,10 @@ import frc.robot.commands.Drive.SwitchDriveIdleMode;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
-import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.input.AttackThree;
 import frc.robot.input.ButtonBox;
 import frc.robot.input.XboxController;
 import frc.robot.input.KeyboardBox;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.Shooter;
-import frc.robot.testingdashboard.TestingDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -86,22 +82,29 @@ public class OI {
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
     if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
-      DriverXboxController.getButtonBack().toggleWhenPressed(new ArcadeDrive());
+      DriverXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
+      DriverXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
+      DriverXboxController.getButtonB().whileHeld(new LowerCaneShootBallsHigh());
+      DriverXboxController.getButtonA().whileHeld(new LowerCaneShootBallsLow());
+      DriverXboxController.getButtonX().whenPressed(new LowerIntake());
+      DriverXboxController.getButtonY().whenPressed(new RaiseIntake());
+      DriverXboxController.getButtonBack().whenPressed(new UserOperateCane());
+      DriverXboxController.getButtonStart().whenPressed(new DriveBackAndShootHigh());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
-      OperatorXboxController.getDPad().getUp().whenPressed(new LowerIntake());
-      OperatorXboxController.getDPad().getDown().whenPressed(new RaiseIntake());
       OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
-      OperatorXboxController.getButtonB().whileHeld(new IntakeBalls());
-      OperatorXboxController.getButtonX().whileHeld(new ExpelBalls());
-      OperatorXboxController.getButtonY().whileHeld(new ShootBallsHigh());
-      OperatorXboxController.getButtonA().whileHeld(new ShootBallsLow());
-      OperatorXboxController.getDPad().getRight().toggleWhenPressed(new UserOperateCane());
       OperatorXboxController.getDPad().getLeft().toggleWhenPressed(new ZeroCaneEncoders(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, true));
       OperatorXboxController.getButtonStart().toggleWhenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
+      //OperatorXboxController.getButtonA().toggleWhenPressed(new ClimbStatefully(Constants.CLIMBER_LEVEL_2_CLIMB, true));
+      //OperatorXboxController.getButtonB().toggleWhenPressed(new ClimbStatefully(Constants.CLIMBER_LEVEL_3_CLIMB, true));
+      //OperatorXboxController.getButtonY().toggleWhenPressed(new ClimbStatefully(Constants.CLIMBER_LEVEL_4_CLIMB, true));
     }
     
-
+    // Shootlow right trigger
+    // shoot hight left trigger
+    // intakein right bumper
+    // expell left bumper
+    // 
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to AttackThree controllers
@@ -114,8 +117,9 @@ public class OI {
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
     if (Constants.BUTTON_BOX_ENABLE) {
-      buttonBox.getButton1().whenHeld(new SpinConveyorBackwards());
-      buttonBox.getButton2().whenHeld(new SpinConveyorForwards());
+      buttonBox.getButton1().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_2_CLIMB, true));
+      buttonBox.getButton2().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_3_CLIMB, true));
+      buttonBox.getButton3().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_4_CLIMB, true));
       buttonBox.getButton4().whenPressed(new RaiseIntake());
       buttonBox.getButton5().whenPressed(new LowerIntake());
       buttonBox.getButton6().whenHeld(new IntakeBalls());
