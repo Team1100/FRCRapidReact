@@ -86,8 +86,8 @@ public class OI {
       DriverXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
       DriverXboxController.getButtonB().whileHeld(new LowerCaneShootBallsHigh());
       DriverXboxController.getButtonA().whileHeld(new LowerCaneShootBallsLow());
-      DriverXboxController.getButtonX().whenPressed(new LowerIntake());
-      DriverXboxController.getButtonY().whenPressed(new RaiseIntake());
+      DriverXboxController.getButtonY().whenPressed(new LowerIntake());
+      DriverXboxController.getButtonX().whenPressed(new RaiseIntake());
       DriverXboxController.getButtonBack().whenPressed(new UserOperateCane());
       DriverXboxController.getButtonStart().whenPressed(new DriveBackAndShootHigh());
     }
