@@ -16,7 +16,7 @@ public class UserSpinConveyor extends CommandBase {
 
   private Conveyor m_conveyor;
   private OI m_oi;
-  private static final double CONVEYOR_SPEED = 0.15;
+  private static final double CONVEYOR_SPEED = 0.5;
 
   /** Creates a new UserSpinConveyorForward. */
   public UserSpinConveyor() {
