@@ -5,6 +5,7 @@
 package frc.robot.commands.Drive;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -63,7 +64,9 @@ public class DriveDistance extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drive.setIdleMode(IdleMode.kCoast);
+  }
 
   // Returns true when the command should end.
   @Override

@@ -30,7 +30,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Climber extends SubsystemBase {
   private static Climber m_climber;
   public final static double INITIAL_TRAVEL_SPEED = 0.3;
-  public final static double INITIAL_CANE_EXTENTION_SPEED = 0.3;
+  public final static double INITIAL_CANE_EXTENTION_SPEED = 0.7;
+  public final static double INITIAL_CANE_RETRACTION_SPEED = 0.5;
   public final static double INITIAL_CANE_ROTATION_SPEED = 0.3;
 
   public static final double GEAR_DIAMETER_IN_INCHES = 4;

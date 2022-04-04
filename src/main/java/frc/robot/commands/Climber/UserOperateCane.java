@@ -20,6 +20,7 @@ public class UserOperateCane extends CommandBase {
   private ClimberCaneRotation m_climberCaneRotation;
   private OI m_oi;
   private double m_caneExtensionSpeed;
+  private double m_caneRetractionSpeed;
   private double m_caneRotationSpeed;
   private boolean m_flag;
 
@@ -32,7 +33,9 @@ public class UserOperateCane extends CommandBase {
     addRequirements(m_climberCaneExtension);
     m_climberCaneRotation = ClimberCaneRotation.getInstance();
     addRequirements(m_climberCaneRotation);
+    
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
+    m_caneRetractionSpeed = Climber.INITIAL_CANE_RETRACTION_SPEED;
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
     m_flag = false;
   }
@@ -47,6 +50,7 @@ public class UserOperateCane extends CommandBase {
   @Override
   public void initialize() {
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
+    m_caneRetractionSpeed = Climber.INITIAL_CANE_RETRACTION_SPEED;
     m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
     m_climber.tankCane(0, 0);
     m_oi = OI.getInstance();
@@ -74,7 +78,7 @@ public class UserOperateCane extends CommandBase {
       if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) { 
         extensionSpeed = m_caneExtensionSpeed;
       } else if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) { 
-        extensionSpeed = -m_caneExtensionSpeed;
+        extensionSpeed = -m_caneRetractionSpeed;
         m_climber.rotateBothCanes(.4);
         m_flag = true;
       }

@@ -26,7 +26,7 @@ public final class Constants {
     public static final double SHOOTER_SPEED_LOW = 0.45;
 
     // Defines Intake command constants
-    public static final double DEFAULT_INTAKE_SPEED = 0.33; // positive goes into robot, negative expels
+    public static final double DEFAULT_INTAKE_SPEED = 0.5; // positive goes into robot, negative expels
 
     // Defines Climber command constants
     public static final int CLIMBER_LEVEL_2_CLIMB = 0;
