@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Drive;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drive;
 import frc.robot.testingdashboard.TestingDashboard;
@@ -32,7 +34,7 @@ public class TurnAngle extends CommandBase {
 
   public static void registerWithTestingDashboard() {
     Drive drive = Drive.getInstance();
-    TurnAngle cmd = new TurnAngle(12.0, Drive.INITIAL_SPEED, false);
+    TurnAngle cmd = new TurnAngle(180, 0.6, false);
     TestingDashboard.getInstance().registerCommand(drive, "Basic", cmd);
   }
 
@@ -47,6 +49,8 @@ public class TurnAngle extends CommandBase {
     m_direction = m_angle/Math.abs(m_angle);
     m_angle = (Math.abs(m_angle) % 360) * m_direction;
     updateFinalAngle();
+    m_drive = Drive.getInstance();
+    m_drive.setIdleMode(IdleMode.kBrake);
   }
 
   public void updateFinalAngle() {
@@ -60,6 +64,19 @@ public class TurnAngle extends CommandBase {
     }
   }
 
+  public boolean overShoot() {
+    if (m_direction == CLOCKWISE) {
+      if (m_initialAngle > 0 && m_finalAngle < 0) {
+        return true;
+      }       
+    } else if (m_direction == COUNTER_CLOCKWISE) {
+      if (m_initialAngle < 0 && m_finalAngle > 0) {
+        return true;
+      }
+  }
+    return false;
+  }
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -71,34 +88,20 @@ public class TurnAngle extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_drive = Drive.getInstance();
+    m_drive.setIdleMode(IdleMode.kCoast);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean finished = false;
     double yaw = m_drive.getYaw();
     if (m_direction == CLOCKWISE) {
-      if (yaw > m_finalAngle) {
-        if (m_initialAngle > 0 && m_finalAngle < 0) {
-          if (yaw < 0) {
-            finished = true;
-          }
-        } else {
-          finished = true;
-        }
-      }
+      return (yaw >= m_finalAngle && ((overShoot() && yaw < 0) || !overShoot()));
     } else if (m_direction == COUNTER_CLOCKWISE) {
-      if (yaw < m_finalAngle) {
-        if (m_initialAngle < 0 && m_finalAngle > 0) {
-          if (yaw > 0) {
-            finished = true;
-          }
-        } else {
-          finished = true;
-        }
-      }
+      return (yaw <= m_finalAngle && ((overShoot() && yaw > 0) || !overShoot()));
     }
-    return finished;
+    return false;
   }
 }
