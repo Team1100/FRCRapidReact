@@ -21,7 +21,6 @@ public class DriveBackAndShootHigh extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //new ToggleIdleMode(IdleMode.kBrake),
       new ToggleIdleMode(IdleMode.kBrake),
       new DriveDistance(-30, 0.8, true),
       new ToggleIdleMode(IdleMode.kBrake),
