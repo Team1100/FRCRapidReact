@@ -22,7 +22,7 @@ public class RotateCaneToBar extends CommandBase {
   private ClimberCaneRotation m_climberCaneRotation;
   private double m_caneSpeed;
   private boolean m_parameterized;
-  private static final double START_DELAY = 1; // 1 second start delay to test if encoder rate is 0
+  private static final double START_DELAY = .25; // 1 second start delay to test if encoder rate is 0
   private static final double RATE_TOLERANCE = 5; // Used to detect if cane has essentially stopped moving
   private Timer m_timer;
 

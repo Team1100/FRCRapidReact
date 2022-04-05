@@ -81,6 +81,8 @@ public class UserOperateCane extends CommandBase {
         extensionSpeed = -m_caneRetractionSpeed;
         m_climber.rotateBothCanes(.4);
         m_flag = true;
+      } else if (xbox.getButtonA().get()) {
+        extensionSpeed = -m_caneRetractionSpeed;
       }
     }
     m_climber.extendCane(extensionSpeed);

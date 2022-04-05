@@ -196,14 +196,16 @@ public class Climber extends SubsystemBase {
     return arrayListAverage(m_right_cane_motor_current_values);
   }
 
-  public void enableBrakeMode() {
-    m_rightCaneMotor.setIdleMode(IdleMode.kBrake);
-    m_leftCaneMotor.setIdleMode(IdleMode.kBrake);
-  }
-
-  public void disableBrakeMode() {
-    m_rightCaneMotor.setIdleMode(IdleMode.kCoast);
-    m_leftCaneMotor.setIdleMode(IdleMode.kCoast);
+  public void setIdleMode(IdleMode mode) {
+    if(m_rightCaneMotor.setIdleMode(mode) != REVLibError.kOk){
+      System.out.println("Could not set idle mode on right cane motor");
+      System.exit(1);
+    }
+  
+    if(m_leftCaneMotor.setIdleMode(mode) != REVLibError.kOk){
+      System.out.println("Could not set idle mode on left cane motor");
+      System.exit(1);
+    }
   }
 
   public double getLeftCaneHeight() {

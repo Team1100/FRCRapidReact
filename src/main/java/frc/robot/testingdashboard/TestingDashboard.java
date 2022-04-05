@@ -218,7 +218,7 @@ public class TestingDashboard {
         Collections.sort(dataList);
         ShuffleboardLayout layout = tdt.tab.getLayout(dataGrpName, BuiltInLayouts.kList);
         layout.withPosition(colpos,0);
-        layout.withSize(1,dataList.size());
+        layout.withSize(2,dataList.size());
         for (int j = 0; j < dataList.size(); j++) {
           String entryName = dataList.get(j);
           double defaultNumberValue = 0;
