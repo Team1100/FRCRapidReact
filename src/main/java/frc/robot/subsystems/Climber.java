@@ -100,6 +100,8 @@ public class Climber extends SubsystemBase {
     m_caneRotateSpeed = 0;
     m_potentiometer = new AnalogInput(RobotMap.CL_POTENTIOMETER);
 
+    setIdleMode(IdleMode.kBrake);
+
     // Initializes the arraylist for the motors that extend the cane
     m_left_cane_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
@@ -115,6 +117,8 @@ public class Climber extends SubsystemBase {
 
     setExtensionEncoderConversionFactor(CONVERSION_FACTOR);
   }
+
+  
   
 
   public static Climber getInstance() {
