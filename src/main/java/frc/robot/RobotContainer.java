@@ -57,7 +57,6 @@ import frc.robot.commands.Auto.OpenGateAndFeedBalls;
 import frc.robot.commands.Auto.OpenGateWhileActive;
 import frc.robot.commands.Auto.RunShooterTimed;
 import frc.robot.commands.Auto.ShootBallsHigh;
-import frc.robot.commands.Auto.TimedTurn;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
 import frc.robot.subsystems.Climber;
@@ -163,7 +162,6 @@ public class RobotContainer {
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
     DriveBackAndShootHigh.registerWithTestingDashboard();
-    TimedTurn.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard

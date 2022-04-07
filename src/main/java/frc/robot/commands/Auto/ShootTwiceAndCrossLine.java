@@ -4,8 +4,13 @@
 
 package frc.robot.commands.Auto;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Drive.DriveDistance;
+import frc.robot.commands.Drive.ToggleIdleMode;
 import frc.robot.commands.Drive.TurnAngle;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.subsystems.Auto;
@@ -16,9 +21,10 @@ import frc.robot.testingdashboard.TestingDashboard;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
 
-  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.3;
+  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.4;
   public static final double AUTO_DRIVE_CROSS_LINE_SPEED = AUTO_DRIVE_COLLECT_BALL_SPEED*1.5;
   public static final double AUTO_DRIVE_DIST = 55.0;
+  public static final double AUTO_TURN_ANGLE = 180;
 
   /** Creates a new ShootTwiceAndCrossLine. */
   public ShootTwiceAndCrossLine() {
@@ -26,7 +32,7 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
 
     /* 
       1 - Shoot Ball
-      2 - Turn 180 degrees
+      2 - Drive back, Turn 180 degrees
       3 - Lower Intake
       4 - Drive Forwards
       5 - Pick Up Ball
@@ -37,13 +43,17 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
     */
 
     addCommands(
+      new RotateCaneToBar(-0.3, true),
       new ShootBallsHighTimed(),
-      //new TurnAngle(179, 0.35, true),
-      new TimedTurn(3.7, 180, 0.4, true),
+      new DriveDistance((-AUTO_DRIVE_DIST / 4), AUTO_DRIVE_DIST, true),
+      new TurnAngle(AUTO_TURN_ANGLE, 0.6, true),
+      new Wait(0.5, true),
+      new ToggleIdleMode(IdleMode.kCoast),
       new LowerIntake(),
-      new DriveAndSpinIntake(AUTO_DRIVE_DIST + 12, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      //new TurnAngle(-179, 0.35, true),
-      new TimedTurn(3.4, 180, 0.4, true),
+      new DriveAndSpinIntake(3 * ((AUTO_DRIVE_DIST + 12) / 4), AUTO_DRIVE_COLLECT_BALL_SPEED),
+      new TurnAngle(AUTO_TURN_ANGLE, 0.6, true),
+      new Wait(0.5, true),
+      new ToggleIdleMode(IdleMode.kCoast),
       new DriveDistance(AUTO_DRIVE_DIST, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
       new ShootBallsHighTimed(),
       new DriveDistance(-AUTO_DRIVE_DIST, AUTO_DRIVE_CROSS_LINE_SPEED, true)

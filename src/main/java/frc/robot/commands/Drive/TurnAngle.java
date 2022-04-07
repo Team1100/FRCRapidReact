@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Drive;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -52,7 +53,6 @@ public class TurnAngle extends CommandBase {
     m_direction = m_angle / Math.abs(m_angle);
     m_angle = (Math.abs(m_angle) % 360) * m_direction;
     updateFinalAngle();
-    m_drive = Drive.getInstance();
     m_drive.setIdleMode(IdleMode.kBrake);
   }
 
@@ -93,7 +93,8 @@ public class TurnAngle extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drive = Drive.getInstance();
-    m_drive.setIdleMode(IdleMode.kCoast);
+    //m_drive.setIdleMode(IdleMode.kCoast);
+    m_drive.zeroYaw();
   }
 
   // Returns true when the command should end.
