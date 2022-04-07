@@ -22,7 +22,7 @@ public final class Constants {
     // Defines Shooter command constants
     public static final double DEFAULT_SHOOTER_SPIN_UP_TIME = 0.5; // seconds
     public static final double DEFAULT_SHOOTER_SPEED = 0.35;
-    public static final double SHOOTER_SPEED_HIGH = 0.63;
+    public static final double SHOOTER_SPEED_HIGH = 0.6;
     public static final double SHOOTER_SPEED_LOW = 0.45;
 
     // Defines Intake command constants

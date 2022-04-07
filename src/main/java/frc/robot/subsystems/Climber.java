@@ -100,6 +100,8 @@ public class Climber extends SubsystemBase {
     m_caneRotateSpeed = 0;
     m_potentiometer = new AnalogInput(RobotMap.CL_POTENTIOMETER);
 
+    setIdleMode(IdleMode.kBrake);
+
     // Initializes the arraylist for the motors that extend the cane
     m_left_cane_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
@@ -115,6 +117,8 @@ public class Climber extends SubsystemBase {
 
     setExtensionEncoderConversionFactor(CONVERSION_FACTOR);
   }
+
+  
   
 
   public static Climber getInstance() {
@@ -196,14 +200,16 @@ public class Climber extends SubsystemBase {
     return arrayListAverage(m_right_cane_motor_current_values);
   }
 
-  public void enableBrakeMode() {
-    m_rightCaneMotor.setIdleMode(IdleMode.kBrake);
-    m_leftCaneMotor.setIdleMode(IdleMode.kBrake);
-  }
-
-  public void disableBrakeMode() {
-    m_rightCaneMotor.setIdleMode(IdleMode.kCoast);
-    m_leftCaneMotor.setIdleMode(IdleMode.kCoast);
+  public void setIdleMode(IdleMode mode) {
+    if(m_rightCaneMotor.setIdleMode(mode) != REVLibError.kOk){
+      System.out.println("Could not set idle mode on right cane motor");
+      System.exit(1);
+    }
+  
+    if(m_leftCaneMotor.setIdleMode(mode) != REVLibError.kOk){
+      System.out.println("Could not set idle mode on left cane motor");
+      System.exit(1);
+    }
   }
 
   public double getLeftCaneHeight() {

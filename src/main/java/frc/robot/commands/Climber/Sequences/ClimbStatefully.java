@@ -104,7 +104,7 @@ public class ClimbStatefully extends CommandBase {
           m_raiseCaneToBar.schedule();
           m_commandsHaveBeenScheduled = true;
           Drive.getInstance().setIdleMode(IdleMode.kBrake);
-          Climber.getInstance().enableBrakeMode();
+          Climber.getInstance().setIdleMode(IdleMode.kBrake);
         } 
         if (m_raiseCaneToBar.isFinished() || m_goToNextState == true) {
           m_state = State.DRIVE_TO_BAR;
@@ -179,13 +179,16 @@ public class ClimbStatefully extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     Drive.getInstance().setIdleMode(IdleMode.kCoast);
-    Climber.getInstance().disableBrakeMode();
+    Climber.getInstance().setIdleMode(IdleMode.kCoast);
     Climber.getInstance().extendCane(0);
     Climber.getInstance().rotateBothCanes(0);
     m_cycle = 0;
     m_state = State.RETRACT_CANE;
     m_isFinished = false;
     m_goToNextState = false;
+
+    if (!m_forceUpright.isFinished())
+      m_forceUpright.cancel();
   }
 
   // Returns true when the command should end.
