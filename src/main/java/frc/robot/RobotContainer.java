@@ -30,6 +30,7 @@ import frc.robot.commands.Climber.Sequences.TestStateMachineSequence;
 import frc.robot.commands.Drive.ArcadeDrive;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.KeyboardDrive;
+import frc.robot.commands.Drive.MotorTurnAngle;
 import frc.robot.commands.Drive.PIDTurnAngle;
 import frc.robot.commands.Drive.TankDrive;
 import frc.robot.commands.Drive.TurnAngle;
@@ -101,6 +102,7 @@ public class RobotContainer {
     KeyboardDrive.registerWithTestingDashboard();
     TurnAngle.registerWithTestingDashboard();
     PIDTurnAngle.registerWithTestingDashboard();
+    MotorTurnAngle.registerWithTestingDashboard();
 
     // Shooter
     ShootBall.registerWithTestingDashboard();
