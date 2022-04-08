@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Climber;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.OI;
@@ -55,6 +57,7 @@ public class UserOperateCane extends CommandBase {
     m_climber.tankCane(0, 0);
     m_oi = OI.getInstance();
     m_flag = false;
+    m_climber.setIdleMode(IdleMode.kBrake);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -103,7 +106,9 @@ public class UserOperateCane extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_climber.setIdleMode(IdleMode.kCoast);
+  }
 
   // Returns true when the command should end.
   @Override

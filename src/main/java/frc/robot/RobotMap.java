@@ -222,6 +222,11 @@ public class RobotMap {
 	public static final int C_RIGHT_MOTOR = CAN_31;
 	public static final int C_GATE_PISTON_PORT1 = PCM_0;
 	public static final int C_GATE_PISTON_PORT2 = PCM_1;
+
+	//[L]ights
+	public static final int L_LIGHT_POWER = PCM_7;
+	public static final int L_LIGHT_RED = PCM_6;
+	public static final int L_LIGHT_BLUE = PCM_5;
 	
 	//[S]hooter
 	public static final int S_MOTOR = CAN_28;
@@ -233,4 +238,6 @@ public class RobotMap {
 	public static final int U_JOYSTICK_LEFT = 3;
 	public static final int U_JOYSTICK_RIGHT = 4;
 	public static final int U_KEYBOARD_BOX = 5;
+
+
 }
