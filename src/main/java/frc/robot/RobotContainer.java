@@ -45,6 +45,7 @@ import frc.robot.commands.Conveyor.SpinConveyorBackwards;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
 import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
+import frc.robot.commands.Auto.SimpleShootTwice;
 import frc.robot.commands.Auto.ShootAndCrossLine;
 import frc.robot.commands.Auto.Wait;
 import frc.robot.commands.Auto.ShootBallsHighTimed;
@@ -157,6 +158,7 @@ public class RobotContainer {
     ExpelBalls.registerWithTestingDashboard();
     OpenGateWhileActive.registerWithTestingDashboard();
     DriveBackAndShootHigh.registerWithTestingDashboard();
+    SimpleShootTwice.registerWithTestingDashboard();
     
     
     // Create Testing Dashboard

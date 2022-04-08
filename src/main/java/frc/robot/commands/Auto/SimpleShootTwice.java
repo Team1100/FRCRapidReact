@@ -20,9 +20,9 @@ import frc.robot.testingdashboard.TestingDashboard;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
+public class SimpleShootTwice extends SequentialCommandGroup {
 
-  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.45;
+  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.55;
   public static final double AUTO_DRIVE_CROSS_LINE_SPEED = AUTO_DRIVE_COLLECT_BALL_SPEED * 1.5;
   public static final double AUTO_DRIVE_DIST = 95.0;
   public static final double BACKUP_DIST = 12;
@@ -30,7 +30,7 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
   public static final double TURN_SPEED = 0.4;
 
   /** Creates a new ShootTwiceAndCrossLine. */
-  public ShootTwiceAndCrossLine() {
+  public SimpleShootTwice() {
     // Add your commands in the addCommands() call, e.g.
 
     /* 
@@ -48,24 +48,22 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
     addCommands(
       new RotateCaneToBar(-0.15, true),
       new ShootBallsHighTimed(),
-      new DriveDistance(-56, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
+      new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
       new ToggleIdleMode(IdleMode.kBrake),
-      new MotorTurnAngle(-120, TURN_SPEED, 0.25, true),
       new RaiseIntake(),
-      new DriveAndSpinIntake(43, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      new MotorTurnAngle(ANGLE_TO_TURN+3, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(-200, TURN_SPEED, 0.25, true)
+      /**new DriveAndSpinIntake(50, AUTO_DRIVE_COLLECT_BALL_SPEED),
+      new MotorTurnAngle(170, TURN_SPEED, 0.25, true),
       new LowerIntake(),
-      new DriveDistance((AUTO_DRIVE_DIST)-8, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
-      new ToggleIdleMode(IdleMode.kBrake),
-      new ShootBallsHighTimed(),
-      new DriveDistance(-12, AUTO_DRIVE_CROSS_LINE_SPEED, true)
+      new DriveDistance(95, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
+      new ShootBallsHighTimed()*/
     );
   }
 
   //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Auto auto = Auto.getInstance();
-    ShootTwiceAndCrossLine cmd = new ShootTwiceAndCrossLine();
+    SimpleShootTwice cmd = new SimpleShootTwice();
     TestingDashboard.getInstance().registerCommand(auto, "AutoSequence", cmd);
   }
 }
