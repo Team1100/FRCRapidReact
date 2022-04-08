@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Climber;
 
-public class UserControlLights extends CommandBase {
+public class UserOperateLights extends CommandBase {
   private int m_lightOption;
   private Solenoid m_lightsPower;
   private Solenoid m_lightsRed;
@@ -26,7 +26,7 @@ public class UserControlLights extends CommandBase {
    * 2 is red
    * 3 is purple (both)
   */
-  public UserControlLights(int lightOption) {
+  public UserOperateLights(int lightOption) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_lightOption = lightOption;
     m_climber = Climber.getInstance();
@@ -68,6 +68,6 @@ public class UserControlLights extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
