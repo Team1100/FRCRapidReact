@@ -15,21 +15,21 @@ import frc.robot.testingdashboard.TestingDashboard;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShootBallsHigh extends ParallelCommandGroup {
+public class ShootBallsExtraHigh extends ParallelCommandGroup {
   
   /** Creates a new ShootBallsHigh. */
-  public ShootBallsHigh() {
+  public ShootBallsExtraHigh() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinShooter(0.65, true),
+      new SpinShooter(.8, true),
       new DelayThenFeedBalls(1)
     );
   }
 
   public static void registerWithTestingDashboard() {
     Auto auto = Auto.getInstance();
-    ShootBallsHigh cmd = new ShootBallsHigh();
+    ShootBallsExtraHigh cmd = new ShootBallsExtraHigh();
     TestingDashboard.getInstance().registerCommand(auto, "Shooting", cmd);
   }
 }

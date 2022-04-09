@@ -47,6 +47,7 @@ import frc.robot.commands.Shooter.ShootBall;
 import frc.robot.commands.Auto.ShootTwiceAndCrossLine;
 import frc.robot.commands.Auto.SimpleShootTwice;
 import frc.robot.commands.Auto.ShootAndCrossLine;
+import frc.robot.commands.Auto.ShootBallsExtraHigh;
 import frc.robot.commands.Auto.Wait;
 import frc.robot.commands.Auto.ShootBallsHighTimed;
 import frc.robot.commands.Auto.ShootBallsLow;
@@ -109,6 +110,7 @@ public class RobotContainer {
     ShootBall.registerWithTestingDashboard();
     PIDShooter.registerWithTestingDashboard();
     SpinShooter.registerWithTestingDashboard();
+    ShootBallsExtraHigh.registerWithTestingDashboard();
 
     // Climber
     DriveToBar.registerWithTestingDashboard();

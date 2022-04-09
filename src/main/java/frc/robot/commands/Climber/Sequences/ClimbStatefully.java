@@ -172,8 +172,8 @@ public class ClimbStatefully extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Drive.getInstance().setIdleMode(IdleMode.kCoast);
-    Climber.getInstance().setIdleMode(IdleMode.kCoast);
+    //Drive.getInstance().setIdleMode(IdleMode.kCoast);
+    //Climber.getInstance().setIdleMode(IdleMode.kCoast);
     Climber.getInstance().extendCane(0);
     Climber.getInstance().rotateBothCanes(0);
     m_cycle = 0;
