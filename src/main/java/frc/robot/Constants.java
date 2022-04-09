@@ -54,6 +54,8 @@ public final class Constants {
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
 
+    public static final double DEFAULT_BRAKE_TIME_DELAY = 1;
+
     // Subsystem periodic loops
     public static final boolean DRIVE_PERIODIC_ENABLE = true;
     public static final boolean CLIMBER_PERIODIC_ENABLE = true;
@@ -65,4 +67,10 @@ public final class Constants {
     public static final boolean KEYBOARD_BOX_ENABLE = false;
     public static final boolean XBOX_CONTROLLER_DRIVER_ENABLE = true;
     public static final boolean XBOX_CONTROLLER_OPERATOR_ENABLE = true;
+
+    // Lights
+    public static final int LIGHTS_OFF = 0;
+    public static final int LIGHTS_BLUE = 1;
+    public static final int LIGHTS_RED = 2;
+    public static final int LIGHTS_PURPLE = 3;
 }

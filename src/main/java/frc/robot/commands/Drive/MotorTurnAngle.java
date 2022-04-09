@@ -84,9 +84,6 @@ public class MotorTurnAngle extends CommandBase {
       // turning counterclockwise
       m_drive.tankDrive(-m_speed, m_speed);
     }
-    System.out.println(m_distance);
-
-    
   }
 
   // Called once the command ends or is interrupted.

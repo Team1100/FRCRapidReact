@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -58,6 +59,10 @@ public class Climber extends SubsystemBase {
 
   private AnalogInput m_potentiometer;
   private double m_caneRotateSpeed;
+
+  private Solenoid m_lightsPower;
+  private Solenoid m_lightsRed;
+  private Solenoid m_lightsBlue;
   
   // TODO: Adjust the Pot min/max voltage, min/max angle, and degrees per volt for current potentiometer
   public static final double POTENTIOMETER_MIN = 1.1; // voltage
@@ -83,7 +88,7 @@ public class Climber extends SubsystemBase {
     m_rightCaneRotationMotor = new VictorSPX(RobotMap.CL_RIGHT_CANE_TURN_MOTOR);
     m_leftCaneRotationMotor.setNeutralMode(NeutralMode.Brake);
     m_rightCaneRotationMotor.setNeutralMode(NeutralMode.Brake);
-    
+
     m_leftCaneMotor = new CANSparkMax(RobotMap.CL_LEFT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor = new CANSparkMax(RobotMap.CL_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightCaneMotor.setInverted(false);
@@ -100,8 +105,6 @@ public class Climber extends SubsystemBase {
     m_caneRotateSpeed = 0;
     m_potentiometer = new AnalogInput(RobotMap.CL_POTENTIOMETER);
 
-    setIdleMode(IdleMode.kBrake);
-
     // Initializes the arraylist for the motors that extend the cane
     m_left_cane_motor_current_values = new ArrayList<Double>(MOTOR_CURRENT_INITIAL_CAPACITY);
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
@@ -111,7 +114,9 @@ public class Climber extends SubsystemBase {
     for (int i = 0; i < MOTOR_CURRENT_INITIAL_CAPACITY; i++) {
       m_right_cane_motor_current_values.add(0.0);
     }
-
+    m_lightsPower = new Solenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.L_LIGHT_POWER);
+    m_lightsBlue = new Solenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.L_LIGHT_BLUE);
+    m_lightsRed = new Solenoid(RobotMap.PCM_CAN, PneumaticsModuleType.CTREPCM, RobotMap.L_LIGHT_RED);
 
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
 
@@ -194,6 +199,18 @@ public class Climber extends SubsystemBase {
 
   public double getTotalAverageLeftCaneMotorCurrent() {
     return arrayListAverage(m_left_cane_motor_current_values);
+  }
+
+  public Solenoid getLightPowers() {
+    return m_lightsPower;
+  }
+
+  public Solenoid getLightBlue() {
+    return m_lightsBlue;
+  }
+
+  public Solenoid getLightRed() {
+    return m_lightsRed;
   }
 
   public double getTotalAverageRightCaneMotorCurrent() {

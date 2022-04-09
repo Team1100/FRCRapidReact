@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import frc.robot.commands.UserOperateLights;
 import frc.robot.commands.Auto.DriveBackAndShootHigh;
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
@@ -92,6 +93,10 @@ public class OI {
       DriverXboxController.getButtonStart().whenPressed(new DriveBackAndShootHigh());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
+      OperatorXboxController.getDPad().getRight().whenPressed(new UserOperateLights(Constants.LIGHTS_OFF));
+      OperatorXboxController.getDPad().getDown().whenPressed(new UserOperateLights(Constants.LIGHTS_RED));
+      OperatorXboxController.getDPad().getUp().whenPressed(new UserOperateLights(Constants.LIGHTS_BLUE));
+      OperatorXboxController.getDPad().getLeft().whenPressed(new UserOperateLights(Constants.LIGHTS_PURPLE));
       //OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
       //OperatorXboxController.getDPad().getLeft().toggleWhenPressed(new ZeroCaneEncoders(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, true));
       //OperatorXboxController.getButtonStart().toggleWhenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
