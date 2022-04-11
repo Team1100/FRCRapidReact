@@ -38,7 +38,7 @@ public class UserOperateCane extends CommandBase {
     
     m_caneExtensionSpeed = Climber.INITIAL_CANE_EXTENTION_SPEED;
     m_caneRetractionSpeed = Climber.INITIAL_CANE_RETRACTION_SPEED;
-    m_caneRotationSpeed = Climber.INITIAL_CANE_ROTATION_SPEED;
+    m_caneRotationSpeed = 0.2;
     m_flag = false;
   }
 
