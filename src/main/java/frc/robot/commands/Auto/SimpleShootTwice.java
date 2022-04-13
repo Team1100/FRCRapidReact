@@ -22,12 +22,12 @@ import frc.robot.testingdashboard.TestingDashboard;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SimpleShootTwice extends SequentialCommandGroup {
 
-  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.55;
+  public static final double AUTO_DRIVE_COLLECT_BALL_SPEED = 0.6;
   public static final double AUTO_DRIVE_CROSS_LINE_SPEED = AUTO_DRIVE_COLLECT_BALL_SPEED * 1.5;
   public static final double AUTO_DRIVE_DIST = 95.0;
   public static final double BACKUP_DIST = 12;
   public static final double ANGLE_TO_TURN = 120;
-  public static final double TURN_SPEED = 0.4;
+  public static final double TURN_SPEED = 0.45;
 
   /** Creates a new ShootTwiceAndCrossLine. */
   public SimpleShootTwice() {
@@ -51,12 +51,12 @@ public class SimpleShootTwice extends SequentialCommandGroup {
       new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
       new ToggleIdleMode(IdleMode.kBrake),
       new RaiseIntake(),
-      new MotorTurnAngle(-200, TURN_SPEED, 0.25, true)
-      /**new DriveAndSpinIntake(50, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      new MotorTurnAngle(170, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(160, TURN_SPEED, 0.25, true),
+      new DriveAndSpinIntake(24, AUTO_DRIVE_COLLECT_BALL_SPEED),
+      new MotorTurnAngle(-160, TURN_SPEED, 0.25, true),
       new LowerIntake(),
       new DriveDistance(95, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
-      new ShootBallsHighTimed()*/
+      new ShootBallsHighTimed()
     );
   }
 

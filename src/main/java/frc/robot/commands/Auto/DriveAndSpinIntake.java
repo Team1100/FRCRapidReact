@@ -19,7 +19,7 @@ public class DriveAndSpinIntake extends ParallelDeadlineGroup {
   public static final double AUTO_DEFAULT_DISTANCE_TO_DRIVE = 10; // inches
   public static final double AUTO_DEFAULT_SPEED_TO_DRIVE = 0.3; // percentage
   public static final double AUTO_INTAKE_SPIN_SPEED = 0.45; // percentage
-  public static final double AUTO_SECONDS_TO_RUN_COMMANDS = 4; // seconds
+  public static final double AUTO_SECONDS_TO_RUN_COMMANDS = 2; // seconds
 
   /** Creates a new DriveAndSpinIntake. */
   public DriveAndSpinIntake(double distance, double speed) {

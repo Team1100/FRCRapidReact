@@ -50,7 +50,7 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
       new ShootBallsHighTimed(),
       new DriveDistance(-56, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
       new ToggleIdleMode(IdleMode.kBrake),
-      new MotorTurnAngle(-120, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(179, TURN_SPEED, 0.25, true),
       new RaiseIntake(),
       new DriveAndSpinIntake(43, AUTO_DRIVE_COLLECT_BALL_SPEED),
       new MotorTurnAngle(ANGLE_TO_TURN+3, TURN_SPEED, 0.25, true),

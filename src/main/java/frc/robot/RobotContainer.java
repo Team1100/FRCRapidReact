@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.commands.Climber.ConstantSpeedRotateCane;
@@ -75,7 +77,14 @@ import frc.robot.testingdashboard.TestingDashboard;
  */
 public class RobotContainer {
   // The robot's subsystems are defined here...
-  
+   // A simple auto routine that drives forward a specified distance, and then stops.
+   private final Command m_simpleAuto = new ShootAndCrossLine();
+
+  // A complex auto routine that drives forward, drops a hatch, and then drives backward.
+  private final Command m_complexAuto = new SimpleShootTwice();
+
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Drive m_drive;
   private final Climber m_climber;
   private ShootAndCrossLine m_ShootAndCrossLineAuto;
@@ -165,6 +174,12 @@ public class RobotContainer {
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();
+    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+    m_chooser.addOption("Complex Auto", m_complexAuto);
+
+// Put the chooser on the dashboard
+    SmartDashboard.putData(m_chooser);
+    
     
   }
 
@@ -185,6 +200,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_ShootAndCrossLineAuto;
+    return m_chooser.getSelected();
   }
 }
