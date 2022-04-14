@@ -31,7 +31,7 @@ public class PIDTurnAngle extends PIDCommand {
         // The controller that the command will use
         new PIDController(0.01, 0.01, 0.0),
         // This should return the measurement
-        () -> m_drive.getYaw(),
+        () -> m_drive.getAngle(),
         // This should return the setpoint (can also be a constant)
         () -> setpoint,
         // This uses the output
@@ -69,7 +69,7 @@ public class PIDTurnAngle extends PIDCommand {
   @Override
   public void initialize() {
     super.initialize();
-    m_initialAngle = m_drive.getYaw();
+    m_initialAngle = m_drive.getAngle();
     if (!m_parameterized) {
       m_setpoint = TestingDashboard.getInstance().getNumber(m_drive, "AngleToTurnInDegrees");
       TestingDashboard.getInstance().updateNumber(m_drive, "InitialAngle", m_initialAngle);

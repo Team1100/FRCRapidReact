@@ -36,7 +36,8 @@ public final class Constants {
 
     // Defines Auto command constants
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
-
+    public static final int AUTO_LEFT = 1;
+    public static final int AUTO_RIGHT = -1;
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;
     public static final int MOTOR_CURRENT = 1;
@@ -54,7 +55,7 @@ public final class Constants {
     public static final double MOTOR_CURRENT_TIME_THRESHOLD = 1; //seconds
     public static final double CANE_MOTOR_CURRENT_THRESHOLD = 15; // Amps
 
-    public static final double DEFAULT_BRAKE_TIME_DELAY = 1;
+    public static final double DEFAULT_BRAKE_TIME_DELAY = .75;
 
     // Subsystem periodic loops
     public static final boolean DRIVE_PERIODIC_ENABLE = true;

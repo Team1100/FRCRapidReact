@@ -7,6 +7,7 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import frc.robot.commands.Conveyor.SpinConveyorForwards;
+import frc.robot.Constants;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Intake.SpinIntake;
 import frc.robot.subsystems.Auto;
@@ -19,14 +20,14 @@ public class DriveAndSpinIntake extends ParallelDeadlineGroup {
   public static final double AUTO_DEFAULT_DISTANCE_TO_DRIVE = 10; // inches
   public static final double AUTO_DEFAULT_SPEED_TO_DRIVE = 0.3; // percentage
   public static final double AUTO_INTAKE_SPIN_SPEED = 0.45; // percentage
-  public static final double AUTO_SECONDS_TO_RUN_COMMANDS = 2; // seconds
+  public static final double AUTO_SECONDS_TO_RUN_COMMANDS = 1.5; // seconds
 
   /** Creates a new DriveAndSpinIntake. */
   public DriveAndSpinIntake(double distance, double speed) {
     // Add the deadline command in the super() call. Add other commands using
     // addCommands().
     super(new Wait(AUTO_SECONDS_TO_RUN_COMMANDS, true),
-      new DriveDistance(distance, speed, true),
+      new DriveDistance(distance, speed, Constants.DEFAULT_BRAKE_TIME_DELAY, true),
       new SpinIntake(AUTO_INTAKE_SPIN_SPEED),
       new SpinConveyorForwards()
     );

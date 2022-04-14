@@ -7,6 +7,7 @@ package frc.robot.commands.Climber.Sequences;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.commands.Auto.Wait;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.subsystems.Climber;
@@ -30,8 +31,8 @@ public class TestStateMachineSequence extends CommandBase {
   /** Creates a new TestStateMachineSequence. */
   public TestStateMachineSequence() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_driveForwards = new DriveDistance(12, 0.4, true);
-    m_driveBackwards = new DriveDistance(-12, 0.4, true);
+    m_driveForwards = new DriveDistance(12, 0.4, Constants.DEFAULT_BRAKE_TIME_DELAY, true);
+    m_driveBackwards = new DriveDistance(-12, 0.4, Constants.DEFAULT_BRAKE_TIME_DELAY, true);
     m_waitThreeSeconds = new Wait(3, true);
     m_state = State.INIT;
     m_isFinished = false;

@@ -7,6 +7,7 @@ package frc.robot.commands.Auto;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.MotorTurnAngle;
@@ -30,7 +31,7 @@ public class SimpleShootTwice extends SequentialCommandGroup {
   public static final double TURN_SPEED = 0.45;
 
   /** Creates a new ShootTwiceAndCrossLine. */
-  public SimpleShootTwice() {
+  public SimpleShootTwice(int direction) {
     // Add your commands in the addCommands() call, e.g.
 
     /* 
@@ -46,16 +47,16 @@ public class SimpleShootTwice extends SequentialCommandGroup {
     */
 
     addCommands(
+      new LowerIntake(),
       new RotateCaneToBar(-0.15, true),
       new ShootBallsHighTimed(),
-      new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
-      new ToggleIdleMode(IdleMode.kBrake),
+      new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, 0, true),
       new RaiseIntake(),
-      new MotorTurnAngle(160, TURN_SPEED, 0.25, true),
-      new DriveAndSpinIntake(24, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      new MotorTurnAngle(-160, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(-150 * direction, TURN_SPEED, 0.25, true),
+      new DriveAndSpinIntake(35, AUTO_DRIVE_COLLECT_BALL_SPEED),
+      new MotorTurnAngle(140 * direction, TURN_SPEED, 0.25, true),
       new LowerIntake(),
-      new DriveDistance(95, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
+      new DriveDistance(95, AUTO_DRIVE_COLLECT_BALL_SPEED,0, true),
       new ShootBallsHighTimed()
     );
   }
@@ -63,7 +64,7 @@ public class SimpleShootTwice extends SequentialCommandGroup {
   //Register with TestingDashboard
   public static void registerWithTestingDashboard() {
     Auto auto = Auto.getInstance();
-    SimpleShootTwice cmd = new SimpleShootTwice();
+    SimpleShootTwice cmd = new SimpleShootTwice(Constants.AUTO_LEFT);
     TestingDashboard.getInstance().registerCommand(auto, "AutoSequence", cmd);
   }
 }

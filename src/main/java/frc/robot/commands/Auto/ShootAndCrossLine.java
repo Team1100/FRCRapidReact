@@ -5,6 +5,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.TurnAngle;
@@ -35,7 +36,7 @@ public class ShootAndCrossLine extends SequentialCommandGroup {
       new RotateCaneToBar(-.15, true),
       new ShootBallsHighTimed(),
       new Wait(AUTO_WAIT_TIME_BEFORE_DRIVING, true),
-      new DriveDistance(AUTO_DISTANCE_TO_DRIVE, AUTO_DRIVE_SPEED, true)
+      new DriveDistance(AUTO_DISTANCE_TO_DRIVE, AUTO_DRIVE_SPEED, 0, true)
     );
   }
 

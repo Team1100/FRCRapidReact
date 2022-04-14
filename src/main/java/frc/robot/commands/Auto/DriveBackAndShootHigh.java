@@ -7,6 +7,7 @@ package frc.robot.commands.Auto;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.ToggleIdleMode;
 import frc.robot.subsystems.Auto;
@@ -23,7 +24,7 @@ public class DriveBackAndShootHigh extends SequentialCommandGroup {
     addCommands(
       //new ToggleIdleMode(IdleMode.kBrake),
       new ToggleIdleMode(IdleMode.kBrake),
-      new DriveDistance(-30, 0.8, true),
+      new DriveDistance(-30, 0.8, Constants.DEFAULT_BRAKE_TIME_DELAY, true),
       new ToggleIdleMode(IdleMode.kBrake),
       new ShootBallsHighTimed(),
       new ToggleIdleMode(IdleMode.kCoast)

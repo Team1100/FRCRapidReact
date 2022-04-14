@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Climber.RotateCaneToBar;
+import frc.robot.Constants;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.MotorTurnAngle;
 import frc.robot.commands.Drive.ToggleIdleMode;
@@ -48,17 +49,17 @@ public class ShootTwiceAndCrossLine extends SequentialCommandGroup {
     addCommands(
       new RotateCaneToBar(-0.15, true),
       new ShootBallsHighTimed(),
-      new DriveDistance(-56, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
+      new DriveDistance(-56, AUTO_DRIVE_COLLECT_BALL_SPEED, 0, true),
       new ToggleIdleMode(IdleMode.kBrake),
       new MotorTurnAngle(179, TURN_SPEED, 0.25, true),
       new RaiseIntake(),
       new DriveAndSpinIntake(43, AUTO_DRIVE_COLLECT_BALL_SPEED),
       new MotorTurnAngle(ANGLE_TO_TURN+3, TURN_SPEED, 0.25, true),
       new LowerIntake(),
-      new DriveDistance((AUTO_DRIVE_DIST)-8, AUTO_DRIVE_COLLECT_BALL_SPEED, true),
+      new DriveDistance((AUTO_DRIVE_DIST)-8, AUTO_DRIVE_COLLECT_BALL_SPEED, 0, true),
       new ToggleIdleMode(IdleMode.kBrake),
       new ShootBallsHighTimed(),
-      new DriveDistance(-12, AUTO_DRIVE_CROSS_LINE_SPEED, true)
+      new DriveDistance(-12, AUTO_DRIVE_CROSS_LINE_SPEED, 0, true)
     );
   }
 

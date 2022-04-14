@@ -20,8 +20,7 @@ public class OpenGateAndFeedBalls extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new OpenGateWhileActive(),
-                new SpinConveyorForwards(),
-                new SpinIntake(Constants.DEFAULT_INTAKE_SPEED));
+                new SpinConveyorForwards());
   }
 
   public static void registerWithTestingDashboard() {

@@ -256,8 +256,12 @@ public class Drive extends SubsystemBase {
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
-  public double getYaw() {
-    return m_navx.getYaw();
+  public double getAngle() {
+    return m_navx.getAngle();
+  }
+
+  public void zeroNavx() {
+    m_navx.reset();
   }
 
   //Encoder Methods

@@ -78,11 +78,11 @@ import frc.robot.testingdashboard.TestingDashboard;
 public class RobotContainer {
   // The robot's subsystems are defined here...
    // A simple auto routine that drives forward a specified distance, and then stops.
-   private final Command m_simpleAuto = new ShootAndCrossLine();
+   private final Command m_oneBall = new ShootAndCrossLine();
 
   // A complex auto routine that drives forward, drops a hatch, and then drives backward.
-  private final Command m_complexAuto = new SimpleShootTwice();
-
+  private final Command m_twoBallLeft = new SimpleShootTwice(Constants.AUTO_LEFT);
+  private final Command m_twoBallRight = new SimpleShootTwice(Constants.AUTO_RIGHT);
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   private final Drive m_drive;
@@ -174,8 +174,9 @@ public class RobotContainer {
     
     // Create Testing Dashboard
     TestingDashboard.getInstance().createTestingDashboard();
-    m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
-    m_chooser.addOption("Complex Auto", m_complexAuto);
+    m_chooser.setDefaultOption("One Ball Auto", m_oneBall);
+    m_chooser.addOption("Left Two Ball Auto", m_twoBallLeft);
+    m_chooser.addOption("Right Two Ball Auto", m_twoBallRight);
 
 // Put the chooser on the dashboard
     SmartDashboard.putData(m_chooser);

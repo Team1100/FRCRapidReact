@@ -226,7 +226,7 @@ public class RobotMap {
 	//[L]ights
 	public static final int L_LIGHT_POWER = PCM_7;
 	public static final int L_LIGHT_RED = PCM_6;
-	public static final int L_LIGHT_BLUE = PCM_5;
+	public static final int L_LIGHT_BLUE = PCM_4;
 	
 	//[S]hooter
 	public static final int S_MOTOR = CAN_28;
