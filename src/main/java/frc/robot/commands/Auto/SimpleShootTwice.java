@@ -52,9 +52,9 @@ public class SimpleShootTwice extends SequentialCommandGroup {
       new ShootBallsHighTimed(),
       new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, 0, true),
       new RaiseIntake(),
-      new MotorTurnAngle(-150 * direction, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(-175 * direction, TURN_SPEED, 0.25, true),
       new DriveAndSpinIntake(35, AUTO_DRIVE_COLLECT_BALL_SPEED),
-      new MotorTurnAngle(140 * direction, TURN_SPEED, 0.25, true),
+      new MotorTurnAngle(165 * direction, TURN_SPEED, 0.25, true),
       new LowerIntake(),
       new DriveDistance(95, AUTO_DRIVE_COLLECT_BALL_SPEED,0, true),
       new ShootBallsHighTimed()

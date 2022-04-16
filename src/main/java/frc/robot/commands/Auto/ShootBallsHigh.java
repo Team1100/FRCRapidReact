@@ -22,7 +22,7 @@ public class ShootBallsHigh extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinShooter(0.61, true),
+      new SpinShooter(0.63, true),
       new DelayThenFeedBalls(1)
     );
   }
