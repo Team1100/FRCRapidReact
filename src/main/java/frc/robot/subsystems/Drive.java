@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -41,6 +42,11 @@ public class Drive extends SubsystemBase {
   private double accelIntCount = 0;
   private AHRS m_navx;
   private IdleMode m_currentIdleMode;
+
+  private SlewRateLimiter fwdRateLimiter;
+  private SlewRateLimiter rotRateLimiter;
+  public double fwdRateLimit = Constants.D_FWD_RATE_LIMIT; // limits rate change to a certain amount per second. Measured in units
+  public  double rotRateLimit = Constants.D_ROT_RATE_LIMIT;
 
   // Motor current variables
   ArrayList<Double> m_left_motor_current_values;
@@ -99,6 +105,8 @@ public class Drive extends SubsystemBase {
     m_accelerometer = new BuiltInAccelerometer(); // unit: g
     m_accelHelper = new RoboRioAccelerometerHelper(m_accelerometer);
 
+    fwdRateLimiter = new SlewRateLimiter(fwdRateLimit);
+    rotRateLimiter = new SlewRateLimiter(rotRateLimit);
     m_measureVelocity = false;
     m_measureDistance = false;
 
@@ -193,6 +201,8 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontLeftMotorCurrentAverage", 0);
       TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FrontRightMotorCurrentAverage", 0);
       TestingDashboard.getInstance().registerString(m_drive, "Robot", "DriveIdleMode", "Coast");
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "RotCurrentFilteringLimit", Constants.D_ROT_RATE_LIMIT);
+      TestingDashboard.getInstance().registerNumber(m_drive, "Motors", "FwdCurrentFilteringLimit", Constants.D_FWD_RATE_LIMIT);
     }
     return m_drive;
   }
@@ -246,13 +256,13 @@ public class Drive extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
-    drivetrain.arcadeDrive(fwd, rot, sqInputs);
+    drivetrain.arcadeDrive(fwdRateLimiter.calculate(fwd), rotRateLimiter.calculate(rot));
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_rightSpeed = rightSpeed;
-    m_leftSpeed = leftSpeed;
-    drivetrain.tankDrive(leftSpeed, rightSpeed);
+    m_rightSpeed = fwdRateLimiter.calculate(rightSpeed);
+    m_leftSpeed = fwdRateLimiter.calculate(leftSpeed);
+    drivetrain.tankDrive(m_leftSpeed, m_rightSpeed);
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
 
@@ -350,6 +360,20 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
       TestingDashboard.getInstance().updateNumber(m_drive, "CurrentYawAngle", m_navx.getYaw());
       TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
+
+      // This is just to be used for debugging
+      double fwdLimit = TestingDashboard.getInstance().getNumber(m_drive, "FwdCurrentFilteringLimit");
+      double rotLimit = TestingDashboard.getInstance().getNumber(m_drive, "RotCurrentFilteringLimit");
+
+      if (fwdLimit != fwdRateLimit) {
+        fwdRateLimiter = new SlewRateLimiter(fwdLimit);
+        fwdRateLimit = fwdLimit;
+      }
+      if (rotLimit != rotRateLimit) {
+        rotRateLimiter = new SlewRateLimiter(rotLimit);
+        rotRateLimit = rotLimit;
+      }
+
 
       // Publish motor current values
       updateMotorCurrentAverages();

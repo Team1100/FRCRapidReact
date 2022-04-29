@@ -38,6 +38,10 @@ public final class Constants {
     public static final int DEFAULT_AUTO_WAIT_TIME = 3;
     public static final int AUTO_LEFT = 1;
     public static final int AUTO_RIGHT = -1;
+
+    // Defines Drive constants
+    public static final int D_FWD_RATE_LIMIT = 3;
+    public static final double D_ROT_RATE_LIMIT = 3.4;
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;
     public static final int MOTOR_CURRENT = 1;

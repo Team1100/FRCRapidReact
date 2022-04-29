@@ -4,15 +4,12 @@
 
 package frc.robot.commands.Auto;
 
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Drive.DriveDistance;
 import frc.robot.commands.Drive.MotorTurnAngle;
-import frc.robot.commands.Drive.ToggleIdleMode;
-import frc.robot.commands.Drive.TurnAngle;
 import frc.robot.commands.Intake.LowerIntake;
 import frc.robot.commands.Intake.RaiseIntake;
 import frc.robot.subsystems.Auto;
@@ -36,14 +33,13 @@ public class SimpleShootTwice extends SequentialCommandGroup {
 
     /* 
       1 - Shoot Ball
-      2 - Turn 180 degrees
+      2 - Drive Back
       3 - Lower Intake
-      4 - Drive Forwards
+      4 - Turn 150 Degrees
       5 - Pick Up Ball
-      6 - Turn 180 Degrees
+      6 - Turn Back 150 Degrees
       7 - Drive Forwards
       8 - Shoot Ball
-      9 - Drive Backwards out of the Zone
     */
 
     addCommands(
@@ -51,7 +47,7 @@ public class SimpleShootTwice extends SequentialCommandGroup {
       new RotateCaneToBar(-0.15, true),
       new ShootBallsHighTimed(),
       new DriveDistance(-46, AUTO_DRIVE_COLLECT_BALL_SPEED, 0, true),
-      new RaiseIntake(),
+      new RaiseIntake(), // RaiseIntake and LowerIntake to the opposite of what their names suggest
       new MotorTurnAngle(-175 * direction, TURN_SPEED, 0.25, true),
       new DriveAndSpinIntake(35, AUTO_DRIVE_COLLECT_BALL_SPEED),
       new MotorTurnAngle(165 * direction, TURN_SPEED, 0.25, true),
