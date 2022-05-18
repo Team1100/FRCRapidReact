@@ -40,8 +40,8 @@ public final class Constants {
     public static final int AUTO_RIGHT = -1;
 
     // Defines Drive constants
-    public static final int D_FWD_RATE_LIMIT = 3;
-    public static final double D_ROT_RATE_LIMIT = 3.4;
+    public static final double D_FWD_RATE_LIMIT = 2.8;
+    public static final double D_ROT_RATE_LIMIT = 3.2;
     // Defines climber sensor constants
     public static final int NO_SENSOR = 0;
     public static final int MOTOR_CURRENT = 1;
