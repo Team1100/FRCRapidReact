@@ -154,7 +154,6 @@ class VisionApplication(object):
         self.satMax = int(self.vision_nt.getNumber('satMax',255))
         self.valMin = int(self.vision_nt.getNumber('valMin',255))
         self.valMax = int(self.vision_nt.getNumber('valMax',255))
-        print(self.hueMin)
         self.myColors = [[self.hueMin,self.satMin,self.valMin,self.hueMax,self.satMax,self.valMax]]
 
     def runApplication(self):
