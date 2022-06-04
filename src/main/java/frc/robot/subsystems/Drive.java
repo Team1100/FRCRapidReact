@@ -260,12 +260,12 @@ public class Drive extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
-    drivetrain.arcadeDrive(fwdRateLimiter.calculate(fwd), rotRateLimiter.calculate(rot));
+    drivetrain.arcadeDrive(fwdRateLimiter.calculate(fwd), rot);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_rightSpeed = fwdRateLimiter.calculate(rightSpeed);
-    m_leftSpeed = fwdRateLimiter.calculate(leftSpeed);
+    m_rightSpeed = rightSpeed;
+    m_leftSpeed = leftSpeed;
     drivetrain.tankDrive(m_leftSpeed, m_rightSpeed);
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }

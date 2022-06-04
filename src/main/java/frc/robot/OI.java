@@ -14,6 +14,8 @@ import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
 import frc.robot.commands.Auto.LowerCaneShootBallsHigh;
 import frc.robot.commands.Auto.LowerCaneShootBallsLow;
+import frc.robot.commands.Auto.ShootBallsHigh;
+import frc.robot.commands.Climber.RotateCaneToBar;
 import frc.robot.commands.Climber.UserOperateCane;
 import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
 import frc.robot.commands.Climber.CaneExtension.ZeroCaneEncoders;
@@ -84,11 +86,12 @@ public class OI {
     if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
       DriverXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
       DriverXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
-      DriverXboxController.getButtonB().whileHeld(new LowerCaneShootBallsHigh());
+      DriverXboxController.getButtonB().whileHeld(new ShootBallsHigh());
       DriverXboxController.getButtonA().whileHeld(new LowerCaneShootBallsLow());
       DriverXboxController.getButtonY().whenPressed(new LowerIntake());
       DriverXboxController.getButtonX().whenPressed(new RaiseIntake());
       DriverXboxController.getButtonBack().whenPressed(new UserOperateCane());
+      DriverXboxController.getDPad().getDown().whenPressed(new RotateCaneToBar(-.3, true));
       //DriverXboxController.getButtonStart().whenPressed(new DriveBackAndShootHigh());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
