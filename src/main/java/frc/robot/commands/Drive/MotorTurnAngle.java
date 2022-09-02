@@ -49,7 +49,6 @@ public class MotorTurnAngle extends CommandBase {
     m_angle = angle;
     m_direction = m_angle/Math.abs(m_angle);
     m_distance = (m_angle / 360) * DIAMETER * Math.PI;
-    SmartDashboard.putNumber("RotationAngle", 0.5);
   }
 
   public static void registerWithTestingDashboard() {
@@ -68,9 +67,6 @@ public class MotorTurnAngle extends CommandBase {
     m_timer.reset();
     m_finished = false;
     m_drive.setIdleMode(IdleMode.kBrake);
-    // m_angle = SmartDashboard.getNumber("RotationAngle", m_angle);
-    // m_distance = (m_angle / 360) * DIAMETER * Math.PI;
-    // m_direction = m_angle/Math.abs(m_angle);
     if (!m_parameterized) {
       m_angle = TestingDashboard.getInstance().getNumber(m_drive, "TurnAngleInDegrees");
       m_speed = TestingDashboard.getInstance().getNumber(m_drive, "SpeedWhenTurning");

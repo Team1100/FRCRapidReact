@@ -10,6 +10,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RoboRioAccelerometerHelper;
@@ -121,6 +122,9 @@ public class Drive extends SubsystemBase {
     }
 
     m_max_num_current_values = MOTOR_CURRENT_INITIAL_CAPACITY;
+
+    SmartDashboard.putNumber("FWD Accel Limit", 3);
+    SmartDashboard.putNumber("ROT Accel Limit", 3);
   }
 
   public void setIdleMode(IdleMode mode) {
@@ -256,12 +260,12 @@ public class Drive extends SubsystemBase {
   }
 
   public void arcadeDrive(double fwd, double rot, boolean sqInputs) {
-    drivetrain.arcadeDrive(fwdRateLimiter.calculate(fwd), rotRateLimiter.calculate(rot));
+    drivetrain.arcadeDrive(fwdRateLimiter.calculate(fwd), rot);
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_rightSpeed = fwdRateLimiter.calculate(rightSpeed);
-    m_leftSpeed = fwdRateLimiter.calculate(leftSpeed);
+    m_rightSpeed = rightSpeed;
+    m_leftSpeed = leftSpeed;
     drivetrain.tankDrive(m_leftSpeed, m_rightSpeed);
     TestingDashboard.getInstance().updateNumber(m_drive, "SpeedOfTravel", leftSpeed);
   }
@@ -362,8 +366,8 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
 
       // This is just to be used for debugging
-      double fwdLimit = TestingDashboard.getInstance().getNumber(m_drive, "FwdCurrentFilteringLimit");
-      double rotLimit = TestingDashboard.getInstance().getNumber(m_drive, "RotCurrentFilteringLimit");
+      double fwdLimit = SmartDashboard.getNumber("FWD Accel Limit", 3);
+      double rotLimit = SmartDashboard.getNumber("ROT Accel Limit", 3);
 
       if (fwdLimit != fwdRateLimit) {
         fwdRateLimiter = new SlewRateLimiter(fwdLimit);

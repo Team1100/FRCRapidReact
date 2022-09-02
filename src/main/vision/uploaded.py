@@ -96,6 +96,7 @@ class VisionApplication(object):
         self.team = self.config["team"]
         self.camera = CameraView(self.config['cameras'][0])
         #self.camera2 = CameraView(self.config['cameras'][1])
+        print(self.camera.width)
         # Initialize Camera Server
         self.initializeCameraServer()
 
@@ -116,11 +117,11 @@ class VisionApplication(object):
         #cam2 = cserver.startAutomaticCapture(dev=1)
 
         self.cvsrc = cserver.putVideo("visionCam", self.camera.width,self.camera.height)
-        self.cvmask = cserver.putVideo("maskCam", self.camera.width, self.camera.height) #new
+        #self.cvmask = cserver.putVideo("maskCam", self.camera.width, self.camera.height) # UNCOMMENT IF YOU WANT PROGRAM TO WORK WITH MASKING
         
         
         self.output_stream = cserver.putVideo('Processed', self.camera.width, self.camera.height)
-        self.sink = cserver.getVideo()
+        self.sink = CameraServer.getInstance().getVideo()
         #self.sink2 = cserver.getVideo(cam2)
 
     def initializeNetworkTables(self):
@@ -128,7 +129,7 @@ class VisionApplication(object):
         ntinst = NetworkTablesInstance.getDefault()
         #ip = '10.11.0.101'
         #ip = '' #for use with a computer
-        print("Setting up NetworkTables client for team {} at {}".format(self.team,ip))
+        #print("Setting up NetworkTables client for team {} at {}".format(self.team,ip))
         ntinst.startClientTeam(self.team)
         #ntinst.startClient(ip)
         self.vision_nt = ntinst.getTable('Shuffleboard/Vision')
@@ -178,58 +179,62 @@ class VisionApplication(object):
                 print("Error on line 176 with grabbing frame")
                 continue
 
-            #if frame_time2 == 0:
-                #self.output_stream.notifyError(self.sink2.getError())
-               # continue
-
-            # Convert to HSV and threshold image
-            self.imgResult = input_img1.copy()
-            self.targetDetected = False
-            self.mask = self.getImageMask(input_img1,self.myColors)
-            self.contours = self.getContours(self.mask)
-            self.isolateTarget(self.contours)
-            for target in self.targetList:
-                if target != None:
-                    target.drawBoundingBox(self.targetDetected)
-            
-            #pitch = (self.boundingBox.centerY/2) * 48.9417
-
-            #self.advancedDistance = (2.298 - .9779) / math.tan(math.radians(pitch + 20.93552078))
-            #offset = camCenter - self.boundingBox.boundingCenterX
-            t2 = time.clock_gettime(time.CLOCK_MONOTONIC) # gets the current "time"
-            timeDiff = t2-t1 # difference between the most recent time and the time recorded when the target was last seen
-
-            if self.targetDetected:
-                #sumArea += self.garea
-                targetDetTolCount = 0
-                t1 = t2
-                self.vision_nt.putNumber('targetDetected',1)
-            else: # only sets updates the targetDetected if a certain amount of time has passed
-                if timeDiff > targetDetTol:
-                    self.vision_nt.putNumber('targetDetected',0)
-             
-            count +=1
-            loopLen = 25
-            # these lines put all the necessary data on network tables, which are then displayed on shuffleboard
-            #self.vision_nt.putNumber('CenterOfBoxX', self.boundingBox.centerX)
-            #self.vision_nt.putNumber('CenterOfBoxY', self.boundingBox.centerY)
-
-            #self.vision_nt.putNumber('advancedDistance', self.advancedDistance)
-            #self.vision_nt.putNumber('offset',-offset)
-
-            #if sumArea > 0 and count >= loopLen:
-            #    average = sumArea/count
-            #    distance = (20235 * (average ** -.558))
-
-            #    self.vision_nt.putNumber('distance',distance)
-            #    self.vision_nt.putNumber('area',average) 
-            #    sumArea = 0
-            #    count = 0
-
-            #self.vision_nt.putNumber('pitch', pitch)
-            self.cvsrc.putFrame(self.imgResult)
-            self.getMaskingValues()
-            self.cvmask.putFrame(self.mask)
+#           UNCOMMENT FOLLOWING LINES TO ALLOW FOR MASKING. CURRENT PROGRAM SIMPLY GRABS VIDEO AND SENDS IT TO NETWORKTABLES
+#            #if frame_time2 == 0:
+#                #self.output_stream.notifyError(self.sink2.getError())
+#               # continue
+#
+#            # Convert to HSV and threshold image
+#            self.imgResult = input_img1.copy()
+#            self.targetDetected = False
+#            self.mask = self.getImageMask(input_img1,self.myColors)
+#            self.contours = self.getContours(self.mask)
+#            self.isolateTarget(self.contours)
+#            for target in self.targetList:
+#                if target != None:
+#                    target.drawBoundingBox(self.targetDetected)
+#            
+#            #pitch = (self.boundingBox.centerY/2) * 48.9417
+#
+#            #self.advancedDistance = (2.298 - .9779) / math.tan(math.radians(pitch + 20.93552078))
+#            #offset = camCenter - self.boundingBox.boundingCenterX
+#            t2 = time.clock_gettime(time.CLOCK_MONOTONIC) # gets the current "time"
+#            timeDiff = t2-t1 # difference between the most recent time and the time recorded when the target was last seen
+#
+#            if self.targetDetected:
+#                #sumArea += self.garea
+#                targetDetTolCount = 0
+#                t1 = t2
+#                self.vision_nt.putNumber('targetDetected',1)
+#            else: # only sets updates the targetDetected if a certain amount of time has passed
+#                if timeDiff > targetDetTol:
+#                    self.vision_nt.putNumber('targetDetected',0)
+#             
+#            count +=1
+#            loopLen = 25
+#            # these lines put all the necessary data on network tables, which are then displayed on shuffleboard
+#            #self.vision_nt.putNumber('CenterOfBoxX', self.boundingBox.centerX)
+#            #self.vision_nt.putNumber('CenterOfBoxY', self.boundingBox.centerY)
+#
+#            #self.vision_nt.putNumber('advancedDistance', self.advancedDistance)
+#            #self.vision_nt.putNumber('offset',-offset)
+#
+#            #if sumArea > 0 and count >= loopLen:
+#            #    average = sumArea/count
+#            #    distance = (20235 * (average ** -.558))
+#
+#            #    self.vision_nt.putNumber('distance',distance)
+#            #    self.vision_nt.putNumber('area',average) 
+#            #    sumArea = 0
+#            #    count = 0
+#
+#            #self.vision_nt.putNumber('pitch', pitch)
+#            #self.cvsrc.putFrame(self.imgResult)
+#
+#
+            self.cvsrc.putFrame(input_img1) # Skips all the processing and simply puts in the video directly
+            #self.getMaskingValues()
+            #self.cvmask.putFrame(self.mask)
             #self.output_stream.putFrame(input_img2)
 
     def getImageMask(self, img, myColors):
