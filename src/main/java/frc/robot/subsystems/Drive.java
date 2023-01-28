@@ -72,7 +72,7 @@ public class Drive extends SubsystemBase {
   /** Creates a new Drive. */
   private Drive() {
     // Add Navx
-    m_navx = new AHRS(RobotMap.D_NAVX);
+    //m_navx = new AHRS(RobotMap.D_NAVX);
 
     m_backLeft = new CANSparkMax(RobotMap.D_BACK_LEFT, MotorType.kBrushless);
     m_backRight = new CANSparkMax(RobotMap.D_BACK_RIGHT, MotorType.kBrushless);
@@ -362,7 +362,7 @@ public class Drive extends SubsystemBase {
       TestingDashboard.getInstance().updateNumber(m_drive, "FrontRightMotorSpeed", m_frontRightEncoder.getVelocity());
       TestingDashboard.getInstance().updateNumber(m_drive, "currentTime", m_accelHelper.getCurrentTime());
       TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
-      TestingDashboard.getInstance().updateNumber(m_drive, "CurrentYawAngle", m_navx.getYaw());
+      //TestingDashboard.getInstance().updateNumber(m_drive, "CurrentYawAngle", m_navx.getYaw());
       TestingDashboard.getInstance().updateNumber(m_drive, "instantAccelMagnitudeInchesPerSecondSquared", m_accelHelper.getAccelerometerMagnitudeInchesPerSecondSquared());
 
       // This is just to be used for debugging

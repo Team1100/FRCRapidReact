@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NTSendable;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -224,7 +225,7 @@ public class TestingDashboard {
           double defaultNumberValue = 0;
           String defaultStringValue = "";
           Sendable sendable;
-          NetworkTableEntry entry;
+          GenericEntry entry;
           int type = tdt.dataTable.getType(entryName);
           switch (type) {
             case TestingDashboardDataTable.TYPE_NUMBER:
