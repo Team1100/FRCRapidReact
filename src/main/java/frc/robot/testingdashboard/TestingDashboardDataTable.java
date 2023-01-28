@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NTSendable;
 
 /**
@@ -27,14 +28,14 @@ public class TestingDashboardDataTable {
   Hashtable<String, ArrayList<String>> table;
   ArrayList<String> names;
   Hashtable<String, Integer> type;
-  Hashtable<String, NetworkTableEntry> entries;
+  Hashtable<String, GenericEntry> entries;
   Hashtable<String, String> defaultString;
   Hashtable<String, Double> defaultDouble;
   Hashtable<String, Object> defaultSendable;
   public TestingDashboardDataTable() {
     table = new Hashtable<String, ArrayList<String>>();
     names = new ArrayList<String>();
-    entries = new Hashtable<String, NetworkTableEntry>();
+    entries = new Hashtable<String, GenericEntry>();
     type = new Hashtable<String, Integer>();
     defaultString = new Hashtable<String, String>();
     defaultDouble = new Hashtable<String, Double>();
@@ -91,16 +92,16 @@ public class TestingDashboardDataTable {
   }
 
   /*
-   *  This function adds the NetworkTableEntry for a given
+   *  This function adds the GenericEntry for a given
    *  named data item.
    */
-  public void addEntry(String name, NetworkTableEntry entry) {
+  public void addEntry(String name, GenericEntry entry) {
       if (names.contains(name)) {
           entries.put(name,entry);
       }
   }
 
-  public NetworkTableEntry getEntry(String str) {
+  public GenericEntry getEntry(String str) {
       return entries.get(str);
   }
 

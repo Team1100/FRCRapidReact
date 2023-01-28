@@ -102,7 +102,7 @@ public class RobotContainer {
     m_drive.setDefaultCommand(new ArcadeDrive());
 
     // Configure the button bindings
-    configureButtonBindings();
+    //configureButtonBindings();
 
     // Register commands with TestingDashboard commands
 

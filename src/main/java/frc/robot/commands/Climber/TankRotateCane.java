@@ -46,10 +46,10 @@ public class TankRotateCane extends CommandBase {
     double rotationSpeed = 0;
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
       XboxController xbox = m_oi.getOperatorXboxController();
-      if (xbox.getDPad().getRight().get()) {
+      if (xbox.getDPad().getRight().getAsBoolean()) {
         rotationSpeed = m_caneSpeed;
       }
-      else if (xbox.getDPad().getLeft().get()) {
+      else if (xbox.getDPad().getLeft().getAsBoolean()) {
         rotationSpeed = -m_caneSpeed;
       }
     }

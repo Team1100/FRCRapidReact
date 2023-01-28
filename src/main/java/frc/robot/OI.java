@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Auto.DriveBackAndShootHigh;
 import frc.robot.commands.Auto.ExpelBalls;
 import frc.robot.commands.Auto.IntakeBalls;
@@ -84,21 +85,21 @@ public class OI {
     // Now Mapping Commands to XBox
     ////////////////////////////////////////////////////
     if (Constants.XBOX_CONTROLLER_DRIVER_ENABLE) {
-      DriverXboxController.getButtonRightBumper().whileHeld(new IntakeBalls());
-      DriverXboxController.getButtonLeftBumper().whileHeld(new ExpelBalls());
-      DriverXboxController.getButtonB().whileHeld(new ShootBallsHigh());
-      DriverXboxController.getButtonA().whileHeld(new LowerCaneShootBallsLow());
-      DriverXboxController.getButtonY().whenPressed(new LowerIntake());
-      DriverXboxController.getButtonX().whenPressed(new RaiseIntake());
-      DriverXboxController.getButtonBack().whenPressed(new UserOperateCane());
-      DriverXboxController.getDPad().getDown().whenPressed(new RotateCaneToBar(-.3, true));
-      //DriverXboxController.getButtonStart().whenPressed(new DriveBackAndShootHigh());
+      DriverXboxController.getButtonRightBumper().whileTrue(new IntakeBalls());
+      DriverXboxController.getButtonLeftBumper().whileTrue(new ExpelBalls());
+      DriverXboxController.getButtonB().whileTrue(new ShootBallsHigh());
+      DriverXboxController.getButtonA().whileTrue(new LowerCaneShootBallsLow());
+      DriverXboxController.getButtonY().onTrue(new LowerIntake());
+      DriverXboxController.getButtonX().onTrue(new RaiseIntake());
+      DriverXboxController.getButtonBack().onTrue(new UserOperateCane());
+      DriverXboxController.getDPad().getDown().onTrue(new RotateCaneToBar(-.3, true));
+      //DriverXboxController.getButtonStart().onTrue(new DriveBackAndShootHigh());
     }
     if (Constants.XBOX_CONTROLLER_OPERATOR_ENABLE) {
-    //  OperatorXboxController.getDPad().getRight().whenPressed(new UserOperateLights(Constants.LIGHTS_OFF));
-    //  OperatorXboxController.getDPad().getDown().whenPressed(new UserOperateLights(Constants.LIGHTS_RED));
-      //OperatorXboxController.getDPad().getUp().whenPressed(new UserOperateLights(Constants.LIGHTS_BLUE));
-      //OperatorXboxController.getDPad().getLeft().whenPressed(new UserOperateLights(Constants.LIGHTS_PURPLE));
+    //  OperatorXboxController.getDPad().getRight().onTrue(new UserOperateLights(Constants.LIGHTS_OFF));
+    //  OperatorXboxController.getDPad().getDown().onTrue(new UserOperateLights(Constants.LIGHTS_RED));
+      //OperatorXboxController.getDPad().getUp().onTrue(new UserOperateLights(Constants.LIGHTS_BLUE));
+      //OperatorXboxController.getDPad().getLeft().onTrue(new UserOperateLights(Constants.LIGHTS_PURPLE));
       
       //OperatorXboxController.getButtonBack().toggleWhenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
       //OperatorXboxController.getDPad().getLeft().toggleWhenPressed(new ZeroCaneEncoders(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, true));
@@ -118,23 +119,23 @@ public class OI {
     // Now Mapping Commands to AttackThree controllers
     ////////////////////////////////////////////////////
     if (Constants.ATTACK_THREE_ENABLE) {
-      leftStick.getButton(2).toggleWhenPressed(new TankDrive());
+      leftStick.getButton(2).toggleOnTrue(new TankDrive());
     }
 
     ////////////////////////////////////////////////////
     // Now Mapping Commands to Button Box
     ////////////////////////////////////////////////////
     if (Constants.BUTTON_BOX_ENABLE) {
-      buttonBox.getButton1().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_2_CLIMB, true));
-      buttonBox.getButton2().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_3_CLIMB, true));
-      buttonBox.getButton3().whenHeld(new ClimbStatefully(Constants.CLIMBER_LEVEL_4_CLIMB, true));
-      buttonBox.getButton4().whenPressed(new RaiseIntake());
-      buttonBox.getButton5().whenPressed(new LowerIntake());
-      buttonBox.getButton6().whenHeld(new IntakeBalls());
-      buttonBox.getButton8().whenPressed(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
-      buttonBox.getButton9().whenPressed(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
-      buttonBox.getButton10().whenPressed(new SwitchDriveIdleMode());
-      buttonBox.getButton14().toggleWhenPressed(new ArcadeDrive());
+      buttonBox.getButton1().whileTrue(new ClimbStatefully(Constants.CLIMBER_LEVEL_2_CLIMB, true));
+      buttonBox.getButton2().whileTrue(new ClimbStatefully(Constants.CLIMBER_LEVEL_3_CLIMB, true));
+      buttonBox.getButton3().whileTrue(new ClimbStatefully(Constants.CLIMBER_LEVEL_4_CLIMB, true));
+      buttonBox.getButton4().onTrue(new RaiseIntake());
+      buttonBox.getButton5().onTrue(new LowerIntake());
+      buttonBox.getButton6().whileTrue(new IntakeBalls());
+      buttonBox.getButton8().onTrue(new ClimbStatefully(Constants.DEFAULT_NUMBER_OF_CLIMB_CYCLES, true));
+      buttonBox.getButton9().onTrue(new ReachForNextBarStatefully(ClimbStatefully.INTIIAL_CANE_EXTENSION_SPEED, ClimbStatefully.SLOWER_CANE_EXTENSION_SPEED, ClimbStatefully.INITIAL_CANE_EXTENSION_DISTANCE, ClimbStatefully.CANE_FORWARDS_ROTATION_SPEED, ClimbStatefully.CANE_BACKWARDS_ROTATION_SPEED));
+      buttonBox.getButton10().onTrue(new SwitchDriveIdleMode());
+      buttonBox.getButton14().toggleOnTrue(new ArcadeDrive());
     }
 
 
@@ -143,10 +144,10 @@ public class OI {
     ////////////////////////////////////////////////////
 
     if (Constants.KEYBOARD_BOX_ENABLE) {
-      keyboardBox.getKForward().whileHeld(new KeyboardDrive(0.75, 0));
-      keyboardBox.getKBack().whileHeld(new KeyboardDrive(-0.75, 0));
-      keyboardBox.getKLeft().whileHeld(new KeyboardDrive(0, 0.67));
-      keyboardBox.getKRight().whileHeld(new KeyboardDrive(0, -0.67));
+      keyboardBox.getKForward().whileTrue(new KeyboardDrive(0.75, 0));
+      keyboardBox.getKBack().whileTrue(new KeyboardDrive(-0.75, 0));
+      keyboardBox.getKLeft().whileTrue(new KeyboardDrive(0, 0.67));
+      keyboardBox.getKRight().whileTrue(new KeyboardDrive(0, -0.67));
     }
     
   }

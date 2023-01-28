@@ -1,8 +1,11 @@
 package frc.robot.input;
 
+import org.opencv.video.TrackerGOTURN;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is for an XboxController. All information about any given button
@@ -243,17 +246,17 @@ public class XboxController extends Joystick {
 	 * This class is for the DPad on the xbox controller.
 	 *
 	 */
-	public static class DirectionalPad extends Button {
+	public static class DirectionalPad extends Trigger {
     private final Joystick parent;
-    final Button up;
-    final Button upRight;
-    final Button right;
-    final Button downRight;
-    final Button down;
-    final Button downLeft;
-    final Button left;
-    final Button upLeft;
-
+    final DPadButton up;
+    final DPadButton upRight;
+    final DPadButton right;
+    final DPadButton downRight;
+    final DPadButton down;
+    final DPadButton downLeft;
+    final DPadButton left;
+    final DPadButton upLeft;
+	
     /**
      * Initializes buttons
      * @param parent 
@@ -282,7 +285,7 @@ public class XboxController extends Joystick {
      * True if dpad is at an angle
      */
 		@Override
-		public boolean get() {
+		public boolean getAsBoolean() {
 			return getPOV() != -1;
 		}
 		
@@ -290,7 +293,7 @@ public class XboxController extends Joystick {
 		 * Gets the up direction
 		 * @return up button
 		 */
-		public Button getUp() {
+		public Trigger getUp() {
 			return up;
 		}
 		
@@ -298,7 +301,7 @@ public class XboxController extends Joystick {
 		 * Gets the upper right direction
 		 * @return upper right button
 		 */
-		public Button getUpRight() {
+		public Trigger getUpRight() {
 			return upRight;
 		}
 		
@@ -306,7 +309,7 @@ public class XboxController extends Joystick {
 		 * Gets the right direction
 		 * @return right button
 		 */
-		public Button getRight() {
+		public Trigger getRight() {
 			return right;
 		}
 		
@@ -314,7 +317,7 @@ public class XboxController extends Joystick {
 		 * Gets the down right direction
 		 * @return down right button
 		 */
-		public Button getDownRight() {
+		public Trigger getDownRight() {
 			return downRight;
 		}
 		
@@ -322,7 +325,7 @@ public class XboxController extends Joystick {
 		 * Gets the down direction
 		 * @return down button
 		 */
-		public Button getDown() {
+		public Trigger getDown() {
 			return down;
 		}
 		
@@ -330,7 +333,7 @@ public class XboxController extends Joystick {
 		 * Gets the down left direction
 		 * @return down left button
 		 */
-		public Button getDownLeft() {
+		public Trigger getDownLeft() {
 			return downLeft;
 		}
 		
@@ -338,7 +341,7 @@ public class XboxController extends Joystick {
 		 * Gets the left direction
 		 * @return left button
 		 */
-		public Button getLeft() {
+		public Trigger getLeft() {
 			return left;
 		}
 		
@@ -346,7 +349,7 @@ public class XboxController extends Joystick {
 		 * Gets the up left direction
 		 * @return left button
 		 */
-		public Button getUpLeft() {
+		public Trigger getUpLeft() {
 			return upLeft;
 		}
 		
@@ -354,7 +357,7 @@ public class XboxController extends Joystick {
      * This class is used to represent each of the 8 values a
      * dpad has as a button.
      */
-    public static class DPadButton extends Button {
+    public static class DPadButton extends Trigger {
       private final Direction direction;
       private final DirectionalPad parent;
             
@@ -372,7 +375,7 @@ public class XboxController extends Joystick {
        * True if dpad direction is this button
        */
       @Override
-      public boolean get() {
+      public boolean getAsBoolean() {
         return parent.getPOV() == direction.value;
       }
     }

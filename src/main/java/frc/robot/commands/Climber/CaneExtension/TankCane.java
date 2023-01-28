@@ -57,12 +57,12 @@ public class TankCane extends CommandBase {
 
       if (xbox.getAxis(XboxAxis.kLeftTrigger) > 0) {
         leftSpeed = m_caneSpeed;
-      } else if (xbox.getButtonLeftBumper().get()) {
+      } else if (xbox.getButtonLeftBumper().getAsBoolean()) {
         leftSpeed = -m_caneSpeed;
       }
       if (xbox.getAxis(XboxAxis.kRightTrigger) > 0) {
         rightSpeed = m_caneSpeed;
-      } else if (xbox.getButtonRightBumper().get()) {
+      } else if (xbox.getButtonRightBumper().getAsBoolean()) {
         rightSpeed = -m_caneSpeed;
       }
     }
