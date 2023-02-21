@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +22,7 @@ public class Shooter extends SubsystemBase {
   
   private static Shooter m_shooter;
   private CANSparkMax m_shooterMotor;
+  private SparkMaxPIDController m_shooterPID;
   private RelativeEncoder m_shooterEncoder;
   private double m_P, m_I, m_D;
 
@@ -31,12 +34,17 @@ public class Shooter extends SubsystemBase {
     if (Constants.HW_ENABLE_SHOOTER) {
       m_shooterMotor = new CANSparkMax(RobotMap.S_MOTOR, MotorType.kBrushless);
       m_shooterMotor.setInverted(true);
+      m_shooterPID = m_shooterMotor.getPIDController();
       m_shooterEncoder = m_shooterMotor.getEncoder();
     }
 
     m_P = 0.00125;
     m_I = 0.00045;
     m_D = 0;
+
+    m_shooterPID.setP(m_P);
+    m_shooterPID.setI(m_I);
+    m_shooterPID.setD(m_D);
   }
 
   public static Shooter getInstance() {
@@ -48,6 +56,7 @@ public class Shooter extends SubsystemBase {
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "Setpoint", 2000);
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterDist", 0);
       TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "ShooterOutputSpeed", 0);
+      TestingDashboard.getInstance().registerNumber(m_shooter, "Shooter", "TargetDistance", 0);
     }
     return m_shooter;
   }
@@ -71,6 +80,11 @@ public class Shooter extends SubsystemBase {
       velocity = m_shooterEncoder.getVelocity();
     }
     return velocity;
+  }
+
+  public void setPIDDistance(double distance)
+  {
+    m_shooterPID.setReference(distance, ControlType.kPosition);
   }
 
   public double getMotorDistance() {

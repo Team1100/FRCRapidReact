@@ -41,6 +41,7 @@ import frc.robot.commands.Intake.RaiseIntake;
 import frc.robot.commands.Intake.UserSpinIntake;
 import frc.robot.commands.Shooter.PIDShooter;
 import frc.robot.commands.Shooter.ShootBall;
+import frc.robot.commands.Shooter.SparkShooterDistance;
 import frc.robot.commands.Shooter.SpinShooter;
 import frc.robot.commands.Conveyor.UserSpinConveyor;
 import frc.robot.commands.Conveyor.SpinConveyorBackwards;
@@ -120,6 +121,7 @@ public class RobotContainer {
     PIDShooter.registerWithTestingDashboard();
     SpinShooter.registerWithTestingDashboard();
     ShootBallsExtraHigh.registerWithTestingDashboard();
+    SparkShooterDistance.registerWithDashboard();
 
     // Climber
     DriveToBar.registerWithTestingDashboard();
